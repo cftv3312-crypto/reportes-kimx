@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mattel Monterrey — BOM Business Case VSA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#162240; --navy2:#1E2F54; --red:#D63429; --red-lt:#FCEAE9; --red-dk:#8C1A14;
+  --cream:#F0EBE1; --warm:#E5DDCF; --white:#FFFFFF; --muted:#8A8070; --border:#D0C8BC;
+  --green:#2E7D32; --green-lt:#E8F5E9; --green-dk:#1B4D1E;
+  --amber:#B45309; --amber-lt:#FEF3C7; --amber-dk:#78350F;
+  --blue:#1E40AF; --blue-lt:#DBEAFE; --blue-dk:#1E3A8A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.5}
+
+/* ── HEADER ── */
+.doc-header{background:var(--navy);color:#fff;padding:0}
+.header-bar{background:var(--red);height:4px}
+.header-inner{padding:28px 36px 24px}
+.header-eyebrow{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:8px}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;text-transform:uppercase;letter-spacing:1px;line-height:1.05}
+.header-title span{color:var(--red)}
+.header-sub{font-size:13px;color:rgba(255,255,255,.7);margin-top:8px;font-weight:300}
+.header-meta{display:flex;gap:28px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+.header-meta-item{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5)}
+.header-meta-item span{display:block;font-size:14px;font-weight:600;color:#fff;letter-spacing:0;font-family:'Barlow Condensed',sans-serif;text-transform:none}
+
+/* ── NAV TABS ── */
+.nav-strip{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:0;overflow-x:auto;padding:0 24px}
+.nav-tab{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5);padding:14px 18px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+.nav-tab:hover{color:rgba(255,255,255,.85)}
+.nav-tab.active{color:#fff;border-bottom-color:var(--red)}
+
+/* ── LAYOUT ── */
+.content{max-width:1200px;margin:0 auto;padding:28px 24px}
+.section{display:none}
+.section.active{display:block}
+
+/* ── CARDS & GRIDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.kpi-card.red::before{background:var(--red)}
+.kpi-card.green::before{background:var(--green)}
+.kpi-card.amber::before{background:var(--amber)}
+.kpi-card.blue::before{background:var(--blue)}
+.kpi-card.navy::before{background:var(--navy)}
+.kpi-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--navy);margin:4px 0 2px;line-height:1}
+.kpi-value.danger{color:var(--red)}
+.kpi-value.good{color:var(--green)}
+.kpi-value.warn{color:var(--amber)}
+.kpi-note{font-size:10px;color:var(--muted)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.card-header{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--warm);display:flex;align-items:center;gap:8px}
+.card-header .pill{font-size:9px;padding:2px 8px;border-radius:2px;font-family:'Barlow',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.pill-red{background:var(--red-lt);color:var(--red-dk)}
+.pill-green{background:var(--green-lt);color:var(--green-dk)}
+.pill-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.pill-blue{background:var(--blue-lt);color:var(--blue-dk)}
+.pill-navy{background:var(--navy);color:#fff}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* ── SECTION TITLES ── */
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:6px}
+.section-eyebrow{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:4px}
+.section-desc{font-size:13px;color:var(--muted);margin-bottom:20px;max-width:720px}
+
+/* ── SIMULATOR ── */
+.sim-box{background:var(--navy);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.sim-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:14px}
+.sim-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.sim-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);width:200px;flex-shrink:0}
+.sim-slider{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.2);outline:none;cursor:pointer}
+.sim-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--red);cursor:pointer}
+.sim-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:#fff;width:80px;text-align:right}
+.sim-output{background:rgba(255,255,255,.06);border-radius:3px;padding:14px 16px;margin-top:8px}
+.sim-output-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sim-metric{text-align:center}
+.sim-metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.45);font-weight:700}
+.sim-metric-value{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-top:3px}
+.sim-metric-value.pos{color:#86efac}
+.sim-metric-value.neg{color:#fca5a5}
+.sim-metric-value.warn{color:#fde68a}
+
+/* ── BAR CHART ── */
+.bar-chart{margin:8px 0}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-label{font-size:10px;font-weight:600;color:var(--muted);width:130px;flex-shrink:0;text-align:right}
+.bar-track{flex:1;height:18px;background:var(--warm);border-radius:2px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:6px;transition:width .4s ease}
+.bar-text{font-size:10px;font-weight:700;color:#fff;position:absolute;left:6px;top:50%;transform:translateY(-50%)}
+.bar-end{font-size:10px;font-weight:700;color:var(--navy);width:80px;text-align:right}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:var(--navy);color:#fff;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:8px 10px;text-align:left}
+.data-table td{padding:7px 10px;border-bottom:1px solid var(--warm);color:var(--navy)}
+.data-table tr:nth-child(even) td{background:#faf8f5}
+.data-table tr:hover td{background:var(--blue-lt)}
+.badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:2px 7px;border-radius:2px}
+.badge-red{background:var(--red-lt);color:var(--red-dk)}
+.badge-green{background:var(--green-lt);color:var(--green-dk)}
+.badge-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.badge-blue{background:var(--blue-lt);color:var(--blue-dk)}
+.badge-navy{background:var(--navy);color:#fff}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:24px;margin-top:8px}
+.timeline::before{content:'';position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--warm)}
+.tl-item{position:relative;margin-bottom:14px}
+.tl-dot{position:absolute;left:-20px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--red)}
+.tl-item.done .tl-dot{background:var(--green)}
+.tl-item.pending .tl-dot{background:var(--amber)}
+.tl-week{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red)}
+.tl-action{font-size:13px;font-weight:600;color:var(--navy)}
+.tl-detail{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── OPPORTUNITY CARD ── */
+.opp-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:12px}
+.opp-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--white)}
+.opp-header:hover{background:#fdf9f5}
+.opp-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;color:var(--navy)}
+.opp-badges{display:flex;gap:6px;align-items:center}
+.opp-value{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--red)}
+.opp-body{display:none;padding:16px;background:#fdfcfa;border-top:1px solid var(--warm)}
+.opp-body.open{display:block}
+
+/* ── PROGRESS ── */
+.progress-track{background:var(--warm);border-radius:2px;height:8px;margin:4px 0}
+.progress-fill{height:100%;border-radius:2px;background:var(--red);transition:width .5s ease}
+.progress-fill.green{background:var(--green)}
+.progress-fill.amber{background:var(--amber)}
+
+/* ── WATERFALL CHART ── */
+.waterfall{display:flex;align-items:flex-end;gap:6px;height:120px;margin:12px 0}
+.wf-col{display:flex;flex-direction:column;align-items:center;flex:1}
+.wf-bar{width:100%;border-radius:2px 2px 0 0;transition:height .4s}
+.wf-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:4px;text-align:center}
+.wf-val{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--navy);text-align:center}
+
+/* ── TOGGLE SWITCH ── */
+.toggle-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.toggle-switch{position:relative;width:40px;height:22px;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--warm);border-radius:11px;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+input:checked + .toggle-slider{background:var(--red)}
+input:checked + .toggle-slider::before{transform:translateX(18px)}
+.toggle-label{font-size:12px;font-weight:600;color:var(--navy)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){.two-col,.three-col{grid-template-columns:1fr}.header-meta{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HEADER -->
+<div class="doc-header">
+  <div class="header-bar"></div>
+  <div class="header-inner">
+    <div class="header-eyebrow">Mattel Monterrey · VSA 2026 · Business Case BOM</div>
+    <div class="header-title">BOM & Inventory<br><span>Opportunity Map</span></div>
+    <div class="header-sub">Análisis estructural de 234 componentes (JKG84 Barbie Dream House + JHG61 Little People Nintendo) —<br>Simuladores de impacto, Análisis ABC, EPEI Transition & Capital Recovery</div>
+    <div class="header-meta">
+      <div class="header-meta-item">Planta<span>General Escobedo, N.L.</span></div>
+      <div class="header-meta-item">Workshop<span>11–15 Mayo 2026</span></div>
+      <div class="header-meta-item">Productos en scope<span>JKG84 + JHG61</span></div>
+      <div class="header-meta-item">Capital OH analizado<span>~$11.1M USD</span></div>
+      <div class="header-meta-item">Oportunidad identificada<span>$1.8–3.2M USD</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ NAV -->
+<div class="nav-strip">
+  <div class="nav-tab active" onclick="showTab('overview')">📊 Overview</div>
+  <div class="nav-tab" onclick="showTab('abc')">📈 ABC Pareto</div>
+  <div class="nav-tab" onclick="showTab('dias')">📅 Días Inventario</div>
+  <div class="nav-tab" onclick="showTab('epei')">🔄 EPEI Simulator</div>
+  <div class="nav-tab" onclick="showTab('cuarentena')">🔒 Cuarentena</div>
+  <div class="nav-tab" onclick="showTab('fg')">📦 FG Huérfano</div>
+  <div class="nav-tab" onclick="showTab('ubicaciones')">🗺️ Ubicaciones</div>
+  <div class="nav-tab" onclick="showTab('roadmap')">🎯 Roadmap</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SECTIONS -->
+<div class="content">
+
+<!-- ────────────────────────── OVERVIEW ────────────────────────── -->
+<div id="sec-overview" class="section active">
+  <div class="section-eyebrow">Executive Summary</div>
+  <div class="section-title">Estado Actual del Capital en BOM</div>
+  <div class="section-desc">El análisis de 234 componentes de BOM (154 JKG84 + 80 JHG61) revela $11.1M en capital inmovilizado con 5 palancas de mejora accionables antes del workshop del 11–15 de mayo.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Capital OH Total</div>
+      <div class="kpi-value danger">$11.1M</div>
+      <div class="kpi-note">234 part numbers activos en BOM</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Partes Costo $0 SAP</div>
+      <div class="kpi-value danger">45</div>
+      <div class="kpi-note">Inventario físico sin valoración</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Capital Cuarentena</div>
+      <div class="kpi-value warn">$38.7K</div>
+      <div class="kpi-note">Bloqueado sin generar valor</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Clase A — 82 partes</div>
+      <div class="kpi-value danger">80%</div>
+      <div class="kpi-note">del capital en solo 35% de partes</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">FG SKUs Huérfanos</div>
+      <div class="kpi-value danger">44</div>
+      <div class="kpi-note">Sin orden activa de entrega</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Sobrecapacidad Almacén</div>
+      <div class="kpi-value warn">+62%</div>
+      <div class="kpi-note">172 pallets vs 106 disponibles</div>
+    </div>
+  </div>
+
+  <!-- Waterfall de oportunidades -->
+  <div class="card">
+    <div class="card-header">Oportunidades de Liberación de Capital <span class="pill pill-red">Simuladas</span></div>
+    <div class="section-desc" style="margin-bottom:16px">Estimado de capital recuperable por palanca. Ajusta los sliders en cada sección para refinar el modelo.</div>
+    
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">ABC — Reducción A→B</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:45%;background:var(--red)"><span class="bar-text">$580K–$900K</span></div>
+        </div>
+        <div class="bar-end">Alta</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Días Inv &gt;21d</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:35%;background:var(--red)"><span class="bar-text">$380K–$620K</span></div>
+        </div>
+        <div class="bar-end">Alta</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">EPEI WO→Demand</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:30%;background:var(--amber)"><span class="bar-text">$320K–$550K</span></div>
+        </div>
+        <div class="bar-end">Media</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">FG Huérfanos</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:25%;background:var(--amber)"><span class="bar-text">$280K–$420K</span></div>
+        </div>
+        <div class="bar-end">Media</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">China 14d Target</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:18%;background:var(--amber)"><span class="bar-text">$180K–$310K</span></div>
+        </div>
+        <div class="bar-end">Media</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Cuarentena</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:5%;background:var(--green)"><span class="bar-text">$38.7K</span></div>
+        </div>
+        <div class="bar-end">Acción ya</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:12px;background:var(--green-lt);border-radius:3px;border-left:3px solid var(--green)">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--green)">$1.8M – $2.8M</span>
+      <span style="font-size:12px;color:var(--green-dk);margin-left:8px;font-weight:600">Capital liberable en 90–180 días si se implementan las 5 palancas</span>
+    </div>
+  </div>
+
+  <!-- Resumen de hipótesis -->
+  <div class="card">
+    <div class="card-header">Hipótesis BOM Prioritarias <span class="pill pill-red">Pre-Workshop</span></div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Hipótesis</th><th>Evidencia</th><th>Impacto $</th><th>Prioridad</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td><b>H3</b></td><td>2 phantom BOMs (11037-96779/96780) no visibles en RM</td><td>Cobertura JKG84: 99.35% — 1 parte faltante</td><td class="badge badge-red">Riesgo MRP</td><td><span class="badge badge-red">Alta</span></td><td>IT / Planeación</td></tr>
+        <tr><td><b>H4</b></td><td>15+ partes con Costo OH = $0 en SAP</td><td>ELEVATOR-BASE 3,980 u. × $0; DINING-TABLE 5,710 u. × $0</td><td class="badge badge-red">Subvaloración</td><td><span class="badge badge-red">Alta</span></td><td>Finanzas / SC</td></tr>
+        <tr><td><b>H8</b></td><td>Caída 87% gasto proveedores 2025→2026</td><td>$73.4M (2025) vs $9.7M (ene-feb 2026)</td><td class="badge badge-red">Riesgo Q3-Q4</td><td><span class="badge badge-red">Alta</span></td><td>SC / Compras</td></tr>
+        <tr><td><b>H1</b></td><td>JKG84: 154 partes vs JHG61: 80 (+93% complejidad)</td><td>94 plásticos, 18 empaque, 15 electrónicos</td><td class="badge badge-amber">LT Ensamble</td><td><span class="badge badge-red">Alta</span></td><td>IE / Operaciones</td></tr>
+        <tr><td><b>H2</b></td><td>Solo 6/228 partes compartidas (2.6%)</td><td>0 plásticos comunes entre productos</td><td class="badge badge-amber">Compras</td><td><span class="badge badge-red">Alta</span></td><td>Ingeniería / SC</td></tr>
+        <tr><td><b>H5</b></td><td>Top-3 resina = 46% gasto — riesgo de proveedor único</td><td>INEOS $13.8M + POLYTRON $13.0M + BENGON $7.0M</td><td class="badge badge-amber">Continuidad</td><td><span class="badge badge-red">Alta</span></td><td>SC / Compras</td></tr>
+        <tr><td><b>H6</b></td><td>JKG84: 18 packaging vs JHG61: 2 (9× más complejidad)</td><td>14 packers distintos, 3 tipos polybag, 2 labels</td><td class="badge badge-amber">Empaque</td><td><span class="badge badge-amber">Media</span></td><td>Operaciones</td></tr>
+        <tr><td><b>H10</b></td><td>$11.1M capital inmovilizado — cobertura excesiva top 20</td><td>SCREW M3 677K u., LABEL 2X1 1.6M u.</td><td class="badge badge-green">Liquidable</td><td><span class="badge badge-amber">Media</span></td><td>SC / Almacén</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ────────────────────────── ABC ────────────────────────── -->
+<div id="sec-abc" class="section">
+  <div class="section-eyebrow">Análisis Pareto</div>
+  <div class="section-title">ABC por Costo On-Hand</div>
+  <div class="section-desc">82 partes (35% del BOM) concentran el 80% del capital inmovilizado ($8.9M). El 20% de reducción en stock de Clase A libera ~$600K–$900K de capital de trabajo.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Clase A — 82 partes</div>
+      <div class="kpi-value danger">$8.9M</div>
+      <div class="kpi-note">80% del capital total</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Clase B — 62 partes</div>
+      <div class="kpi-value warn">$1.7M</div>
+      <div class="kpi-note">15% del capital</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Clase C — 57 partes</div>
+      <div class="kpi-value good">$0.6M</div>
+      <div class="kpi-note">5% del capital</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">Partes $0 cost (excluidas)</div>
+      <div class="kpi-value">45</div>
+      <div class="kpi-note">Error de costeo SAP — H4</div>
+    </div>
+  </div>
+
+  <!-- TOP 10 ABC -->
+  <div class="card">
+    <div class="card-header">Top 12 — Clase A por Capital Inmovilizado</div>
+    <table class="data-table">
+      <thead><tr><th>Rank</th><th>Part Number</th><th>Descripción</th><th>Producto</th><th>Categoría</th><th>Qty OH</th><th>Cost OH</th><th>Yield/unit</th><th>Semanas Cob.</th><th>Clase</th></tr></thead>
+      <tbody id="abc-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- SIMULADOR ABC -->
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador de Reducción ABC — Impacto en Capital de Trabajo</div>
+    <div class="sim-row">
+      <div class="sim-label">% Reducción Stock Clase A</div>
+      <input type="range" class="sim-slider" min="5" max="40" value="20" id="abc-red-a" oninput="calcABC()">
+      <div class="sim-val" id="abc-val-a">20%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">% Reducción Stock Clase B</div>
+      <input type="range" class="sim-slider" min="0" max="30" value="10" id="abc-red-b" oninput="calcABC()">
+      <div class="sim-val" id="abc-val-b">10%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Costo Capital Anual (%)</div>
+      <input type="range" class="sim-slider" min="8" max="20" value="12" id="abc-coc" oninput="calcABC()">
+      <div class="sim-val" id="abc-val-coc">12%</div>
+    </div>
+    <div class="sim-output">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Capital Liberado</div><div class="sim-metric-value pos" id="abc-out-cap">$1,955K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Ahorro Costo Capital/año</div><div class="sim-metric-value pos" id="abc-out-coc">$235K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">% Stock Total Reducido</div><div class="sim-metric-value warn" id="abc-out-pct">17.6%</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Pallets Liberados (est.)</div><div class="sim-metric-value pos" id="abc-out-pal">11</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categorías por capital -->
+  <div class="card">
+    <div class="card-header">Distribución Capital por Categoría</div>
+    <div class="bar-chart" id="cat-bars"></div>
+  </div>
+</div>
+
+<!-- ────────────────────────── DÍAS ────────────────────────── -->
+<div id="sec-dias" class="section">
+  <div class="section-eyebrow">Cobertura de Inventario</div>
+  <div class="section-title">Días Inventario vs Target</div>
+  <div class="section-desc">Target planta: 21 días para compras pequeñas / 14 días para componentes China. El buffer operativo actual es de 3–4 días, lo que implica un exceso estructural de stock en múltiples categorías.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card navy">
+      <div class="kpi-label">Buffer Operacional</div>
+      <div class="kpi-value">3–4d</div>
+      <div class="kpi-note">Cobertura real de producción</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">Target Compras Peq.</div>
+      <div class="kpi-value">21d</div>
+      <div class="kpi-note">Política actual de planta</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">Target China</div>
+      <div class="kpi-value">14d</div>
+      <div class="kpi-note">Lead time importación</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Partes &gt;21 días</div>
+      <div class="kpi-value danger" id="kpi-over21">47</div>
+      <div class="kpi-note">Exceso vs target</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">China &gt;14 días</div>
+      <div class="kpi-value danger">38</div>
+      <div class="kpi-note">De 161 partes origen China</div>
+    </div>
+  </div>
+
+  <!-- Simulador días -->
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador de Target de Cobertura — Impacto Capital</div>
+    <div class="sim-row">
+      <div class="sim-label">Nuevo target días (compras pcq.)</div>
+      <input type="range" class="sim-slider" min="7" max="21" value="14" id="days-target" oninput="calcDays()">
+      <div class="sim-val" id="days-val">14d</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Nuevo target China (días)</div>
+      <input type="range" class="sim-slider" min="5" max="14" value="10" id="days-china" oninput="calcDays()">
+      <div class="sim-val" id="days-val-china">10d</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">% partes aplicables al ajuste</div>
+      <input type="range" class="sim-slider" min="30" max="80" value="55" id="days-pct-apply" oninput="calcDays()">
+      <div class="sim-val" id="days-val-apply">55%</div>
+    </div>
+    <div class="sim-output">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Capital Liberado</div><div class="sim-metric-value pos" id="days-out-cap">$680K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Días prom. nuevo inventario</div><div class="sim-metric-value warn" id="days-out-avg">13.2d</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Reducción vs baseline</div><div class="sim-metric-value pos" id="days-out-red">-37%</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Riesgo desabasto est.</div><div class="sim-metric-value warn" id="days-out-risk">Bajo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top excedentes -->
+  <div class="card">
+    <div class="card-header">Top Componentes con Mayor Exceso de Cobertura <span class="pill pill-red">Acción Inmediata</span></div>
+    <table class="data-table">
+      <thead><tr><th>Part Number</th><th>Descripción</th><th>Producto</th><th>Origen</th><th>Qty OH</th><th>Cost OH</th><th>Días Inv</th><th>Target</th><th>Exceso $</th><th>Acción</th></tr></thead>
+      <tbody id="days-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ────────────────────────── EPEI ────────────────────────── -->
+<div id="sec-epei" class="section">
+  <div class="section-eyebrow">Planning Strategy</div>
+  <div class="section-title">EPEI Simulator — WorkOrder → Demand-Based</div>
+  <div class="section-desc">Transición de producción por Work Order (batch fijo) a un modelo EPEI basado en demanda real: 70% demand pull + 30% forecast solo cuando demanda es menor. Planning hace escenarios por utilidad, volumen o ventas.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card navy">
+      <div class="kpi-label">Modelo Actual</div>
+      <div class="kpi-value" style="font-size:18px">Work Order</div>
+      <div class="kpi-note">Batch fijo → exceso WIP + FG</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Modelo Target</div>
+      <div class="kpi-value" style="font-size:18px;color:var(--green)">EPEI Demand</div>
+      <div class="kpi-note">70% pull + 30% forecast</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Setup Assembly (actual)</div>
+      <div class="kpi-value warn">3 días</div>
+      <div class="kpi-note">Barrera para reducir EPEI</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">WIP + FG excedente</div>
+      <div class="kpi-value danger">~$1.4M</div>
+      <div class="kpi-note">Estimado batch-driven</div>
+    </div>
+  </div>
+
+  <!-- Simulador EPEI -->
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador EPEI — Modelo de Planificación por Escenario</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div style="color:rgba(255,255,255,.6);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Parámetros Operativos</div>
+        <div class="sim-row">
+          <div class="sim-label">EPEI actual (días)</div>
+          <input type="range" class="sim-slider" min="5" max="30" value="15" id="epei-current" oninput="calcEPEI()">
+          <div class="sim-val" id="epei-val-cur">15d</div>
+        </div>
+        <div class="sim-row">
+          <div class="sim-label">EPEI target (días)</div>
+          <input type="range" class="sim-slider" min="2" max="15" value="5" id="epei-target" oninput="calcEPEI()">
+          <div class="sim-val" id="epei-val-tgt">5d</div>
+        </div>
+        <div class="sim-row">
+          <div class="sim-label">Setup reducción (%)</div>
+          <input type="range" class="sim-slider" min="20" max="80" value="50" id="epei-setup" oninput="calcEPEI()">
+          <div class="sim-val" id="epei-val-setup">50%</div>
+        </div>
+        <div class="sim-row">
+          <div class="sim-label">% Demand pull (vs forecast)</div>
+          <input type="range" class="sim-slider" min="50" max="90" value="70" id="epei-pull" oninput="calcEPEI()">
+          <div class="sim-val" id="epei-val-pull">70%</div>
+        </div>
+      </div>
+      <div>
+        <div style="color:rgba(255,255,255,.6);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Escenario de Planning</div>
+        <div class="toggle-row" style="margin-bottom:14px">
+          <label class="toggle-switch"><input type="radio" name="epei-scenario" value="utilidad" checked onchange="calcEPEI()"><span class="toggle-slider"></span></label>
+          <div class="toggle-label">Maximizar Utilidad</div>
+        </div>
+        <div class="toggle-row" style="margin-bottom:14px">
+          <label class="toggle-switch"><input type="radio" name="epei-scenario" value="volumen" onchange="calcEPEI()"><span class="toggle-slider"></span></label>
+          <div class="toggle-label">Maximizar Volumen</div>
+        </div>
+        <div class="toggle-row" style="margin-bottom:14px">
+          <label class="toggle-switch"><input type="radio" name="epei-scenario" value="ventas" onchange="calcEPEI()"><span class="toggle-slider"></span></label>
+          <div class="toggle-label">Maximizar Ventas $</div>
+        </div>
+        <div style="margin-top:8px;padding:10px;background:rgba(255,255,255,.06);border-radius:3px">
+          <div style="font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;font-weight:700">Lógica activa</div>
+          <div id="epei-scenario-desc" style="font-size:12px;color:rgba(255,255,255,.8);margin-top:4px">Optimiza mix JKG84/JHG61 por margen/unit. Prioriza JKG84 ($132/unit) en ventanas de alta demanda.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-output" style="margin-top:14px">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Reducción WIP</div><div class="sim-metric-value pos" id="epei-out-wip">-$540K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Reducción Lead Time</div><div class="sim-metric-value pos" id="epei-out-lt">-67%</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Capital Liberado</div><div class="sim-metric-value pos" id="epei-out-cap">$680K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">OTIF proyectado</div><div class="sim-metric-value warn" id="epei-out-otif">95.2%</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Runs/semana</div><div class="sim-metric-value warn" id="epei-out-runs">3.0</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Riesgo transición</div><div class="sim-metric-value warn" id="epei-out-risk">Medio</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparación WO vs EPEI -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">Modelo Actual — Work Order</div>
+      <table class="data-table">
+        <tr><td><b>Trigger de producción</b></td><td><span class="badge badge-amber">Batch fijo</span></td></tr>
+        <tr><td><b>EPEI</b></td><td>15–20 días estimado</td></tr>
+        <tr><td><b>WIP acumulado</b></td><td>Alto (3–4 días buffer ≠ WIP real)</td></tr>
+        <tr><td><b>Visibilidad demanda</b></td><td>Reactiva post-MPS</td></tr>
+        <tr><td><b>Flexibilidad mix</b></td><td>Baja — setup 3 días</td></tr>
+        <tr><td><b>OTIF actual</b></td><td>92.9%</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-header">Modelo Target — EPEI Demand Pull <span class="pill pill-green">Target</span></div>
+      <table class="data-table">
+        <tr><td><b>Trigger de producción</b></td><td><span class="badge badge-green">70% demand + 30% fcst</span></td></tr>
+        <tr><td><b>EPEI</b></td><td>5–7 días (target)</td></tr>
+        <tr><td><b>WIP acumulado</b></td><td>Reducido 50–65%</td></tr>
+        <tr><td><b>Visibilidad demanda</b></td><td>Proactiva — scenarios por obj.</td></tr>
+        <tr><td><b>Flexibilidad mix</b></td><td>Alta (post reducción setup)</td></tr>
+        <tr><td><b>OTIF proyectado</b></td><td>95%+ (meta VSA)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────── CUARENTENA ────────────────────────── -->
+<div id="sec-cuarentena" class="section">
+  <div class="section-eyebrow">Capital Bloqueado</div>
+  <div class="section-title">Inventario en Cuarentena</div>
+  <div class="section-desc">Capital inmovilizado que no genera valor ni como materia prima ni como producto terminado. Cada día en cuarentena tiene un costo de oportunidad medible.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Capital Total Bloqueado</div>
+      <div class="kpi-value danger">$38.7K</div>
+      <div class="kpi-note">Sin flujo de valor</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Partes Afectadas</div>
+      <div class="kpi-value warn">18</div>
+      <div class="kpi-note">De 234 en BOM total</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">% del Total OH</div>
+      <div class="kpi-value">0.35%</div>
+      <div class="kpi-note">Problema de gestión, no de escala</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Costo/día (capital 12%)</div>
+      <div class="kpi-value danger">$12.7</div>
+      <div class="kpi-note">USD por día de inacción</div>
+    </div>
+  </div>
+
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador de Recuperación de Cuarentena</div>
+    <div class="sim-row">
+      <div class="sim-label">% liberado tras QA review</div>
+      <input type="range" class="sim-slider" min="10" max="80" value="45" id="quar-lib" oninput="calcQuar()">
+      <div class="sim-val" id="quar-val-lib">45%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">% scrap (no recuperable)</div>
+      <input type="range" class="sim-slider" min="5" max="50" value="25" id="quar-scrap" oninput="calcQuar()">
+      <div class="sim-val" id="quar-val-scrap">25%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Días promedio en cuarentena</div>
+      <input type="range" class="sim-slider" min="5" max="60" value="30" id="quar-days" oninput="calcQuar()">
+      <div class="sim-val" id="quar-val-days">30d</div>
+    </div>
+    <div class="sim-output">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Capital Recuperado</div><div class="sim-metric-value pos" id="quar-out-rec">$17.4K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Capital Scrap</div><div class="sim-metric-value neg" id="quar-out-scrap">$9.7K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Costo Oportunidad</div><div class="sim-metric-value neg" id="quar-out-opp">$380</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Acción en &lt;</div><div class="sim-metric-value warn" id="quar-out-days">48h</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Partes en Cuarentena — Detalle <span class="pill pill-red">Decisión Requerida</span></div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Part Number</th><th>Descripción</th><th>Producto</th><th>Quar. Qty</th><th>Quar. Cost</th><th>Total OH</th><th>% del Total</th><th>Acción Sugerida</th></tr></thead>
+      <tbody id="quar-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ────────────────────────── FG ────────────────────────── -->
+<div id="sec-fg" class="section">
+  <div class="section-eyebrow">Finished Goods</div>
+  <div class="section-title">FG Inventory vs Shipment Plan — Huérfanos</div>
+  <div class="section-desc">De 194 SKUs de producto terminado, 44 no tienen orden de entrega activa. Este inventario está consumiendo espacio de almacén sin generar retorno. Lead time US/CA: 14 días. Internacional: 21 días.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card navy">
+      <div class="kpi-label">Total FG SKUs</div>
+      <div class="kpi-value">194</div>
+      <div class="kpi-note">JKG84 + JHG61 × regiones</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">SKUs Activos</div>
+      <div class="kpi-value good">140</div>
+      <div class="kpi-note">Con orden de entrega activa</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">SKUs Huérfanos</div>
+      <div class="kpi-value danger">44</div>
+      <div class="kpi-note">Sin orden activa, con stock</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Capital Huérfano</div>
+      <div class="kpi-value danger">$8.2M</div>
+      <div class="kpi-note">FG sin destino confirmado</div>
+    </div>
+  </div>
+
+  <!-- FG simulator -->
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador de Liberación FG Huérfano</div>
+    <div class="sim-row">
+      <div class="sim-label">% convertible a orden activa</div>
+      <input type="range" class="sim-slider" min="10" max="70" value="35" id="fg-conv" oninput="calcFG()">
+      <div class="sim-val" id="fg-val-conv">35%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">% redistribuible a otro mercado</div>
+      <input type="range" class="sim-slider" min="5" max="40" value="20" id="fg-redist" oninput="calcFG()">
+      <div class="sim-val" id="fg-val-redist">20%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">% a liquidar (descuento avg %)</div>
+      <input type="range" class="sim-slider" min="5" max="35" value="15" id="fg-liq" oninput="calcFG()">
+      <div class="sim-val" id="fg-val-liq">15%</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Descuento liquidación (%)</div>
+      <input type="range" class="sim-slider" min="10" max="40" value="20" id="fg-disc" oninput="calcFG()">
+      <div class="sim-val" id="fg-val-disc">20%</div>
+    </div>
+    <div class="sim-output">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Revenue Recuperado</div><div class="sim-metric-value pos" id="fg-out-rev">$5.1M</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Pérdida Liquidación</div><div class="sim-metric-value neg" id="fg-out-loss">$246K</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">SKUs Sin Solución</div><div class="sim-metric-value neg" id="fg-out-orphan">13</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Pallets Liberados</div><div class="sim-metric-value pos" id="fg-out-pal">27</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Distribución por región -->
+  <div class="card">
+    <div class="card-header">FG Huérfanos por Región y Producto</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">JKG84 — US/CA</div>
+        <div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--red)"><span class="bar-text">18 SKUs</span></div></div><div class="bar-end">$3.8M</div></div>
+      <div class="bar-row"><div class="bar-label">JKG84 — LATAM</div>
+        <div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--amber)"><span class="bar-text">8 SKUs</span></div></div><div class="bar-end">$1.4M</div></div>
+      <div class="bar-row"><div class="bar-label">JHG61 — US/CA</div>
+        <div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--amber)"><span class="bar-text">6 SKUs</span></div></div><div class="bar-end">$1.8M</div></div>
+      <div class="bar-row"><div class="bar-label">JKG84 — INTL</div>
+        <div class="bar-track"><div class="bar-fill" style="width:12%;background:var(--green)"><span class="bar-text">5 SKUs</span></div></div><div class="bar-end">$0.9M</div></div>
+      <div class="bar-row"><div class="bar-label">JHG61 — LATAM/INTL</div>
+        <div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--green)"><span class="bar-text">7 SKUs</span></div></div><div class="bar-end">$0.3M</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────── UBICACIONES ────────────────────────── -->
+<div id="sec-ubicaciones" class="section">
+  <div class="section-eyebrow">Space Analysis</div>
+  <div class="section-title">Mapa de Ubicaciones — 999-XXX vs 699-XXX</div>
+  <div class="section-desc">El almacén opera al 162% de su capacidad. 172 pallets existentes vs 106 disponibles. El Área Isla-110 está al 100%. La zona 699-XXX (CargoKey 3PL) absorbe el desbordamiento con costo adicional de almacenaje externo.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Capacidad Almacén</div>
+      <div class="kpi-value danger">106</div>
+      <div class="kpi-note">Pallets disponibles</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Pallets Existentes</div>
+      <div class="kpi-value danger">172</div>
+      <div class="kpi-note">Actual en piso + racks</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Sobrecapacidad</div>
+      <div class="kpi-value danger">+62%</div>
+      <div class="kpi-note">66 pallets fuera de capacidad</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Racks Ocupados</div>
+      <div class="kpi-value warn">60%</div>
+      <div class="kpi-note">14% cancelados (no usables)</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Área Isla-110</div>
+      <div class="kpi-value warn">100%</div>
+      <div class="kpi-note">Sin capacidad adicional</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">3PL CargoKey (699)</div>
+      <div class="kpi-value">~28</div>
+      <div class="kpi-note">Partes desbordadas a externo</div>
+    </div>
+  </div>
+
+  <!-- Simulador ubicaciones -->
+  <div class="sim-box">
+    <div class="sim-title">⚙ Simulador de Liberación de Espacio</div>
+    <div class="sim-row">
+      <div class="sim-label">Pallets liberados por ABC</div>
+      <input type="range" class="sim-slider" min="0" max="25" value="11" id="loc-abc" oninput="calcLoc()">
+      <div class="sim-val" id="loc-val-abc">11</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Pallets liberados FG huérfano</div>
+      <input type="range" class="sim-slider" min="0" max="35" value="18" id="loc-fg" oninput="calcLoc()">
+      <div class="sim-val" id="loc-val-fg">18</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Pallets retirados de 3PL (699)</div>
+      <input type="range" class="sim-slider" min="0" max="28" value="12" id="loc-3pl" oninput="calcLoc()">
+      <div class="sim-val" id="loc-val-3pl">12</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-label">Costo 3PL (USD/pallet/mes)</div>
+      <input type="range" class="sim-slider" min="20" max="80" value="45" id="loc-cost3pl" oninput="calcLoc()">
+      <div class="sim-val" id="loc-val-cost3pl">$45</div>
+    </div>
+    <div class="sim-output">
+      <div class="sim-output-grid">
+        <div class="sim-metric"><div class="sim-metric-label">Pallets Totales Post</div><div class="sim-metric-value warn" id="loc-out-total">131</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Capacidad Usada</div><div class="sim-metric-value warn" id="loc-out-pct">124%</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">Ahorro 3PL/año</div><div class="sim-metric-value pos" id="loc-out-3pl">$6,480</div></div>
+        <div class="sim-metric"><div class="sim-metric-label">¿Dentro de cap.?</div><div class="sim-metric-value neg" id="loc-out-ok">NO aún</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mapa visual de zonas -->
+  <div class="card">
+    <div class="card-header">Distribución Capital por Zona de Almacén</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">999-A (Clase A prioritario)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--navy)"><span class="bar-text">$4.2M — 38 partes</span></div></div><div class="bar-end">Alta rotación</div></div>
+      <div class="bar-row"><div class="bar-label">999-B (Clase A/B mixto)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--navy)"><span class="bar-text">$3.1M — 54 partes</span></div></div><div class="bar-end">Media rotación</div></div>
+      <div class="bar-row"><div class="bar-label">999-C (Clase B/C)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--amber)"><span class="bar-text">$1.8M — 47 partes</span></div></div><div class="bar-end">Baja rotación</div></div>
+      <div class="bar-row"><div class="bar-label">999-D (Clase C, lento)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--amber)"><span class="bar-text">$1.1M — 41 partes</span></div></div><div class="bar-end">Muy baja</div></div>
+      <div class="bar-row"><div class="bar-label">699-CK (3PL CargoKey)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--red)"><span class="bar-text">$0.9M — 28 partes</span></div></div><div class="bar-end">⚠️ Externo</div></div>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:var(--red-lt);border-radius:3px;border-left:3px solid var(--red)">
+      <span style="font-size:11px;font-weight:700;color:var(--red-dk)">⚠️ Principio de slotting violado:</span>
+      <span style="font-size:11px;color:var(--navy);margin-left:4px">Partes Clase C están en zonas A y B, bloqueando acceso a materiales de alta demanda. Reorganización de slotting por ABC liberaría ~12 pallets de zonas prime.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────── ROADMAP ────────────────────────── -->
+<div id="sec-roadmap" class="section">
+  <div class="section-eyebrow">Plan de Acción</div>
+  <div class="section-title">Roadmap de Implementación — VSA 2026</div>
+  <div class="section-desc">Secuencia de acciones post-workshop ordenadas por impacto/esfuerzo. Las primeras 2 semanas son críticas para capturar el "quick wins" de cuarentena y phantom BOMs.</div>
+
+  <!-- Resumen financiero total -->
+  <div class="card" style="border-color:var(--red);border-width:2px">
+    <div class="card-header" style="color:var(--red)">💰 Business Case Consolidado — Oportunidad Total</div>
+    <div class="three-col">
+      <div style="text-align:center;padding:12px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)">Escenario Conservador</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--navy)">$1.8M</div>
+        <div style="font-size:11px;color:var(--muted)">30% palancas activadas</div>
+      </div>
+      <div style="text-align:center;padding:12px;border-left:1px solid var(--warm);border-right:1px solid var(--warm)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)">Escenario Base</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--red)">$2.4M</div>
+        <div style="font-size:11px;color:var(--muted)">60% palancas activadas</div>
+      </div>
+      <div style="text-align:center;padding:12px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)">Escenario Optimista</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--green)">$3.2M</div>
+        <div style="font-size:11px;color:var(--muted)">85% palancas activadas</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <table class="data-table">
+        <thead><tr><th>Palanca</th><th>Conservador</th><th>Base</th><th>Optimista</th><th>Plazo</th><th>Complejidad</th></tr></thead>
+        <tbody>
+          <tr><td><b>ABC — Reducción Clase A</b></td><td>$580K</td><td>$740K</td><td>$900K</td><td>60–90d</td><td><span class="badge badge-amber">Media</span></td></tr>
+          <tr><td><b>Días Inventario &gt;21d</b></td><td>$380K</td><td>$500K</td><td>$620K</td><td>30–60d</td><td><span class="badge badge-amber">Media</span></td></tr>
+          <tr><td><b>EPEI WO → Demand 70/30</b></td><td>$320K</td><td>$430K</td><td>$550K</td><td>90–180d</td><td><span class="badge badge-red">Alta</span></td></tr>
+          <tr><td><b>FG Huérfanos</b></td><td>$280K</td><td>$350K</td><td>$420K</td><td>30–45d</td><td><span class="badge badge-green">Baja</span></td></tr>
+          <tr><td><b>China 14d Target</b></td><td>$180K</td><td>$240K</td><td>$310K</td><td>45–90d</td><td><span class="badge badge-amber">Media</span></td></tr>
+          <tr><td><b>Cuarentena</b></td><td>$38.7K</td><td>$38.7K</td><td>$38.7K</td><td>&lt;2 sem</td><td><span class="badge badge-green">Mínima</span></td></tr>
+          <tr style="background:var(--navy)"><td style="color:#fff;font-weight:700">TOTAL ESTIMADO</td><td style="color:#86efac;font-weight:800">$1,779K</td><td style="color:#86efac;font-weight:800">$2,299K</td><td style="color:#86efac;font-weight:800">$2,839K</td><td style="color:rgba(255,255,255,.6)">—</td><td style="color:rgba(255,255,255,.6)">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">Timeline de Acciones <span class="pill pill-red">Post-Workshop</span></div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Semana 1 (13–17 Mayo)</div>
+          <div class="tl-action">Workshop VSA — Gemba + Value Stream Mapping</div>
+          <div class="tl-detail">Validación in-situ de datos BOM, cuarentena e inventario huérfano</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Semana 2 (20–24 Mayo)</div>
+          <div class="tl-action">Quick Win: Cuarentena + Phantom BOMs</div>
+          <div class="tl-detail">Liberar $38.7K cuarentena + corregir 11037-96779/96780 en SAP</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Semanas 3–4 (27 Mayo – 6 Jun)</div>
+          <div class="tl-action">FG Huérfanos — Revisión con Sales + Redistribución</div>
+          <div class="tl-detail">44 SKUs → acción: activar orden, reasignar mercado o liquidar</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Semanas 5–8 (Junio)</div>
+          <div class="tl-action">ABC Clase A — Plan de reducción con Supply Chain</div>
+          <div class="tl-detail">82 partes → frecuencia de reabasto, MOQ renegociado, safety stock</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Semanas 9–12 (Julio)</div>
+          <div class="tl-action">China 14d + Días Inventario normalization</div>
+          <div class="tl-detail">38 partes China fuera de target → ajuste de reorder points</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Q3 2026 (Agosto–Octubre)</div>
+          <div class="tl-action">EPEI Piloto — Transición a Demand 70/30</div>
+          <div class="tl-detail">Piloto en línea de ensamble JHG61 (menor complejidad de setup)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Owners y Responsabilidades</div>
+      <table class="data-table">
+        <thead><tr><th>Palanca</th><th>Lead</th><th>Soporte</th><th>Fecha límite</th></tr></thead>
+        <tbody>
+          <tr><td>Cuarentena</td><td>Fatima Ruiz</td><td>QA / Almacén</td><td>23 Mayo</td></tr>
+          <tr><td>Phantom BOMs</td><td>IT / Planeación</td><td>Ingeniería</td><td>23 Mayo</td></tr>
+          <tr><td>FG Huérfanos</td><td>Supply Chain</td><td>Sales / Finanzas</td><td>06 Jun</td></tr>
+          <tr><td>Costeo $0 SAP</td><td>Finanzas</td><td>Supply Chain</td><td>13 Jun</td></tr>
+          <tr><td>ABC Clase A</td><td>Compras / SC</td><td>Alberto Candia</td><td>04 Jul</td></tr>
+          <tr><td>China 14d</td><td>Planeación</td><td>Compras</td><td>11 Jul</td></tr>
+          <tr><td>EPEI Piloto</td><td>Edgar Luna (KI)</td><td>Alberto Candia</td><td>01 Ago</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:16px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">Progreso estimado (post-acciones)</div>
+        <div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>Capital liberado</span><span id="rdmp-pct-lbl">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="rdmp-bar" style="width:0%"></div></div>
+        </div>
+        <div style="font-size:11px;color:var(--muted)">Ajusta los simuladores en cada pestaña y regresa aquí para ver el progreso consolidado.</div>
+        <button onclick="calcRoadmap()" style="margin-top:10px;background:var(--red);color:#fff;border:none;padding:8px 18px;border-radius:3px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px">Recalcular Progreso</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<!-- ═══════════════════════════════════════════════════════ FOOTER -->
+<div style="padding:14px 22px;border-top:1px solid var(--border);background:var(--cream);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;text-align:center">
+  Kaizen Institute México &middot; All Rights Reserved &middot; Confidencial
+</div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const abcTop = [
+  {rank:1,pn:'0013-0070',desc:'SCREW M3*6 HI-LO',prod:'JKG84',cat:'Hardware',qty:677000,cost:837000,yield_:32,sem:6.2,cls:'A'},
+  {rank:2,pn:'3800-9212',desc:'LABEL 2X1 ROLL',prod:'JKG84',cat:'Inks/Labels',qty:1600000,cost:730000,yield_:10,sem:19.4,cls:'A'},
+  {rank:3,pn:'11036-60726',desc:'CLEAR TAPE 1 INCH',prod:'JKG84',cat:'Packaging',qty:215000,cost:321000,yield_:1,sem:2.6,cls:'A'},
+  {rank:4,pn:'11036-08593',desc:'PCBA MAIN BOARD',prod:'JKG84',cat:'Electronics',qty:44000,cost:89000,yield_:1,sem:0.9,cls:'A'},
+  {rank:5,pn:'11036-08594',desc:'TOILET PCBA',prod:'JKG84',cat:'Electronics',qty:38000,cost:76000,yield_:1,sem:0.8,cls:'A'},
+  {rank:6,pn:'11036-57126',desc:'CHIP ART COVER',prod:'JKG84',cat:'Packaging',qty:89000,cost:165000,yield_:8,sem:1.6,cls:'A'},
+  {rank:7,pn:'0003-0011',desc:'SCREW PM M3*0.5X10',prod:'JKG84+JHG61',cat:'Hardware',qty:280000,cost:195000,yield_:1,sem:3.4,cls:'A'},
+  {rank:8,pn:'00956-2015',desc:'SOLDER SN100C',prod:'JKG84+JHG61',cat:'Electronics',qty:8500,cost:42000,yield_:0.95,sem:0.3,cls:'A'},
+  {rank:9,pn:'0001-3001',desc:'POLYBAG 11X9 CLR',prod:'JKG84',cat:'Packaging',qty:370000,cost:102000,yield_:7,sem:0.8,cls:'A'},
+  {rank:10,pn:'3900-9673',desc:'T-PIN CLEAR',prod:'JKG84',cat:'Hardware',qty:125000,cost:45000,yield_:5,sem:0.7,cls:'A'},
+  {rank:11,pn:'11035-65155',desc:'KITCHEN-FLOOR PANEL',prod:'JKG84',cat:'Molded Plastic',qty:45000,cost:0,yield_:1,sem:0.9,cls:'—'},
+  {rank:12,pn:'11035-65157',desc:'LIVINGROOM-FLOOR',prod:'JKG84',cat:'Molded Plastic',qty:41000,cost:0,yield_:1,sem:0.8,cls:'—'},
+];
+
+const daysData = [
+  {pn:'3800-9212',desc:'LABEL 2X1 ROLL',prod:'JKG84',origin:'MX/USA',qty:1600000,cost:730000,dias:92.3,target:21,excess:677000},
+  {pn:'0001-3001',desc:'POLYBAG 11X9 CLR',prod:'JKG84',origin:'MX/USA',qty:370000,cost:102000,dias:53.2,target:21,excess:48300},
+  {pn:'0013-0070',desc:'SCREW M3*6 HI-LO',prod:'JKG84',origin:'MX/USA',qty:677000,cost:837000,dias:29.4,target:21,excess:237000},
+  {pn:'11036-57126',desc:'CHIP ART COVER',prod:'JKG84',origin:'China',qty:89000,cost:165000,dias:26.8,target:14,excess:49800},
+  {pn:'11036-08593',desc:'PCBA MAIN BOARD',prod:'JKG84',origin:'China',qty:44000,cost:89000,dias:22.4,target:14,excess:36100},
+  {pn:'3900-9673',desc:'T-PIN CLEAR',prod:'JKG84',origin:'MX/USA',qty:125000,cost:45000,dias:22.1,target:21,excess:1450},
+  {pn:'0003-0011',desc:'SCREW PM M3*0.5X10',prod:'JKG84+JHG61',origin:'China',qty:280000,cost:195000,dias:19.4,target:14,excess:74500},
+  {pn:'11036-60726',desc:'CLEAR TAPE 1 INCH',prod:'JKG84',origin:'MX/USA',qty:215000,cost:321000,dias:18.2,target:21,excess:0},
+];
+
+const quarData = [
+  {pn:'11036-08593',desc:'PCBA MAIN BOARD',prod:'JKG84',qqty:1200,qcost:2400,totaloh:44000},
+  {pn:'0001-3001',desc:'POLYBAG 11X9 CLR',prod:'JKG84',qqty:2000,qcost:840,totaloh:370000},
+  {pn:'0003-0011',desc:'SCREW PM M3*0.5X10',prod:'JKG84+JHG61',qqty:500,qcost:350,totaloh:280000},
+  {pn:'11035-10678',desc:'DINING-ROOM WALL A',prod:'JKG84',qqty:320,qcost:620,totaloh:18500},
+  {pn:'11034-91979',desc:'JHG61 PCBA',prod:'JHG61',qqty:85,qcost:3400,totaloh:12000},
+  {pn:'3800-8073',desc:'LABEL-SET-A',prod:'JKG84',qqty:4200,qcost:980,totaloh:95000},
+  {pn:'00955-3020',desc:'CONTACT NEG TERM',prod:'JKG84+JHG61',qqty:650,qcost:1850,totaloh:28000},
+  {pn:'11035-65240',desc:'CABINET-PANEL-A',prod:'JKG84',qqty:180,qcost:720,totaloh:9800},
+];
+
+// ── NAV ──────────────────────────────────────────────────────────────────
+function showTab(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── POPULATE TABLES ──────────────────────────────────────────────────────
+function fmt(n){return n>=1000?'$'+Math.round(n).toLocaleString():n<0?'$'+Math.round(n).toLocaleString():'$'+n.toFixed(0)}
+function fmtN(n){return Math.round(n).toLocaleString()}
+
+window.onload=function(){
+  // ABC table
+  const atb=document.getElementById('abc-table-body');
+  abcTop.forEach(r=>{
+    const cls=r.cls==='A'?'badge-red':r.cls==='B'?'badge-amber':r.cls==='C'?'badge-green':'badge-navy';
+    const costFmt=r.cost>0?fmt(r.cost):'<span style="color:var(--red);font-weight:700">$0 ⚠️</span>';
+    atb.innerHTML+=`<tr>
+      <td>${r.rank}</td><td><b>${r.pn}</b></td><td>${r.desc}</td>
+      <td><span class="badge badge-navy">${r.prod}</span></td>
+      <td>${r.cat}</td><td>${fmtN(r.qty)}</td>
+      <td>${costFmt}</td>
+      <td style="text-align:center">${r.yield_}×</td>
+      <td style="text-align:center">${r.sem}w</td>
+      <td><span class="badge ${cls}">${r.cls}</span></td>
+    </tr>`;
+  });
+
+  // Category bars
+  const cats=[
+    {n:'Molded Plastic',v:5304919,bg:'var(--navy)'},
+    {n:'Hardware/Fasteners',v:1564982,bg:'var(--red)'},
+    {n:'Packaging Mat.',v:1561305,bg:'var(--amber)'},
+    {n:'Electronics',v:1276851,bg:'var(--blue)'},
+    {n:'Other Parts',v:1062096,bg:'var(--muted)'},
+    {n:'Inks/Labels',v:265619,bg:'var(--green)'},
+  ];
+  const maxV=cats[0].v; const cb=document.getElementById('cat-bars');
+  cats.forEach(c=>{
+    const pct=Math.round(c.v/maxV*100);
+    cb.innerHTML+=`<div class="bar-row">
+      <div class="bar-label">${c.n}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.bg}"><span class="bar-text">$${Math.round(c.v/1000)}K</span></div></div>
+      <div class="bar-end">${(c.v/11099353*100).toFixed(1)}%</div>
+    </div>`;
+  });
+
+  // Days table
+  const dtb=document.getElementById('days-table-body');
+  daysData.forEach(r=>{
+    const flag=r.dias>r.target?'badge-red':'badge-green';
+    const excessFmt=r.excess>0?fmt(r.excess):'—';
+    const orig=r.origin==='China'?'badge-amber':'badge-blue';
+    const accion=r.dias>30?'Reducir MOQ urgente':r.dias>21?'Ajustar reorder point':'Monitorear';
+    dtb.innerHTML+=`<tr>
+      <td><b>${r.pn}</b></td><td>${r.desc}</td>
+      <td><span class="badge badge-navy">${r.prod}</span></td>
+      <td><span class="badge ${orig}">${r.origin}</span></td>
+      <td>${fmtN(r.qty)}</td><td>${fmt(r.cost)}</td>
+      <td style="text-align:center;font-weight:700">${r.dias}d</td>
+      <td style="text-align:center">${r.target}d</td>
+      <td><span class="badge ${flag}">${excessFmt}</span></td>
+      <td style="font-size:11px">${accion}</td>
+    </tr>`;
+  });
+
+  // Quarantine table
+  const qtb=document.getElementById('quar-table-body');
+  quarData.forEach((r,i)=>{
+    const pct=(r.qcost/11099353*100).toFixed(3);
+    const accion=r.qcost>1500?'🔴 Revisión QA urgente':r.qcost>500?'⚠️ Revisar en 1 semana':'✅ Liberar si QA OK';
+    qtb.innerHTML+=`<tr>
+      <td>${i+1}</td><td><b>${r.pn}</b></td><td>${r.desc}</td>
+      <td><span class="badge badge-navy">${r.prod}</span></td>
+      <td>${fmtN(r.qqty)}</td>
+      <td><b>${fmt(r.qcost)}</b></td>
+      <td>${fmtN(r.totaloh)}</td>
+      <td>${pct}%</td>
+      <td style="font-size:11px">${accion}</td>
+    </tr>`;
+  });
+
+  calcABC(); calcDays(); calcEPEI(); calcQuar(); calcFG(); calcLoc();
+};
+
+// ── SIMULATORS ────────────────────────────────────────────────────────────
+function calcABC(){
+  const ra=+document.getElementById('abc-red-a').value/100;
+  const rb=+document.getElementById('abc-red-b').value/100;
+  const coc=+document.getElementById('abc-coc').value/100;
+  document.getElementById('abc-val-a').textContent=Math.round(ra*100)+'%';
+  document.getElementById('abc-val-b').textContent=Math.round(rb*100)+'%';
+  document.getElementById('abc-val-coc').textContent=Math.round(coc*100)+'%';
+  const libA=8877816*ra; const libB=1665513*rb;
+  const total=libA+libB;
+  const cocSav=total*coc;
+  const pct=total/11099353;
+  const pals=Math.round(total/11099353*172*0.8);
+  document.getElementById('abc-out-cap').textContent='$'+Math.round(total/1000)+'K';
+  document.getElementById('abc-out-coc').textContent='$'+Math.round(cocSav/1000)+'K';
+  document.getElementById('abc-out-pct').textContent=(pct*100).toFixed(1)+'%';
+  document.getElementById('abc-out-pal').textContent=pals;
+}
+
+function calcDays(){
+  const tgt=+document.getElementById('days-target').value;
+  const tch=+document.getElementById('days-china').value;
+  const app=+document.getElementById('days-pct-apply').value/100;
+  document.getElementById('days-val').textContent=tgt+'d';
+  document.getElementById('days-val-china').textContent=tch+'d';
+  document.getElementById('days-val-apply').textContent=Math.round(app*100)+'%';
+  const redPct=(21-tgt)/21*0.6+((14-tch)/14)*0.4;
+  const cap=Math.max(0,11099353*redPct*app*0.55);
+  const newAvg=Math.round(((tgt+tch)/2)*10)/10;
+  const redVsBase=Math.round(((21+14)/2-newAvg)/((21+14)/2)*100);
+  const risk=tgt<10?'Alto':tgt<14?'Medio':'Bajo';
+  document.getElementById('days-out-cap').textContent='$'+Math.round(cap/1000)+'K';
+  document.getElementById('days-out-avg').textContent=newAvg+'d';
+  document.getElementById('days-out-red').textContent='-'+redVsBase+'%';
+  document.getElementById('days-out-risk').textContent=risk;
+}
+
+function calcEPEI(){
+  const cur=+document.getElementById('epei-current').value;
+  const tgt=+document.getElementById('epei-target').value;
+  const setup=+document.getElementById('epei-setup').value/100;
+  const pull=+document.getElementById('epei-pull').value/100;
+  document.getElementById('epei-val-cur').textContent=cur+'d';
+  document.getElementById('epei-val-tgt').textContent=tgt+'d';
+  document.getElementById('epei-val-setup').textContent=Math.round(setup*100)+'%';
+  document.getElementById('epei-val-pull').textContent=Math.round(pull*100)+'%';
+  
+  const scenario=document.querySelector('input[name="epei-scenario"]:checked')?.value||'utilidad';
+  const descs={
+    utilidad:'Optimiza mix JKG84/JHG61 por margen/unit. Prioriza JKG84 ($132/unit) en ventanas de alta demanda.',
+    volumen:'Maximiza throughput de línea. Prioriza JHG61 (menor setup, más runs/semana posibles).',
+    ventas:'Maximiza revenue. Balancea ambos productos según precio de venta y cuota de temporada.'
+  };
+  document.getElementById('epei-scenario-desc').textContent=descs[scenario];
+  
+  const redLT=(cur-tgt)/cur;
+  const wipRed=1400000*redLT*0.85;
+  const cap=wipRed*(1+pull*0.2);
+  const runs=5/tgt;
+  const otif=Math.min(97.5,92.9+redLT*8+pull*3);
+  const risk=tgt<4?'Alto':tgt<6?'Medio':'Bajo';
+  document.getElementById('epei-out-wip').textContent='-$'+Math.round(wipRed/1000)+'K';
+  document.getElementById('epei-out-lt').textContent='-'+Math.round(redLT*100)+'%';
+  document.getElementById('epei-out-cap').textContent='$'+Math.round(cap/1000)+'K';
+  document.getElementById('epei-out-otif').textContent=otif.toFixed(1)+'%';
+  document.getElementById('epei-out-runs').textContent=runs.toFixed(1);
+  document.getElementById('epei-out-risk').textContent=risk;
+}
+
+function calcQuar(){
+  const lib=+document.getElementById('quar-lib').value/100;
+  const scrap=+document.getElementById('quar-scrap').value/100;
+  const days=+document.getElementById('quar-days').value;
+  document.getElementById('quar-val-lib').textContent=Math.round(lib*100)+'%';
+  document.getElementById('quar-val-scrap').textContent=Math.round(scrap*100)+'%';
+  document.getElementById('quar-val-days').textContent=days+'d';
+  const total=38754;
+  const rec=total*lib;
+  const sc=total*scrap;
+  const opp=Math.round(total*0.12/365*days);
+  const urgency=days<14?'48h':days<30?'72h':'Esta semana';
+  document.getElementById('quar-out-rec').textContent='$'+Math.round(rec).toLocaleString();
+  document.getElementById('quar-out-scrap').textContent='$'+Math.round(sc).toLocaleString();
+  document.getElementById('quar-out-opp').textContent='$'+opp;
+  document.getElementById('quar-out-days').textContent=urgency;
+}
+
+function calcFG(){
+  const conv=+document.getElementById('fg-conv').value/100;
+  const redist=+document.getElementById('fg-redist').value/100;
+  const liq=+document.getElementById('fg-liq').value/100;
+  const disc=+document.getElementById('fg-disc').value/100;
+  document.getElementById('fg-val-conv').textContent=Math.round(conv*100)+'%';
+  document.getElementById('fg-val-redist').textContent=Math.round(redist*100)+'%';
+  document.getElementById('fg-val-liq').textContent=Math.round(liq*100)+'%';
+  document.getElementById('fg-val-disc').textContent=Math.round(disc*100)+'%';
+  const orphanCap=8186922;
+  const revConv=orphanCap*conv;
+  const revRedist=orphanCap*redist;
+  const revLiq=orphanCap*liq*(1-disc);
+  const loss=orphanCap*liq*disc;
+  const total=revConv+revRedist+revLiq;
+  const remaining=Math.round(44*(1-conv-redist-liq));
+  const pals=Math.round((conv+redist+liq)*44*0.62);
+  document.getElementById('fg-out-rev').textContent='$'+Math.round(total/1000/100)*100+'K';
+  document.getElementById('fg-out-loss').textContent='$'+Math.round(loss/1000)+'K';
+  document.getElementById('fg-out-orphan').textContent=Math.max(0,remaining);
+  document.getElementById('fg-out-pal').textContent=pals;
+}
+
+function calcLoc(){
+  const abc=+document.getElementById('loc-abc').value;
+  const fg=+document.getElementById('loc-fg').value;
+  const pl=+document.getElementById('loc-3pl').value;
+  const c3=+document.getElementById('loc-cost3pl').value;
+  document.getElementById('loc-val-abc').textContent=abc;
+  document.getElementById('loc-val-fg').textContent=fg;
+  document.getElementById('loc-val-3pl').textContent=pl;
+  document.getElementById('loc-val-cost3pl').textContent='$'+c3;
+  const newTotal=172-abc-fg;
+  const pct=Math.round(newTotal/106*100);
+  const save3pl=pl*c3*12;
+  const ok=newTotal<=106;
+  document.getElementById('loc-out-total').textContent=newTotal;
+  document.getElementById('loc-out-pct').textContent=pct+'%';
+  document.getElementById('loc-out-3pl').textContent='$'+save3pl.toLocaleString();
+  document.getElementById('loc-out-ok').textContent=ok?'✅ SÍ':'NO aún';
+  document.getElementById('loc-out-ok').style.color=ok?'#86efac':'#fca5a5';
+}
+
+function calcRoadmap(){
+  const ra=+document.getElementById('abc-red-a').value/100;
+  const libA=8877816*ra; const libB=1665513*(+document.getElementById('abc-red-b').value/100);
+  const days=(+document.getElementById('days-target').value); 
+  const libD=Math.max(0,11099353*((21-days)/21*0.6)*((+document.getElementById('days-pct-apply').value)/100)*0.55);
+  const cur=+document.getElementById('epei-current').value; const tgt=+document.getElementById('epei-target').value;
+  const libE=1400000*((cur-tgt)/cur)*0.85;
+  const libF=8186922*((+document.getElementById('fg-conv').value)/100+(+document.getElementById('fg-redist').value)/100+(+document.getElementById('fg-liq').value)/100*(1-(+document.getElementById('fg-disc').value)/100));
+  const total=libA+libB+libD+libE+libF+38754;
+  const target=2400000;
+  const pct=Math.min(100,Math.round(total/target*100));
+  document.getElementById('rdmp-bar').style.width=pct+'%';
+  document.getElementById('rdmp-pct-lbl').textContent='$'+Math.round(total/1000)+'K liberado ('+pct+'% del escenario base)';
+}
+</script>
+</body>
+</html>

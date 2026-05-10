@@ -3,1391 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Value Tree — Mattel Montoi VSA 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,500;0,600;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Mattel Montoi — Entregables KIMX 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0D1B2A;
-    --navy2: #152336;
-    --navy3: #1E3151;
-    --red: #C41E3A;
-    --red-light: #E8304A;
-    --gold: #E8A020;
-    --cream: #F2EDE4;
-    --green: #2A9D5C;
-    --amber: #F4A024;
-    --muted: #8BA3C0;
-    --border: rgba(139,163,192,0.18);
-    --card-bg: rgba(21,35,54,0.85);
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'Syne', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-    --font-serif: 'Lora', serif;
+  :root{
+    --navy:#162240;
+    --navy2:#1E2F54;
+    --red:#D63429;
+    --red-lt:#FCEAE9;
+    --red-dk:#8C1A14;
+    --cream:#F0EBE1;
+    --warm:#E5DDCF;
+    --white:#FFFFFF;
+    --muted:#8A8070;
+    --border:#D0C8BC;
+    --green:#2E7D32;
+    --green-lt:#E8F5E9;
+    --amber:#B45309;
+    --amber-lt:#FEF3C7;
+    --blue:#1E40AF;
+    --blue-lt:#DBEAFE;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *{box-sizing:border-box;margin:0;padding:0;}
 
-  body {
-    background: var(--navy);
-    color: var(--cream);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* NOISE TEXTURE */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
+  body{
+    font-family:'Barlow',sans-serif;
+    background:var(--cream);
+    color:var(--navy);
+    font-size:14px;
+    line-height:1.5;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
   }
 
   /* HEADER */
-  .header {
-    position: relative;
-    z-index: 10;
-    padding: 24px 40px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(180deg, rgba(13,27,42,0.98) 0%, rgba(13,27,42,0.0) 100%);
+  header{
+    background:var(--navy);
+    padding:28px 40px 24px;
+    display:flex;
+    align-items:flex-end;
+    gap:20px;
+    border-bottom:3px solid var(--red);
   }
 
-  .header-left { display: flex; flex-direction: column; gap: 2px; }
-  .header-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .header-title {
-    font-family: var(--font-display);
-    font-size: 32px;
-    letter-spacing: 0.04em;
-    color: var(--cream);
-    line-height: 1;
-  }
-  .header-title span { color: var(--red); }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 24px;
+  .header-bar{
+    width:4px;
+    height:52px;
+    background:var(--red);
+    border-radius:2px;
+    flex-shrink:0;
   }
 
-  .target-badge {
-    background: linear-gradient(135deg, var(--red) 0%, #8B0F26 100%);
-    border-radius: 8px;
-    padding: 10px 20px;
-    text-align: center;
-    box-shadow: 0 4px 24px rgba(196,30,58,0.35);
-  }
-  .target-badge .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.7); text-transform: uppercase; }
-  .target-badge .amt { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: #fff; line-height: 1; }
+  .header-text{}
 
-  .status-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .chip {
-    display: flex; align-items: center; gap: 5px;
-    padding: 4px 10px; border-radius: 20px;
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
-    border: 1px solid;
-  }
-  .chip.ok { color: var(--green); border-color: rgba(42,157,92,0.35); background: rgba(42,157,92,0.08); }
-  .chip.warn { color: var(--amber); border-color: rgba(244,160,36,0.35); background: rgba(244,160,36,0.08); }
-  .chip.miss { color: var(--red); border-color: rgba(196,30,58,0.35); background: rgba(196,30,58,0.08); }
-  .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-
-  /* LAYOUT */
-  .main {
-    display: flex;
-    position: relative;
-    z-index: 2;
-    min-height: calc(100vh - 100px);
+  .header-eyebrow{
+    font-size:9px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:2.5px;
+    color:var(--muted);
+    margin-bottom:4px;
   }
 
-  /* TREE PANEL */
-  .tree-panel {
-    flex: 1;
-    padding: 32px 20px 40px 40px;
-    overflow-y: auto;
+  .header-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:28px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#fff;
+    line-height:1;
   }
 
-  /* DETAIL PANEL */
-  .detail-panel {
-    width: 340px;
-    flex-shrink: 0;
-    background: var(--navy2);
-    border-left: 1px solid var(--border);
-    padding: 28px;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - 100px);
-    overflow-y: auto;
-    transition: all 0.3s ease;
+  .header-title span{
+    color:var(--red);
   }
 
-  .detail-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    gap: 12px;
-    color: var(--muted);
-    text-align: center;
-  }
-  .detail-empty .icon { font-size: 36px; opacity: 0.4; }
-  .detail-empty p { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; line-height: 1.6; }
-
-  .detail-content { display: none; animation: fadeSlide 0.25s ease; }
-  .detail-content.active { display: block; }
-
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+  .header-sub{
+    font-size:12px;
+    font-weight:400;
+    color:var(--warm);
+    margin-top:5px;
+    letter-spacing:0.3px;
   }
 
-  .detail-tag {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 3px;
-    margin-bottom: 12px;
-    display: inline-block;
-  }
-  .detail-tag.pilar1 { background: rgba(196,30,58,0.2); color: var(--red-light); border: 1px solid rgba(196,30,58,0.3); }
-  .detail-tag.pilar2 { background: rgba(232,160,32,0.15); color: var(--gold); border: 1px solid rgba(232,160,32,0.3); }
-  .detail-tag.pilar3 { background: rgba(42,157,92,0.15); color: var(--green); border: 1px solid rgba(42,157,92,0.3); }
-  .detail-tag.pilar4 { background: rgba(139,163,192,0.12); color: #A8C4E0; border: 1px solid rgba(139,163,192,0.25); }
-
-  .detail-name {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--cream);
-    line-height: 1.3;
-    margin-bottom: 14px;
+  /* MAIN */
+  main{
+    flex:1;
+    max-width:780px;
+    width:100%;
+    margin:48px auto;
+    padding:0 24px;
   }
 
-  .detail-section { margin-bottom: 18px; }
-  .detail-section-title {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--border);
+  .section-label{
+    font-size:9px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--red);
+    margin-bottom:20px;
   }
 
-  .detail-value {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--cream);
-    line-height: 1.5;
-  }
-  .detail-value.confirmed { color: var(--green); }
-  .detail-value.validate { color: var(--amber); font-style: italic; }
-  .detail-value.missing { color: var(--red-light); }
-
-  .savings-box {
-    background: var(--navy3);
-    border-radius: 8px;
-    padding: 14px;
-    margin-top: 8px;
-    border: 1px solid var(--border);
-  }
-  .savings-box .slabel {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-  .savings-box .svalue {
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.03em;
-  }
-  .savings-box .svalue.confirmed { color: var(--green); }
-  .savings-box .svalue.validate { color: var(--amber); }
-  .savings-box .svalue.missing { color: var(--red-light); }
-
-  .source-tag {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: rgba(139,163,192,0.08);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 3px 8px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-    margin-right: 4px;
+  /* CARDS */
+  .card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:24px 28px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    text-decoration:none;
+    color:inherit;
+    transition:box-shadow 0.15s, border-color 0.15s, transform 0.1s;
+    cursor:pointer;
   }
 
-  .action-item {
-    display: flex;
-    gap: 8px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-    line-height: 1.5;
-    color: rgba(242,237,228,0.8);
-  }
-  .action-item:last-child { border-bottom: none; }
-  .action-icon { flex-shrink: 0; font-size: 12px; margin-top: 1px; }
-
-  /* PROGRESS BAR */
-  .progress-section {
-    margin-bottom: 28px;
-    background: var(--navy2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-  }
-  .progress-header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 10px;
-  }
-  .progress-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .progress-pct { font-family: var(--font-display); font-size: 18px; color: var(--amber); }
-
-  .progress-bar-track {
-    height: 8px;
-    background: rgba(139,163,192,0.12);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--green) 0%, var(--amber) 100%);
-    width: 0%;
-    transition: width 1s ease;
+  .card:hover{
+    border-color:var(--navy);
+    box-shadow:0 4px 16px rgba(22,34,64,0.10);
+    transform:translateY(-2px);
   }
 
-  .progress-breakdown {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    font-family: var(--font-mono); font-size: 10px;
-  }
-  .pb-item { display: flex; gap: 5px; align-items: center; }
-  .pb-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-
-  /* TREE NODES */
-  .pillars-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    margin-bottom: 24px;
+  .card-num{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:32px;
+    font-weight:800;
+    color:var(--warm);
+    min-width:36px;
+    text-align:center;
+    line-height:1;
+    flex-shrink:0;
   }
 
-  .pilar-header {
-    border-radius: 8px 8px 0 0;
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .pilar-header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent-color);
-  }
-  .pilar-header:hover { filter: brightness(1.15); }
-
-  .pilar-header .ph-num {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--accent-color);
-    margin-bottom: 4px;
-  }
-  .pilar-header .ph-title {
-    font-family: var(--font-display);
-    font-size: 16px;
-    letter-spacing: 0.04em;
-    color: var(--cream);
-    line-height: 1.1;
-  }
-  .pilar-header .ph-sub {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    color: rgba(242,237,228,0.5);
-    margin-top: 3px;
+  .card:hover .card-num{
+    color:var(--red);
   }
 
-  /* LEVERS GRID */
-  .levers-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .card-divider{
+    width:1px;
+    height:48px;
+    background:var(--border);
+    flex-shrink:0;
   }
 
-  .lever-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 11px 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-  }
-  .lever-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--lever-color, var(--muted));
-    opacity: 0.7;
-    border-radius: 3px 0 0 3px;
-    transition: opacity 0.2s;
-  }
-  .lever-card:hover { 
-    background: rgba(30,49,81,0.9);
-    border-color: rgba(139,163,192,0.35);
-    transform: translateX(2px);
-  }
-  .lever-card:hover::before { opacity: 1; }
-  .lever-card.selected {
-    border-color: var(--lever-color, var(--muted));
-    background: rgba(30,49,81,0.95);
+  .card-body{
+    flex:1;
   }
 
-  .lever-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 5px;
+  .card-tag{
+    font-size:8.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1.8px;
+    color:var(--muted);
+    margin-bottom:5px;
   }
 
-  .lever-name {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--cream);
-    line-height: 1.3;
-    flex: 1;
+  .card-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:18px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--navy);
+    line-height:1.15;
+    margin-bottom:4px;
   }
 
-  .status-badge {
-    flex-shrink: 0;
-    font-size: 13px;
-    line-height: 1;
+  .card-desc{
+    font-size:12px;
+    color:var(--muted);
+    font-weight:400;
   }
 
-  .lever-baseline {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .lever-baseline .val { color: var(--cream); font-weight: 500; }
-  .lever-savings {
-    margin-top: 5px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-  }
-  .lever-savings.confirmed { color: var(--green); }
-  .lever-savings.validate { color: var(--amber); }
-  .lever-savings.missing { color: rgba(242,237,228,0.35); font-style: italic; }
-
-  /* PILAR COLUMNS */
-  .pilar-column {
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: rgba(13,27,42,0.5);
+  .card-arrow{
+    font-size:20px;
+    color:var(--border);
+    flex-shrink:0;
+    transition:color 0.15s, transform 0.15s;
   }
 
-  /* ROOT NODE */
-  .root-node {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, rgba(196,30,58,0.15) 0%, rgba(21,35,54,0.8) 100%);
-    border: 1px solid rgba(196,30,58,0.25);
-    border-radius: 10px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-  .root-node::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 20px;
-    background: linear-gradient(to bottom, var(--border), transparent);
-  }
-  .root-node .rn-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .root-node .rn-title {
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.08em;
-    color: var(--cream);
-  }
-  .root-node .rn-amount {
-    font-family: var(--font-display);
-    font-size: 42px;
-    color: var(--red);
-    letter-spacing: 0.02em;
-    line-height: 1;
-    filter: drop-shadow(0 0 20px rgba(196,30,58,0.4));
-  }
-  .root-node .rn-sub {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-top: 4px;
+  .card:hover .card-arrow{
+    color:var(--red);
+    transform:translateX(4px);
   }
 
-  /* CONNECTOR LINES */
-  .tree-connector {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    height: 20px;
-    margin-bottom: 4px;
-  }
-  .connector-line {
-    position: absolute;
-    top: 0;
-    width: 60%;
-    height: 1px;
-    background: var(--border);
+  /* divider */
+  .divider{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:36px 0 28px;
   }
 
-  /* COUNTER TICKER */
-  .savings-tracker {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 100;
-    background: var(--navy2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 18px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    min-width: 200px;
-  }
-  .st-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-  .st-confirmed { font-family: var(--font-display); font-size: 11px; color: var(--green); letter-spacing: 0.05em; }
-  .st-validate { font-family: var(--font-display); font-size: 11px; color: var(--amber); letter-spacing: 0.05em; }
-  .st-bar { height: 4px; background: rgba(139,163,192,0.1); border-radius: 2px; margin-top: 8px; overflow: hidden; }
-  .st-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--amber)); transition: width 0.5s; }
-
-  /* COLUMNS LABEL */
-  .pilar-label {
-    padding: 10px 14px;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: rgba(21,35,54,0.8);
-    border-bottom: 1px solid var(--border);
+  .meta-block{
+    display:flex;
+    gap:32px;
+    flex-wrap:wrap;
+    margin-top:8px;
   }
 
-  .lever-area { padding: 10px 10px 12px; display: flex; flex-direction: column; gap: 7px; }
-
-  /* TOOLTIP */
-  .tooltip {
-    position: fixed;
-    background: var(--navy2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--cream);
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.15s;
-    max-width: 220px;
-    line-height: 1.4;
+  .meta-item{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
   }
 
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(139,163,192,0.2); border-radius: 3px; }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+  .meta-label{
+    font-size:8.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1.8px;
+    color:var(--muted);
   }
-  .pulsing { animation: pulse 2s infinite; }
 
-  .workshop-date {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--amber);
-    letter-spacing: 0.1em;
+  .meta-value{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:15px;
+    font-weight:700;
+    color:var(--navy);
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+  }
+
+  /* FOOTER */
+  footer{
+    padding:14px 22px;
+    border-top:1px solid var(--border);
+    background:var(--cream);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--muted);
+    font-weight:700;
+    text-align:center;
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <span class="header-label">Mattel Montoi · General Escobedo, N.L. · VSA 2026</span>
-    <div class="header-title">VALUE <span>TREE</span> — RUTA A LOS $500K</div>
-    <span class="workshop-date">🗓 Workshop on-site: 11–15 Mayo 2026</span>
+<header>
+  <div class="header-bar"></div>
+  <div class="header-text">
+    <div class="header-eyebrow">Kaizen Institute México · Entregables de Proyecto</div>
+    <div class="header-title">Mattel <span>Montoi</span></div>
+    <div class="header-sub">VSA Gemba Walk 2026 — Reportes y herramientas del engagement</div>
   </div>
-  <div class="header-right">
-    <div class="status-chips">
-      <div class="chip ok"><div class="dot"></div>✅ Dato confirmado</div>
-      <div class="chip warn"><div class="dot"></div>⚠️ Dato parcial</div>
-      <div class="chip miss"><div class="dot"></div>❌ A validar en planta</div>
+</header>
+
+<main>
+
+  <div class="section-label">Entregables disponibles — 3 documentos</div>
+
+  <a class="card" href="kimx-mattel-bom-business-case.html" target="_blank">
+    <div class="card-num">01</div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+      <div class="card-tag">Business Case · VSA</div>
+      <div class="card-title">BOM Business Case</div>
+      <div class="card-desc">Análisis de valor sobre estructura de materiales — Mattel Monterrey 2026</div>
     </div>
-    <div class="target-badge">
-      <div class="lbl">Objetivo USD</div>
-      <div class="amt">$500K</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card" href="kimx-mattel-quality-boardgame.html" target="_blank">
+    <div class="card-num">02</div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+      <div class="card-tag">Business Case · Calidad</div>
+      <div class="card-title">Quality Crisis Boardgame</div>
+      <div class="card-desc">Business case interactivo sobre crisis de calidad — Mattel Montoi</div>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card" href="value_tree_mattel_montoi.html" target="_blank">
+    <div class="card-num">03</div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+      <div class="card-tag">Análisis Estratégico · VSA</div>
+      <div class="card-title">Value Tree</div>
+      <div class="card-desc">Árbol de valor del engagement — Mattel Montoi VSA 2026</div>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <hr class="divider">
+
+  <div class="section-label">Información del engagement</div>
+  <div class="meta-block">
+    <div class="meta-item">
+      <span class="meta-label">Cliente</span>
+      <span class="meta-value">Mattel Montoi</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Planta</span>
+      <span class="meta-value">Escobedo, NL</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Metodología</span>
+      <span class="meta-value">VSA Gemba Walk</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Año</span>
+      <span class="meta-value">2026</span>
     </div>
   </div>
-</div>
 
-<!-- MAIN -->
-<div class="main">
+</main>
 
-  <!-- TREE PANEL -->
-  <div class="tree-panel">
-
-    <!-- PROGRESS -->
-    <div class="progress-section">
-      <div class="progress-header">
-        <span class="progress-title">Cobertura de datos hacia el objetivo</span>
-        <span class="progress-pct" id="pct-display">Calculando...</span>
-      </div>
-      <div class="progress-bar-track">
-        <div class="progress-bar-fill" id="main-progress-bar"></div>
-      </div>
-      <div class="progress-breakdown">
-        <div class="pb-item"><div class="pb-dot" style="background:var(--green)"></div><span style="color:var(--green)">Baseline confirmado: <strong>$318K</strong> (retrabajo)</span></div>
-        <div class="pb-item"><div class="pb-dot" style="background:var(--amber)"></div><span style="color:var(--amber)">Parcial/cuantificable en workshop: ~$182K+ potencial</span></div>
-        <div class="pb-item"><div class="pb-dot" style="background:rgba(139,163,192,0.3)"></div><span style="color:var(--muted)">Sin dato: requiere validación</span></div>
-      </div>
-    </div>
-
-    <!-- ROOT NODE -->
-    <div class="root-node">
-      <div class="rn-label">META SOSTENIBLE — VSA KAIZEN 2026</div>
-      <div class="rn-title">AHORROS TOTALES</div>
-      <div class="rn-amount">$500,000 USD</div>
-      <div class="rn-sub">JKG84 Barbie Dream House · JHG61 Little People Nintendo Playset · ~25% del volumen de planta</div>
-    </div>
-
-    <!-- 4 PILLARS -->
-    <div class="pillars-row">
-
-      <!-- PILAR 1: CALIDAD -->
-      <div class="pilar-column">
-        <div class="pilar-header" style="background: linear-gradient(135deg, rgba(196,30,58,0.2) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--red);">
-          <div class="ph-num">PILAR 01</div>
-          <div class="ph-title">CALIDAD<br>& RETRABAJO</div>
-          <div class="ph-sub">CoQ · Rework · Scrap</div>
-        </div>
-        <div class="lever-area">
-
-          <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L1')" id="card-L1">
-            <div class="lever-top">
-              <div class="lever-name">Reducción costo de retrabajo (Rework)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">Baseline: <span class="val">$318K/año</span> confirmado</div>
-            <div class="lever-savings validate">Ahorro potencial: dato a validar (% reducción)</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L2')" id="card-L2">
-            <div class="lever-top">
-              <div class="lever-name">Reducción de scrap por tipo de pieza</div>
-              <div class="status-badge">❌</div>
-            </div>
-            <div class="lever-baseline">Baseline: <span class="val">No disponible</span></div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L3')" id="card-L3">
-            <div class="lever-top">
-              <div class="lever-name">CoQ — Costo Total de Calidad (retrabajo + scrap + tiempo línea)</div>
-              <div class="status-badge">❌</div>
-            </div>
-            <div class="lever-baseline">Baseline parcial: <span class="val">$318K</span> (sin desglose)</div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L4')" id="card-L4">
-            <div class="lever-top">
-              <div class="lever-name">Calidad en ensamble (In-Process Control)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">PPMS moldeo: <span class="val">Confirmado 106 semanas</span></div>
-            <div class="lever-savings validate">Ahorro indirecto: dato a validar</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- PILAR 2: INVENTARIO & 3PL -->
-      <div class="pilar-column">
-        <div class="pilar-header" style="background: linear-gradient(135deg, rgba(232,160,32,0.18) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--gold);">
-          <div class="ph-num">PILAR 02</div>
-          <div class="ph-title">INVENTARIO<br>& CAPITAL</div>
-          <div class="ph-sub">3PL · RM · FG · Cuarentena</div>
-        </div>
-        <div class="lever-area">
-
-          <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L5')" id="card-L5">
-            <div class="lever-top">
-              <div class="lever-name">Costo 3PL CargoKey — inventario externo</div>
-              <div class="status-badge">❌</div>
-            </div>
-            <div class="lever-baseline">Partes 699-XXX identificadas: <span class="val">Confirmado</span></div>
-            <div class="lever-savings missing">Dato a validar de ahorro (tarifa 3PL)</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L6')" id="card-L6">
-            <div class="lever-top">
-              <div class="lever-name">Reducción días cobertura RM (piezas pequeñas)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Baseline: <span class="val">21 días</span> · objetivo: reducir</div>
-            <div class="lever-savings validate">Capital liberado: dato a validar (costo financiero)</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L7')" id="card-L7">
-            <div class="lever-top">
-              <div class="lever-name">Reducción días cobertura China-sourced</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">Baseline: <span class="val">14 días</span> · origen China</div>
-            <div class="lever-savings validate">Capital liberado: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L8')" id="card-L8">
-            <div class="lever-top">
-              <div class="lever-name">Liquidación inventario en cuarentena</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Quarantine Qty + Cost: <span class="val">7,597 partes analizadas</span></div>
-            <div class="lever-savings validate">Liberación capital: dato a validar ($ cuarentena total)</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L9')" id="card-L9">
-            <div class="lever-top">
-              <div class="lever-name">Reducción low-turnover SKUs (~60% no movers)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Racks almacén: <span class="val">60% sin movimiento</span></div>
-            <div class="lever-savings validate">Ahorro espacio + capital: dato a validar</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- PILAR 3: FLUJO DE MATERIAL -->
-      <div class="pilar-column">
-        <div class="pilar-header" style="background: linear-gradient(135deg, rgba(42,157,92,0.18) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--green);">
-          <div class="ph-num">PILAR 03</div>
-          <div class="ph-title">FLUJO DE<br>MATERIAL</div>
-          <div class="ph-sub">IDL · NVA · Staging · Espacio</div>
-        </div>
-        <div class="lever-area">
-
-          <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L10')" id="card-L10">
-            <div class="lever-top">
-              <div class="lever-name">Optimización rutas logística interna (NVA)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">IDL: <span class="val">77 montacarguistas + 107 material handlers</span></div>
-            <div class="lever-savings validate">Costo operativo/FTE: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L11')" id="card-L11">
-            <div class="lever-top">
-              <div class="lever-name">Eliminación pasos NVA del flujo (5 etapas → target)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">Flujo actual: <span class="val">Moldeo→Ventana→WH→Staging→Línea</span></div>
-            <div class="lever-savings validate">Tiempo NVA eliminado: dato a validar en gemba</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L12')" id="card-L12">
-            <div class="lever-top">
-              <div class="lever-name">Descongestión staging (sobrecarga 62%)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Capacidad: <span class="val">106 pallets · Real: ~172 pallets</span></div>
-            <div class="lever-savings validate">Costo almacenaje extra / 3PL: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L13')" id="card-L13">
-            <div class="lever-top">
-              <div class="lever-name">Mejora utilización de espacio (+30% objetivo)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Floor: <span class="val">~90% ocupado por inventario</span></div>
-            <div class="lever-savings validate">Ahorro m² / costo de oportunidad: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L14')" id="card-L14">
-            <div class="lever-top">
-              <div class="lever-name">Reducción equipos logística (84 equipos vs rutas reales)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Equipos: <span class="val">52 HS · 11 Reach · etc.</span></div>
-            <div class="lever-savings validate">Costo operativo equipos: dato a validar</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- PILAR 4: PLANEACIÓN & SETUP -->
-      <div class="pilar-column">
-        <div class="pilar-header" style="background: linear-gradient(135deg, rgba(139,163,192,0.15) 0%, rgba(21,35,54,0.9) 100%); --accent-color: #8BBCD8;">
-          <div class="ph-num">PILAR 04</div>
-          <div class="ph-title">PLANEACIÓN<br>& SETUP</div>
-          <div class="ph-sub">EPEI · Changeover · OTIF · SC</div>
-        </div>
-        <div class="lever-area">
-
-          <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L15')" id="card-L15">
-            <div class="lever-top">
-              <div class="lever-name">Reducción tiempo de changeover (3-4 días → objetivo)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">Setup actual: <span class="val">3–4 días/línea</span> (estimado)</div>
-            <div class="lever-savings validate">Impacto OEE ensamble: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L16')" id="card-L16">
-            <div class="lever-top">
-              <div class="lever-name">EPEI — Reducción safety stock por variabilidad</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">Buffer: <span class="val">3–4 días</span> · Supply Match: <span class="val">94%</span></div>
-            <div class="lever-savings validate">Capital en safety stock: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L17')" id="card-L17">
-            <div class="lever-top">
-              <div class="lever-name">Revenue en riesgo por gap Supply Match (94% → 95%+)</div>
-              <div class="status-badge">✅</div>
-            </div>
-            <div class="lever-baseline">Supply Match: <span class="val">94%</span> · Target: <span class="val">95%</span> 🔴</div>
-            <div class="lever-savings validate">Revenue protegido: dato a validar (unidades × precio)</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L18')" id="card-L18">
-            <div class="lever-top">
-              <div class="lever-name">Mejora OTIF comercial (92.9% → target)</div>
-              <div class="status-badge">⚠️</div>
-            </div>
-            <div class="lever-baseline">OTIF 2026: <span class="val">92.9%</span></div>
-            <div class="lever-savings validate">Penalidades / costo de servicio: dato a validar</div>
-          </div>
-
-          <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L19')" id="card-L19">
-            <div class="lever-top">
-              <div class="lever-name">Optimización subcontratistas (3 activos)</div>
-              <div class="status-badge">❌</div>
-            </div>
-            <div class="lever-baseline">Subcon: <span class="val">3 activos</span> (ex 6–7)</div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
-          </div>
-
-        </div>
-      </div>
-
-    </div><!-- end pillars-row -->
-
-    <!-- BOTTOM INSIGHTS -->
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;">
-
-      <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
-        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">📊 DATOS CRÍTICOS DISPONIBLES</div>
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--cream)">Raw Material BOM · 7,597 partes</span>
-            <span style="color:var(--green); font-family: var(--font-mono)">✅</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--cream)">Production History · 474 SKUs × 73 sem</span>
-            <span style="color:var(--green); font-family: var(--font-mono)">✅</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--cream)">% Low Quality Production · 106 sem</span>
-            <span style="color:var(--green); font-family: var(--font-mono)">✅</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--cream)">FG Inventory · 194 SKUs</span>
-            <span style="color:var(--green); font-family: var(--font-mono)">✅</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--cream)">Internal Logistics · 84 equipos</span>
-            <span style="color:var(--green); font-family: var(--font-mono)">✅</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px; border-top: 1px solid var(--border); padding-top: 6px;">
-            <span style="color:var(--red-light)">Rework Cost desglose</span>
-            <span style="color:var(--red-light); font-family: var(--font-mono)">❌ Crítico</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--red-light)">OEE líneas ensamble</span>
-            <span style="color:var(--red-light); font-family: var(--font-mono)">❌ Crítico</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <span style="color:var(--red-light)">Tiempos de ciclo por estación</span>
-            <span style="color:var(--red-light); font-family: var(--font-mono)">❌ VSM Crítico</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
-        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">🎯 PRIORIDADES DATOS — SEMANA 11-15 MAYO</div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
-            <span style="color:var(--red); flex-shrink:0; font-weight:700">P1</span>
-            <span><strong>Rework mensual desglosado</strong> — Calidad/Finanzas → clave para cuantificar ~$318K baseline</span>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
-            <span style="color:var(--red); flex-shrink:0; font-weight:700">P2</span>
-            <span><strong>OEE líneas ensamble</strong> — Alberto Candia → sin esto no hay VSM de ensamble</span>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
-            <span style="color:var(--red); flex-shrink:0; font-weight:700">P3</span>
-            <span><strong>Tiempos de ciclo gemba</strong> — Observación días 1-2 → base del VSM estado actual</span>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
-            <span style="color:var(--amber); flex-shrink:0; font-weight:700">P4</span>
-            <span><strong>Tarifa 3PL CargoKey</strong> — Logística → conversión directa a ahorro mensual</span>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
-            <span style="color:var(--amber); flex-shrink:0; font-weight:700">P5</span>
-            <span><strong>Layout con dimensiones</strong> — Fatima Ruiz → sin esto no se cuantifica espacio</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div><!-- end tree-panel -->
-
-  <!-- DETAIL PANEL -->
-  <div class="detail-panel">
-
-    <div class="detail-empty" id="detail-empty">
-      <div class="icon">🌲</div>
-      <p>Haz clic en cualquier<br>palanca de ahorro<br>para ver el detalle</p>
-    </div>
-
-    <!-- DETAIL CONTENTS -->
-    <div id="detail-L1" class="detail-content">
-      <div class="detail-tag pilar1">PILAR 01 · CALIDAD</div>
-      <div class="detail-name">Reducción Costo de Retrabajo (Rework)</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Estado del dato</div>
-        <div class="detail-value">⚠️ Baseline confirmado — porcentaje de mejora pendiente</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Baseline confirmado</div>
-        <div class="svalue confirmed">$318,000 USD/año</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro proyectado</div>
-        <div class="svalue validate">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Fuentes de datos</div>
-        <span class="source-tag">📄 VSA Sheet (narrativo)</span>
-        <span class="source-tag">❌ Rework sheet vacío</span>
-        <span class="source-tag">📊 Low Quality Production</span>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Hipótesis de mejora</div>
-        <div class="action-item"><span class="action-icon">→</span>Si se reduce 30% del rework = $95K ahorro (hipótesis — validar con calidad)</div>
-        <div class="action-item"><span class="action-icon">→</span>Si se reduce 50% = $159K ahorro (hipótesis — validar con finanzas)</div>
-        <div class="action-item"><span class="action-icon">→</span>NOTA: No asumir %; obtener plan de reducción con Alberto Candia + Calidad</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Acción prioritaria en workshop</div>
-        <div class="action-item"><span class="action-icon">🔴</span>Obtener reporte mensual de retrabajo desglosado por SKU — Área de Calidad / Finanzas</div>
-        <div class="action-item"><span class="action-icon">🔴</span>Cruzar con % Low Quality Production (106 semanas disponibles)</div>
-      </div>
-    </div>
-
-    <div id="detail-L2" class="detail-content">
-      <div class="detail-tag pilar1">PILAR 01 · CALIDAD</div>
-      <div class="detail-name">Reducción de Scrap por Tipo de Pieza</div>
-      <div class="savings-box">
-        <div class="slabel">Baseline scrap</div>
-        <div class="svalue missing">No disponible</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro proyectado</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Acción prioritaria</div>
-        <div class="action-item"><span class="action-icon">🔴</span>Solicitar scrap rate por commodity/material en workshop con Calidad</div>
-        <div class="action-item"><span class="action-icon">→</span>Cruzar con Raw Material (7,597 partes) para estimar valor de scrap</div>
-      </div>
-    </div>
-
-    <div id="detail-L3" class="detail-content">
-      <div class="detail-tag pilar1">PILAR 01 · CALIDAD</div>
-      <div class="detail-name">CoQ — Costo Total de Calidad</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Componentes del CoQ</div>
-        <div class="detail-value">Retrabajo + Scrap + Tiempo perdido en línea</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Baseline parcial (rework only)</div>
-        <div class="svalue confirm" style="color:var(--amber)">$318K USD (sin desglose)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">CoQ total estimado</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Acción</div>
-        <div class="action-item"><span class="action-icon">🔴</span>Construir CoQ completo en workshop con Finanzas — día 3</div>
-        <div class="action-item"><span class="action-icon">→</span>OEE Moldeo 84% implica ~16% pérdida — cuantificar costo por hora perdida</div>
-      </div>
-    </div>
-
-    <div id="detail-L4" class="detail-content">
-      <div class="detail-tag pilar1">PILAR 01 · CALIDAD</div>
-      <div class="detail-name">Calidad en Ensamble (In-Process Control)</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Datos disponibles</div>
-        <div class="detail-value confirmed">✅ 106 semanas PPMS moldeo disponibles</div>
-        <div class="detail-value" style="margin-top:4px">⚠️ Calidad ensamble: columna con muchos vacíos</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">OEE Moldeo baseline</div>
-        <div class="svalue confirm" style="color:var(--amber)">84% (Avail 88.6% · Perf 96% · Qual 98.8%)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">OEE Ensamble</div>
-        <div class="svalue missing">No disponible — validar con Alberto Candia</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro por mejora OEE</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-    </div>
-
-    <div id="detail-L5" class="detail-content">
-      <div class="detail-tag pilar2">PILAR 02 · INVENTARIO</div>
-      <div class="detail-name">Costo 3PL CargoKey — Inventario Externo</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Evidencia disponible</div>
-        <div class="detail-value confirmed">✅ Partes con prefijo 699-XXX identificadas en Raw Material</div>
-        <div class="detail-value" style="margin-top:4px">✅ FG Inventory también con referencias 699-XXX</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Costo mensual 3PL CargoKey</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Lógica del ahorro</div>
-        <div class="action-item"><span class="action-icon">→</span>Reducir inventario externo = eliminar tarifa de almacenaje 3PL directamente</div>
-        <div class="action-item"><span class="action-icon">→</span>Cuantificar # pallets en 699-XXX × tarifa 3PL/pallet/mes</div>
-        <div class="action-item"><span class="action-icon">🟡</span>Solicitar a Logística: tarifa actual CargoKey y volumen promedio mensual</div>
-      </div>
-    </div>
-
-    <div id="detail-L6" class="detail-content">
-      <div class="detail-tag pilar2">PILAR 02 · INVENTARIO</div>
-      <div class="detail-name">Reducción Días Cobertura RM — Piezas Pequeñas</div>
-      <div class="savings-box">
-        <div class="slabel">Inventario actual</div>
-        <div class="svalue confirm" style="color:var(--amber)">21 días (piezas pequeñas)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Capital liberado potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Lógica del cálculo</div>
-        <div class="action-item"><span class="action-icon">→</span>Capital liberado = días reducidos × consumo diario × costo estándar</div>
-        <div class="action-item"><span class="action-icon">→</span>Aplicar tasa financiera Mattel para convertir capital → ahorro anual</div>
-        <div class="action-item"><span class="action-icon">✅</span>Raw Material (7,597 partes) + Production History disponibles para el cruce</div>
-      </div>
-    </div>
-
-    <div id="detail-L7" class="detail-content">
-      <div class="detail-tag pilar2">PILAR 02 · INVENTARIO</div>
-      <div class="detail-name">Reducción Días Cobertura — Partes de China</div>
-      <div class="savings-box">
-        <div class="slabel">Inventario actual China-sourced</div>
-        <div class="svalue confirm" style="color:var(--amber)">14 días promedio</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Capital liberado potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Punto crítico</div>
-        <div class="action-item"><span class="action-icon">⚠️</span>No hay mapeo componente → país de origen en Raw Material — confirmar con Compras</div>
-        <div class="action-item"><span class="action-icon">→</span>Validar si LT China justifica los 14 días o si hay oportunidad de reducción</div>
-      </div>
-    </div>
-
-    <div id="detail-L8" class="detail-content">
-      <div class="detail-tag pilar2">PILAR 02 · INVENTARIO</div>
-      <div class="detail-name">Liquidación Inventario en Cuarentena</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Datos disponibles</div>
-        <div class="detail-value confirmed">✅ Quarantine Qty + Quarantine Cost en Raw Material (7,597 partes)</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Valor en cuarentena ($)</div>
-        <div class="svalue validate">Calcular desde Raw Material — pendiente extracción</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro por disposición</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Acción pre-workshop</div>
-        <div class="action-item"><span class="action-icon">✅</span>Datos YA disponibles en BOM_Analysis_Hipotesis.xlsx — extraer sumatoria Quarantine Cost</div>
-      </div>
-    </div>
-
-    <div id="detail-L9" class="detail-content">
-      <div class="detail-tag pilar2">PILAR 02 · INVENTARIO</div>
-      <div class="detail-name">Reducción Low-Turnover SKUs (~60% no movers)</div>
-      <div class="savings-box">
-        <div class="slabel">Racks sin movimiento</div>
-        <div class="svalue confirm" style="color:var(--amber)">~60% de los racks Raw Mat WH</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">4,358 ubicaciones en Rack WH</div>
-        <div class="svalue confirm" style="color:var(--amber)">~2,615 posiciones sin movimiento</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro capital + espacio</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-    </div>
-
-    <div id="detail-L10" class="detail-content">
-      <div class="detail-tag pilar3">PILAR 03 · FLUJO</div>
-      <div class="detail-name">Optimización Rutas Logística Interna</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Headcount identificado</div>
-        <div class="detail-value confirmed">✅ 77 operadores de montacargas</div>
-        <div class="detail-value confirmed" style="margin-top:2px">✅ 107 material handlers</div>
-        <div class="detail-value" style="margin-top:2px; color:var(--muted)">= 184 IDL FTEs de logística interna</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Costo por FTE logística/año</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">⚠️ Nota cultural Mattel</div>
-        <div class="action-item"><span class="action-icon">🤝</span>La reducción de headcount NO es un objetivo. El ahorro viene de eliminar recorridos NVA → reasignar capacidad a valor agregado</div>
-      </div>
-      <div class="detail-section">
-        <div class="detail-section-title">Equipo disponible</div>
-        <div class="detail-value confirmed">✅ 84 equipos: 52 Hand Stackers · 11 Reach Trucks · etc.</div>
-      </div>
-    </div>
-
-    <div id="detail-L11" class="detail-content">
-      <div class="detail-tag pilar3">PILAR 03 · FLUJO</div>
-      <div class="detail-name">Eliminación Pasos NVA — Flujo de Material</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Flujo actual identificado (5 pasos)</div>
-        <div class="detail-value" style="font-size:12px; line-height:2; color:var(--amber)">
-          Moldeo → Ventana → Almacén → Staging → Línea
-        </div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Tiempo NVA por lote</div>
-        <div class="svalue missing">Dato a validar en gemba (días 1-2 workshop)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro por eliminación NVA</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Herramienta: Spaghetti Diagram</div>
-        <div class="action-item"><span class="action-icon">→</span>Mapear recorrido real de material en gemba para cuantificar distancia total/turno</div>
-        <div class="action-item"><span class="action-icon">→</span>Identificar qué pasos son eliminables vs. optimizables</div>
-      </div>
-    </div>
-
-    <div id="detail-L12" class="detail-content">
-      <div class="detail-tag pilar3">PILAR 03 · FLUJO</div>
-      <div class="detail-name">Descongestión Área de Staging (Sobrecarga 62%)</div>
-      <div class="savings-box">
-        <div class="slabel">Capacidad nominal</div>
-        <div class="svalue confirm" style="color:var(--green)">106 pallets</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Occupancy real</div>
-        <div class="svalue confirm" style="color:var(--red)">~172 pallets (100%+ saturado)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro por descongestión</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Vinculación directa</div>
-        <div class="action-item"><span class="action-icon">→</span>Staging saturado = desborde a 3PL CargoKey = costo adicional cuantificable</div>
-        <div class="action-item"><span class="action-icon">→</span>Reducir inventario buffer (3-4 días) = alivio directo en staging</div>
-      </div>
-    </div>
-
-    <div id="detail-L13" class="detail-content">
-      <div class="detail-tag pilar3">PILAR 03 · FLUJO</div>
-      <div class="detail-name">Mejora Utilización de Espacio (+30% objetivo)</div>
-      <div class="savings-box">
-        <div class="slabel">Floor ocupado por inventario</div>
-        <div class="svalue confirm" style="color:var(--red)">~90% saturado</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Racks WH utilización</div>
-        <div class="svalue confirm" style="color:var(--amber)">~60% (14% cancelados)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro m² liberados</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Vinculación con objetivo VSA</div>
-        <div class="action-item"><span class="action-icon">🎯</span>−30% espacio = objetivo VSA explícito · medir m² liberados vs costo de oportunidad</div>
-      </div>
-    </div>
-
-    <div id="detail-L14" class="detail-content">
-      <div class="detail-tag pilar3">PILAR 03 · FLUJO</div>
-      <div class="detail-name">Optimización Equipos Logísticos (84 equipos)</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Inventario de equipos disponible</div>
-        <div class="detail-value confirmed">✅ 52 Hand Stackers (HS)</div>
-        <div class="detail-value confirmed">✅ 11 Reach Trucks</div>
-        <div class="detail-value confirmed">✅ Otros tipificados en Internal Logistics</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Costo operativo total de equipos/año</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Análisis posible</div>
-        <div class="action-item"><span class="action-icon">→</span>Ratio: 84 equipos / 77 operadores = 1.09 equipo/operador — evaluar si es correcto</div>
-        <div class="action-item"><span class="action-icon">→</span>Costo mantenimiento/combustible por equipo: solicitar a Mantenimiento</div>
-      </div>
-    </div>
-
-    <div id="detail-L15" class="detail-content">
-      <div class="detail-tag pilar4">PILAR 04 · PLANEACIÓN</div>
-      <div class="detail-name">Reducción Tiempo de Changeover (3–4 días → objetivo)</div>
-      <div class="savings-box">
-        <div class="slabel">Setup actual estimado</div>
-        <div class="svalue confirm" style="color:var(--red)">3–4 días por cambio de línea</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Impacto en OEE ensamble</div>
-        <div class="svalue missing">Dato a validar — OEE ensamble desconocido</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro por reducción setup</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Cálculo posible en workshop</div>
-        <div class="action-item"><span class="action-icon">→</span>Horas perdidas/changeover × costo línea/hora = costo actual de setup</div>
-        <div class="action-item"><span class="action-icon">→</span>Aplicar SMED → target: reducir a &lt;1 día → cuantificar delta</div>
-        <div class="action-item"><span class="action-icon">🟡</span>Solicitar registros reales de changeover a Fatima Ruiz</div>
-      </div>
-    </div>
-
-    <div id="detail-L16" class="detail-content">
-      <div class="detail-tag pilar4">PILAR 04 · PLANEACIÓN</div>
-      <div class="detail-name">EPEI — Reducción Safety Stock por Variabilidad</div>
-      <div class="savings-box">
-        <div class="slabel">Buffer inventario actual</div>
-        <div class="svalue confirm" style="color:var(--amber)">3–4 días</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Supply Match 2026</div>
-        <div class="svalue confirm" style="color:var(--red)">94% (🔴 bajo target 95%)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Capital en safety stock</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Lógica EPEI</div>
-        <div class="action-item"><span class="action-icon">→</span>Reducir EPEI = producir con más frecuencia en lotes menores = menos safety stock necesario</div>
-        <div class="action-item"><span class="action-icon">→</span>Requiere reducir changeover primero (palanca L15)</div>
-        <div class="action-item"><span class="action-icon">→</span>Production History disponible para calcular variabilidad actual</div>
-      </div>
-    </div>
-
-    <div id="detail-L17" class="detail-content">
-      <div class="detail-tag pilar4">PILAR 04 · PLANEACIÓN</div>
-      <div class="detail-name">Revenue en Riesgo — Supply Match (94% → 95%+)</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Situación actual</div>
-        <div class="detail-value" style="color:var(--red-light)">❗ Supply Match 94% — ROJO vs target 95%</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Ventas anuales planta</div>
-        <div class="svalue confirm" style="color:var(--green)">~$140M USD (2026 target)</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Revenue en riesgo por gap 1%</div>
-        <div class="svalue validate">~$1.4M USD potencial · dato a validar</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro/protección de revenue</div>
-        <div class="svalue missing">Dato a validar de ahorro (% recuperable)</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Fuentes disponibles</div>
-        <span class="source-tag">✅ Production History · 474 SKUs</span>
-        <span class="source-tag">✅ Annual Sales Forecast</span>
-        <span class="source-tag">⚠️ OTIF 92.9% (narrativo)</span>
-      </div>
-    </div>
-
-    <div id="detail-L18" class="detail-content">
-      <div class="detail-tag pilar4">PILAR 04 · PLANEACIÓN</div>
-      <div class="detail-name">Mejora OTIF Comercial (92.9% → target)</div>
-      <div class="savings-box">
-        <div class="slabel">OTIF 2026 actual</div>
-        <div class="svalue confirm" style="color:var(--amber)">92.9%</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Lead time externo USA/CAN</div>
-        <div class="svalue confirm" style="color:var(--amber)">14 días</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro en penalidades / servicio</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Dato crítico faltante</div>
-        <div class="action-item"><span class="action-icon">🟡</span>Solicitar a Customer Service: detalle OTIF por cliente y semana + penalidades aplicadas</div>
-        <div class="action-item"><span class="action-icon">→</span>183 rutas SKU-mercado disponibles en Delivery Lead Time</div>
-      </div>
-    </div>
-
-    <div id="detail-L19" class="detail-content">
-      <div class="detail-tag pilar4">PILAR 04 · PLANEACIÓN</div>
-      <div class="detail-name">Optimización Subcontratistas (3 activos)</div>
-      <div class="detail-section">
-        <div class="detail-section-title">Contexto</div>
-        <div class="detail-value">De 6–7 subcontratistas reducido a 3 activos</div>
-        <div class="detail-value" style="color:var(--muted); margin-top:4px; font-size:11px">Mattel provee: moldes, resina y pigmentos · Subcon aporta: máquinas y mano de obra</div>
-      </div>
-      <div class="savings-box">
-        <div class="slabel">Costo subcontratistas / rendimiento</div>
-        <div class="svalue missing">No disponible — sin datos</div>
-      </div>
-      <div class="savings-box" style="margin-top:8px">
-        <div class="slabel">Ahorro potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
-      </div>
-      <div class="detail-section" style="margin-top:14px">
-        <div class="detail-section-title">Acción</div>
-        <div class="action-item"><span class="action-icon">🔴</span>Solicitar data de los 3 subcontratistas activos: producción, calidad, tiempos</div>
-        <div class="action-item"><span class="action-icon">→</span>Alberto Candia tiene background automotriz — referente para subcon análisis</div>
-      </div>
-    </div>
-
-  </div><!-- end detail-panel -->
-
-</div><!-- end main -->
-
-<!-- SAVINGS TRACKER -->
-<div class="savings-tracker">
-  <div class="st-label">Progreso hacia $500K</div>
-  <div class="st-confirmed">✅ Baseline confirmado: $318K rework</div>
-  <div class="st-validate">⚠️ Capital potencial: a cuantificar</div>
-  <div class="st-bar">
-    <div class="st-fill" style="width: 63.6%"></div>
-  </div>
-  <div style="font-family: var(--font-mono); font-size: 9px; color: var(--muted); margin-top: 4px;">63.6% del baseline identificado · gap requiere workshop</div>
-</div>
-
-<script>
-  // Detail panel logic
-  const detailIds = ['L1','L2','L3','L4','L5','L6','L7','L8','L9','L10','L11','L12','L13','L14','L15','L16','L17','L18','L19'];
-  let activeCard = null;
-
-  function showDetail(id) {
-    // Hide all
-    document.getElementById('detail-empty').style.display = 'none';
-    detailIds.forEach(did => {
-      const el = document.getElementById('detail-' + did);
-      if (el) el.classList.remove('active');
-      const card = document.getElementById('card-' + did);
-      if (card) card.classList.remove('selected');
-    });
-    // Show selected
-    const detail = document.getElementById('detail-' + id);
-    if (detail) detail.classList.add('active');
-    const card = document.getElementById('card-' + id);
-    if (card) card.classList.add('selected');
-    activeCard = id;
-  }
-
-  // Animate progress bar on load
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const bar = document.getElementById('main-progress-bar');
-      if (bar) bar.style.width = '63.6%';
-      const pct = document.getElementById('pct-display');
-      if (pct) pct.textContent = '63.6% baseline identificado';
-    }, 300);
-  });
-
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (!activeCard) return;
-    const idx = detailIds.indexOf(activeCard);
-    if (e.key === 'ArrowDown' && idx < detailIds.length - 1) showDetail(detailIds[idx + 1]);
-    if (e.key === 'ArrowUp' && idx > 0) showDetail(detailIds[idx - 1]);
-  });
-</script>
+<footer>
+  Kaizen Institute México &middot; All Rights Reserved &middot; Confidencial
+</footer>
 
 </body>
 </html>
