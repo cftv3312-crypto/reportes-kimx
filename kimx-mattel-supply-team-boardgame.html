@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supply Chain Team — Board Game | VSA Mattel Montoi</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#162240;--navy2:#1E2F54;--red:#D63429;--red-lt:#FCEAE9;--red-dk:#8C1A14;
+  --cream:#F0EBE1;--warm:#E5DDCF;--white:#FFFFFF;--muted:#8A8070;--border:#D0C8BC;
+  --green:#2E7D32;--green-lt:#E8F5E9;--green-dk:#1B4D1E;
+  --amber:#B45309;--amber-lt:#FEF3C7;--amber-dk:#78350F;
+  --blue:#1E40AF;--blue-lt:#DBEAFE;--blue-dk:#1E3A8A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.4;}
+.header{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;text-transform:uppercase;color:var(--white);letter-spacing:1px;line-height:1;}
+.header-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:5px;}
+.header-badge{background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:3px;white-space:nowrap;}
+.mission-section{background:var(--navy2);padding:18px 32px;display:flex;gap:12px;align-items:stretch;}
+.mission-intro{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding-right:8px;}
+.mission-intro-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
+.mission-intro-sub{font-size:9px;color:rgba(255,255,255,0.35);margin-top:5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.mission-card{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--red);border-radius:4px;padding:12px 16px;}
+.mission-card .ask-to{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:5px;}
+.mission-card .q-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.mission-card .question{font-size:11.5px;color:rgba(255,255,255,0.78);font-style:italic;line-height:1.45;}
+.main{padding:24px 32px 8px;}
+.zone-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:22px;}
+.zone-pip{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.zone-name{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted);}
+.zone-line{flex:1;height:1px;background:var(--border);}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px;}
+.player-card{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow 0.18s,transform 0.18s;}
+.player-card:hover{box-shadow:0 5px 22px rgba(22,34,64,0.14);transform:translateY(-2px);}
+.player-card.leader{border-width:2px;}
+.card-stripe{height:5px;}
+.card-body{padding:12px 14px 10px;}
+.card-header-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;line-height:1.1;color:var(--navy);}
+.role-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0;margin-left:8px;margin-top:3px;}
+.card-title{font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:500;}
+.section-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:3px;}
+.owns-text{font-size:11.5px;color:var(--navy);line-height:1.4;margin-bottom:10px;}
+.question-box{background:var(--cream);border-radius:4px;padding:8px 10px;margin-bottom:10px;}
+.question-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:3px;}
+.question-text{font-size:11px;color:var(--navy);font-style:italic;line-height:1.4;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--warm);padding-top:8px;}
+.day-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.day-badge{font-size:8.5px;font-weight:700;letter-spacing:0.5px;padding:2px 7px;border-radius:2px;background:var(--warm);color:var(--navy);text-transform:uppercase;}
+.day-badge.key{background:var(--navy);color:white;}
+.day-badge.all{background:var(--red);color:white;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+/* Zone: Command */
+.z-cmd .card-stripe{background:var(--navy);} .z-cmd.leader{border-color:var(--navy);}
+.z-cmd .role-badge{background:var(--navy);color:white;} .z-cmd .dot{background:var(--navy);}
+.pip-cmd{background:var(--navy);}
+/* Zone: NPI */
+.z-npi .card-stripe{background:var(--amber);} .z-npi.leader{border-color:var(--amber);}
+.z-npi .role-badge{background:var(--amber-lt);color:var(--amber-dk);} .z-npi .dot{background:var(--amber);}
+.z-npi .question-box{background:var(--amber-lt);} .pip-npi{background:var(--amber);}
+/* Zone: Logistics */
+.z-log .card-stripe{background:var(--blue);}
+.z-log .role-badge{background:var(--blue-lt);color:var(--blue-dk);} .z-log .dot{background:var(--blue);}
+.pip-log{background:var(--blue);}
+/* Zone: Shipping */
+.z-shp .card-stripe{background:var(--green);}
+.z-shp .role-badge{background:var(--green-lt);color:var(--green-dk);} .z-shp .dot{background:var(--green);}
+.pip-shp{background:var(--green);}
+/* Zone: Procurement */
+.z-prc .card-stripe{background:#059669;}
+.z-prc .role-badge{background:#D1FAE5;color:#064E3B;} .z-prc .dot{background:#059669;}
+.pip-prc{background:#059669;}
+/* Timeline */
+.timeline-wrap{padding:0 32px;}
+.timeline-section{background:var(--navy);border-radius:8px;padding:18px 22px;margin-top:28px;}
+.timeline-header{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
+.timeline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.tday{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:5px;padding:11px 13px;}
+.tday-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:2px;}
+.tday-date{font-size:9.5px;color:rgba(255,255,255,0.4);margin-bottom:8px;}
+.tday-focus{font-size:11px;color:white;font-weight:600;margin-bottom:8px;line-height:1.3;}
+.tday-pills{display:flex;flex-direction:column;gap:3px;}
+.tpill{font-size:9px;color:rgba(255,255,255,0.65);padding:3px 8px;background:rgba(255,255,255,0.07);border-radius:3px;}
+.tpill.hot{color:white;background:var(--red);}
+.footer{padding:14px 22px;border-top:1px solid var(--border);background:var(--cream);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;text-align:center;margin-top:28px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-label">VSA Mattel Montoi &middot; 11&ndash;15 Mayo 2026</div>
+    <div class="header-title">Supply Chain Team &mdash; Board Game</div>
+    <div class="header-sub">Plan de juego &middot; 11 participantes &middot; $500K USD en oportunidades de ahorro</div>
+  </div>
+  <div class="header-badge">JC Torres &middot; Facilitador Principal</div>
+</div>
+
+<div class="mission-section">
+  <div class="mission-intro">
+    <div class="mission-intro-label">3 Preguntas<br>que abren todo</div>
+    <div class="mission-intro-sub">Hacer el Lunes</div>
+  </div>
+  <div class="mission-card">
+    <div class="ask-to">&rarr; Elizabeth Neri</div>
+    <div class="q-name">Desviaciones del Schedule</div>
+    <div class="question">&ldquo;&iquest;Con qu&eacute; frecuencia se generan desviaciones al schedule congelado y cu&aacute;ntos d&iacute;as de anticipaci&oacute;n tiene el aviso t&iacute;picamente?&rdquo;</div>
+  </div>
+  <div class="mission-card">
+    <div class="ask-to">&rarr; Dionicio Zuniga</div>
+    <div class="q-name">NPIs Activos</div>
+    <div class="question">&ldquo;&iquest;Cu&aacute;ntos NPIs activos tienes corriendo simult&aacute;neamente hoy y cu&aacute;l es el % que llega a producci&oacute;n fuera del readiness est&aacute;ndar?&rdquo;</div>
+  </div>
+  <div class="mission-card">
+    <div class="ask-to">&rarr; Marcela Tovar</div>
+    <div class="q-name">Inventario en Hold</div>
+    <div class="question">&ldquo;&iquest;Cu&aacute;ntos m&sup2; estimas que est&aacute; ocupando el inventario en hold esperando autorizaci&oacute;n de disposici&oacute;n corporativa?&rdquo;</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="zone-header">
+    <div class="zone-pip pip-cmd"></div>
+    <div class="zone-name">Comando &amp; Soporte</div>
+    <div class="zone-line"></div>
+  </div>
+  <div class="cards-grid">
+    <div class="player-card z-cmd leader">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Carlos Gutierrez</div><div class="role-badge">Leader</div></div>
+        <div class="card-title">Manager Industrial Engineering</div>
+        <div class="section-label">Qu&eacute; aporta</div>
+        <div class="owns-text">Validaci&oacute;n de hip&oacute;tesis y firma de n&uacute;meros del future state. Ve el sistema completo. Desbloquea tensiones entre &aacute;reas.</div>
+        <div class="question-box">
+          <div class="question-label">C&oacute;mo usarlo</div>
+          <div class="question-text">No atascarle en detalles. Usarlo para alinear decisiones y validar cada n&uacute;mero antes de que entre al business case.</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge all">Todos los d&iacute;as</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-cmd">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Zuleiby Juarez</div><div class="role-badge">Co-facilitadora</div></div>
+        <div class="card-title">Lean Engineer</div>
+        <div class="section-label">Qu&eacute; aporta</div>
+        <div class="owns-text">Apoyo t&eacute;cnico Lean dentro del equipo Mattel. Conoce el lenguaje, puede co-facilitar el mapeo y mantener el pace del grupo.</div>
+        <div class="question-box">
+          <div class="question-label">C&oacute;mo usarla</div>
+          <div class="question-text">Tratarla como extensi&oacute;n del equipo KIMX. Delegar captura de datos y facilitaci&oacute;n de sub-grupos.</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge all">Todos los d&iacute;as</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone-header">
+    <div class="zone-pip pip-npi"></div>
+    <div class="zone-name">NPI &mdash; Causa Ra&iacute;z</div>
+    <div class="zone-line"></div>
+  </div>
+  <div class="cards-grid">
+    <div class="player-card z-npi leader">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Dionicio Zuniga</div><div class="role-badge">&#9873; Causa Ra&iacute;z</div></div>
+        <div class="card-title">Manager NPI</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">D&iacute;as promedio de retraso entre frozen schedule y ejecuci&oacute;n real. NPIs activos simult&aacute;neos. % que llega fuera de readiness est&aacute;ndar.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta de apertura</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos NPIs activos tienes corriendo simult&aacute;neamente y cu&aacute;l es el % que llega a producci&oacute;n fuera de readiness?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: deep dive</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-npi">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Elizabeth Neri</div><div class="role-badge">Datos Duros</div></div>
+        <div class="card-title">Master Planner</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Tasas de violaci&oacute;n del periodo congelado. Frecuencia de cambios NPI. Variabilidad de demanda. Inventory excess y expediting costs.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta de apertura</div>
+          <div class="question-text">&ldquo;&iquest;Con qu&eacute; frecuencia se generan desviaciones al schedule congelado y cu&aacute;ntos d&iacute;as de anticipaci&oacute;n tiene el aviso?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone-header">
+    <div class="zone-pip pip-log"></div>
+    <div class="zone-name">Log&iacute;stica &amp; Almac&eacute;n</div>
+    <div class="zone-line"></div>
+  </div>
+  <div class="cards-grid">
+    <div class="player-card z-log">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Jorge Pineda</div><div class="role-badge">Flujo Materiales</div></div>
+        <div class="card-title">Manager Logistics</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Distancias recorridas, frecuencia de reabastecimiento, interacci&oacute;n montacargas/peatones. Spaghetti diagram del flujo actual.</div>
+        <div class="question-box">
+          <div class="question-label">C&oacute;mo usarlo</div>
+          <div class="question-text">Par directo en shopfloor el martes. Ir con &eacute;l para medir el spaghetti diagram del flujo de materiales.</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-log">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Marcela Tovar</div><div class="role-badge">Espacio</div></div>
+        <div class="card-title">Manager Warehouse</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">m&sup2; de inventario en hold, congesti&oacute;n de almac&eacute;n, waste de movimiento. Ya tiene la soluci&oacute;n en mente: layout + tugger train.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta de apertura</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos m&sup2; estimas que ocupa el inventario en hold esperando autorizaci&oacute;n de disposici&oacute;n?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: dise&ntilde;o futuro</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-log">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Nereyda Ruiz</div><div class="role-badge">Recepci&oacute;n</div></div>
+        <div class="card-title">Assoc Manager Receiving Operations</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Tiempos de recepci&oacute;n, procesos de inspecci&oacute;n, recepciones de emergencia fuera de ciclo generadas por NPI.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta clave</div>
+          <div class="question-text">&ldquo;&iquest;Con qu&eacute; frecuencia llegan recepciones no programadas por cambios de NPI o urgencias de producci&oacute;n?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-log">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Gerardo Matias</div><div class="role-badge">L&iacute;nea</div></div>
+        <div class="card-title">Assembly Supervisor</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Tiempo de paro de l&iacute;nea por falta de material, distancias de caminata de operadores. Dato central para BC de supermercados.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta clave</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntas veces al turno paran las l&iacute;neas esperando material y cu&aacute;nto tiempo dura esa espera en promedio?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge">Mi&eacute;: training</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone-header">
+    <div class="zone-pip pip-shp"></div>
+    <div class="zone-name">Shipping &amp; Calidad</div>
+    <div class="zone-line"></div>
+  </div>
+  <div class="cards-grid">
+    <div class="player-card z-shp">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Raul Morales</div><div class="role-badge">Shipping</div></div>
+        <div class="card-title">Sr Shipping Supervisor</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Contenedores descargados y recargados, &oacute;rdenes en hold, discrepancias de cantidad. Absorbe inestabilidad upstream &mdash; cada evento tiene costo real.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta clave</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos eventos de descarga/recarga de contenedor tuviste en el &uacute;ltimo trimestre y cu&aacute;nto tiempo toma cada uno?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-card z-shp">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Cesar Ibarra</div><div class="role-badge">Calidad</div></div>
+        <div class="card-title">Assoc Manager Quality</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Quality holds en contenedores y su impacto en shipping. Con Raul tiene el costo completo del problema de liberaci&oacute;n de embarques.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta clave</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos holds de calidad en embarques registraron en los &uacute;ltimos 3 meses y cu&aacute;l fue el costo promedio por evento?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone-header">
+    <div class="zone-pip pip-prc"></div>
+    <div class="zone-name">Procurement &amp; Gobernanza de Inventario</div>
+    <div class="zone-line"></div>
+  </div>
+  <div class="cards-grid" style="max-width:510px;">
+    <div class="player-card z-prc">
+      <div class="card-stripe"></div>
+      <div class="card-body">
+        <div class="card-header-row"><div class="card-name">Liliana Martinez</div><div class="role-badge">Gobernanza</div></div>
+        <div class="card-title">Manager Procurement</div>
+        <div class="section-label">Dato clave a extraer</div>
+        <div class="owns-text">Valor en $ del inventario obsoleto en hold esperando autorizaci&oacute;n corporativa. &Oacute;rdenes de compra canceladas o urgentes por NPI.</div>
+        <div class="question-box">
+          <div class="question-label">Pregunta clave</div>
+          <div class="question-text">&ldquo;&iquest;Cu&aacute;nto inventory en valor dollar est&aacute; en hold esperando disposici&oacute;n y hace cu&aacute;nto tiempo est&aacute; retenido en promedio?&rdquo;</div>
+        </div>
+        <div class="card-footer">
+          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="timeline-wrap">
+  <div class="timeline-section">
+    <div class="timeline-header">Timeline &mdash; 5 d&iacute;as &middot; Qu&eacute; hace JC con el equipo Supply Chain</div>
+    <div class="timeline-grid">
+      <div class="tday">
+        <div class="tday-label">D&iacute;a 1</div>
+        <div class="tday-date">Lunes 11 Mayo</div>
+        <div class="tday-focus">Fery lidera.<br>JC observa din&aacute;mica.</div>
+        <div class="tday-pills">
+          <span class="tpill hot">Dionicio &larr; observar</span>
+          <span class="tpill hot">Elizabeth &larr; observar</span>
+          <span class="tpill">Lanzar las 3 preguntas</span>
+          <span class="tpill">Alinear con Carlos al cierre</span>
+        </div>
+      </div>
+      <div class="tday">
+        <div class="tday-label">D&iacute;a 2</div>
+        <div class="tday-date">Martes 12 Mayo</div>
+        <div class="tday-focus">Muda Hunting<br>en shopfloor.</div>
+        <div class="tday-pills">
+          <span class="tpill hot">Jorge + Marcela &larr; spaghetti</span>
+          <span class="tpill hot">Nereyda &larr; receiving</span>
+          <span class="tpill">Gerardo &larr; line-side</span>
+          <span class="tpill">Raul &larr; shipping obs.</span>
+        </div>
+      </div>
+      <div class="tday">
+        <div class="tday-label">D&iacute;a 3</div>
+        <div class="tday-date">Mi&eacute;rcoles 13 Mayo</div>
+        <div class="tday-focus">JC presenta<br>TFM Training.</div>
+        <div class="tday-pills">
+          <span class="tpill hot">Conectar con su planta</span>
+          <span class="tpill">Gerardo &larr; border of line</span>
+          <span class="tpill">Jorge + Marcela &larr; tugger</span>
+          <span class="tpill">Elizabeth &larr; pull planning</span>
+        </div>
+      </div>
+      <div class="tday">
+        <div class="tday-label">D&iacute;a 4</div>
+        <div class="tday-date">Jueves 14 Mayo</div>
+        <div class="tday-focus">&#9873; Cuantificaci&oacute;n.<br>El d&iacute;a m&aacute;s importante.</div>
+        <div class="tday-pills">
+          <span class="tpill hot">Elizabeth + Dionicio &rarr; NPI $</span>
+          <span class="tpill hot">Marcela + Jorge &rarr; layout $</span>
+          <span class="tpill hot">Raul + Cesar &rarr; shipping $</span>
+          <span class="tpill hot">Liliana &rarr; inventario $</span>
+          <span class="tpill">Carlos valida cada n&uacute;mero</span>
+        </div>
+      </div>
+      <div class="tday">
+        <div class="tday-label">D&iacute;a 5</div>
+        <div class="tday-date">Viernes 15 Mayo</div>
+        <div class="tday-focus">Presentaci&oacute;n<br>de hallazgos.</div>
+        <div class="tday-pills">
+          <span class="tpill">Current &rarr; Waste &rarr; Future</span>
+          <span class="tpill">Oportunidades de ahorro</span>
+          <span class="tpill">Sprint 10&ndash;22 semanas</span>
+          <span class="tpill hot">Cada persona co-presenta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Kaizen Institute M&eacute;xico &middot; All Rights Reserved &middot; Confidencial
+</div>
+</body>
+</html>

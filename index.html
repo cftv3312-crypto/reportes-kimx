@@ -3,322 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mattel Montoi — Entregables KIMX 2026</title>
+<title>Mattel Montoi — VSA 2026 | KAIZEN Institute México</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#162240;
-    --navy2:#1E2F54;
-    --red:#D63429;
-    --red-lt:#FCEAE9;
-    --red-dk:#8C1A14;
-    --cream:#F0EBE1;
-    --warm:#E5DDCF;
-    --white:#FFFFFF;
-    --muted:#8A8070;
-    --border:#D0C8BC;
-    --green:#2E7D32;
-    --green-lt:#E8F5E9;
-    --amber:#B45309;
-    --amber-lt:#FEF3C7;
-    --blue:#1E40AF;
-    --blue-lt:#DBEAFE;
-  }
-
-  *{box-sizing:border-box;margin:0;padding:0;}
-
-  body{
-    font-family:'Barlow',sans-serif;
-    background:var(--cream);
-    color:var(--navy);
-    font-size:14px;
-    line-height:1.5;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-  }
-
-  /* HEADER */
-  header{
-    background:var(--navy);
-    padding:28px 40px 24px;
-    display:flex;
-    align-items:flex-end;
-    gap:20px;
-    border-bottom:3px solid var(--red);
-  }
-
-  .header-bar{
-    width:4px;
-    height:52px;
-    background:var(--red);
-    border-radius:2px;
-    flex-shrink:0;
-  }
-
-  .header-text{}
-
-  .header-eyebrow{
-    font-size:9px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:2.5px;
-    color:var(--muted);
-    margin-bottom:4px;
-  }
-
-  .header-title{
-    font-family:'Barlow Condensed',sans-serif;
-    font-size:28px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    color:#fff;
-    line-height:1;
-  }
-
-  .header-title span{
-    color:var(--red);
-  }
-
-  .header-sub{
-    font-size:12px;
-    font-weight:400;
-    color:var(--warm);
-    margin-top:5px;
-    letter-spacing:0.3px;
-  }
-
-  /* MAIN */
-  main{
-    flex:1;
-    max-width:780px;
-    width:100%;
-    margin:48px auto;
-    padding:0 24px;
-  }
-
-  .section-label{
-    font-size:9px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    color:var(--red);
-    margin-bottom:20px;
-  }
-
-  /* CARDS */
-  .card{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:6px;
-    padding:24px 28px;
-    margin-bottom:14px;
-    display:flex;
-    align-items:center;
-    gap:20px;
-    text-decoration:none;
-    color:inherit;
-    transition:box-shadow 0.15s, border-color 0.15s, transform 0.1s;
-    cursor:pointer;
-  }
-
-  .card:hover{
-    border-color:var(--navy);
-    box-shadow:0 4px 16px rgba(22,34,64,0.10);
-    transform:translateY(-2px);
-  }
-
-  .card-num{
-    font-family:'Barlow Condensed',sans-serif;
-    font-size:32px;
-    font-weight:800;
-    color:var(--warm);
-    min-width:36px;
-    text-align:center;
-    line-height:1;
-    flex-shrink:0;
-  }
-
-  .card:hover .card-num{
-    color:var(--red);
-  }
-
-  .card-divider{
-    width:1px;
-    height:48px;
-    background:var(--border);
-    flex-shrink:0;
-  }
-
-  .card-body{
-    flex:1;
-  }
-
-  .card-tag{
-    font-size:8.5px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:1.8px;
-    color:var(--muted);
-    margin-bottom:5px;
-  }
-
-  .card-title{
-    font-family:'Barlow Condensed',sans-serif;
-    font-size:18px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-    color:var(--navy);
-    line-height:1.15;
-    margin-bottom:4px;
-  }
-
-  .card-desc{
-    font-size:12px;
-    color:var(--muted);
-    font-weight:400;
-  }
-
-  .card-arrow{
-    font-size:20px;
-    color:var(--border);
-    flex-shrink:0;
-    transition:color 0.15s, transform 0.15s;
-  }
-
-  .card:hover .card-arrow{
-    color:var(--red);
-    transform:translateX(4px);
-  }
-
-  /* divider */
-  .divider{
-    border:none;
-    border-top:1px solid var(--border);
-    margin:36px 0 28px;
-  }
-
-  .meta-block{
-    display:flex;
-    gap:32px;
-    flex-wrap:wrap;
-    margin-top:8px;
-  }
-
-  .meta-item{
-    display:flex;
-    flex-direction:column;
-    gap:3px;
-  }
-
-  .meta-label{
-    font-size:8.5px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:1.8px;
-    color:var(--muted);
-  }
-
-  .meta-value{
-    font-family:'Barlow Condensed',sans-serif;
-    font-size:15px;
-    font-weight:700;
-    color:var(--navy);
-    text-transform:uppercase;
-    letter-spacing:0.3px;
-  }
-
-  /* FOOTER */
-  footer{
-    padding:14px 22px;
-    border-top:1px solid var(--border);
-    background:var(--cream);
-    font-size:9px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    color:var(--muted);
-    font-weight:700;
-    text-align:center;
-  }
+:root{
+  --navy:#162240;--navy2:#1E2F54;--red:#D63429;--red-lt:#FCEAE9;--red-dk:#8C1A14;
+  --cream:#F0EBE1;--warm:#E5DDCF;--white:#FFFFFF;--muted:#8A8070;--border:#D0C8BC;
+  --green:#2E7D32;--green-lt:#E8F5E9;--green-dk:#1B4D1E;
+  --amber:#B45309;--amber-lt:#FEF3C7;--amber-dk:#78350F;
+  --blue:#1E40AF;--blue-lt:#DBEAFE;--blue-dk:#1E3A8A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.5;min-height:100vh}
+.header{background:var(--navy)}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:18px 40px 14px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.ki-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:2px}
+.ki-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:1px;color:#fff;text-transform:uppercase}
+.header-badge{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:2px}
+.header-hero{padding:28px 40px 32px}
+.client-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.header-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#fff;line-height:1.1;margin-bottom:8px}
+.header-hero h1 span{color:var(--red)}
+.subtitle{font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:0.3px}
+.header-meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.meta-pill{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:3px;padding:7px 16px}
+.mp-label{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.mp-value{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;letter-spacing:0.5px}
+.intro{padding:32px 40px 8px}
+.intro-text{max-width:700px;font-size:13.5px;color:var(--navy);line-height:1.65}
+.intro-text strong{font-weight:600}
+.section-label{padding:16px 40px 10px;display:flex;align-items:center;gap:12px}
+.section-label span{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:0 40px 40px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:box-shadow 0.18s,transform 0.18s;cursor:pointer;text-decoration:none;display:block}
+.card:hover{box-shadow:0 6px 24px rgba(22,34,64,0.13);transform:translateY(-2px)}
+.card-top{height:5px}
+.card-body{padding:20px 22px 16px}
+.card-number{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:0.4px;color:var(--navy);line-height:1.15;margin-bottom:8px}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:16px}
+.card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--warm);padding:12px 22px}
+.card-tag{font-size:8.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+.card-cta{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:5px}
+.card-cta svg{transition:transform 0.15s}
+.card:hover .card-cta svg{transform:translateX(3px)}
+.tag-analysis{background:var(--blue-lt);color:var(--blue-dk)}
+.tag-business{background:var(--green-lt);color:var(--green-dk)}
+.tag-quality{background:var(--red-lt);color:var(--red-dk)}
+.tag-supply{background:var(--amber-lt);color:var(--amber-dk)}
+.tag-strategy{background:rgba(22,34,64,0.08);color:var(--navy)}
+.accent-blue .card-top{background:var(--blue)}
+.accent-green .card-top{background:var(--green)}
+.accent-red .card-top{background:var(--red)}
+.accent-amber .card-top{background:var(--amber)}
+.accent-navy .card-top{background:var(--navy)}
+.disclaimer{margin:16px 40px 8px;padding:14px 18px;background:var(--blue-lt);border-left:3px solid var(--blue);border-radius:2px}
+.disclaimer p{font-size:11.5px;color:var(--blue-dk);line-height:1.6}
+.disclaimer strong{font-weight:600}
+.footer{padding:14px 22px;border-top:1px solid var(--border);background:var(--cream);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;text-align:center}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-bar"></div>
-  <div class="header-text">
-    <div class="header-eyebrow">Kaizen Institute México · Entregables de Proyecto</div>
-    <div class="header-title">Mattel <span>Montoi</span></div>
-    <div class="header-sub">VSA Gemba Walk 2026 — Reportes y herramientas del engagement</div>
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="ki-label">Kaizen Institute México</div>
+      <div class="ki-name">Value Stream Analysis · Mattel Montoi</div>
+    </div>
+    <div class="header-badge">Confidencial</div>
   </div>
-</header>
+  <div class="header-hero">
+    <div class="client-label">Cliente · Planta</div>
+    <h1>Mattel <span>Montoi</span><br>Entregables VSA 2026</h1>
+    <div class="subtitle">General Escobedo, Nuevo León, México &nbsp;·&nbsp; Workshop May 11–15, 2026</div>
+    <div class="header-meta">
+      <div class="meta-pill"><div class="mp-label">Engagement</div><div class="mp-value">VSA · 5 días</div></div>
+      <div class="meta-pill"><div class="mp-label">Entregables</div><div class="mp-value">5 documentos</div></div>
+      <div class="meta-pill"><div class="mp-label">Equipo</div><div class="mp-value">KI MX + KI SG</div></div>
+      <div class="meta-pill"><div class="mp-label">Objetivo ahorro</div><div class="mp-value">$500K USD</div></div>
+    </div>
+  </div>
+</div>
 
-<main>
+<div class="intro">
+  <p class="intro-text">
+    Este portal concentra los <strong>entregables analíticos del Value Stream Analysis</strong> realizado en la planta Montoi de Mattel. 
+    Cada documento corresponde a un eje de análisis distinto: hipótesis de ingeniería, business case de BOM, calidad productiva, 
+    cadena de suministro y árbol de valor estratégico. Haz clic en cualquier tarjeta para abrir el reporte.
+  </p>
+</div>
 
-  <div class="section-label">Entregables disponibles — 3 documentos</div>
+<div class="disclaimer">
+  <p><strong>Nota de uso:</strong> Este portal contiene información operativa confidencial. Las proyecciones marcadas como <em>"dato a validar"</em> requieren confirmación con datos reales de planta antes de presentarse a dirección.</p>
+</div>
 
-  <a class="card" href="kimx-mattel-bom-business-case.html" target="_blank">
-    <div class="card-num">01</div>
-    <div class="card-divider"></div>
+<div class="section-label"><span>Entregables analíticos · Mayo 2026</span></div>
+
+<div class="grid">
+
+  <a class="card accent-blue" href="[ANALYSIS] Hipotesis Senior Engineer.html">
+    <div class="card-top"></div>
     <div class="card-body">
-      <div class="card-tag">Business Case · VSA</div>
+      <div class="card-number">Entregable 01</div>
+      <div class="card-title">Hipótesis Senior Engineer</div>
+      <div class="card-desc">Hipótesis de mejora formuladas por ingeniería senior. Mapeo de oportunidades por proceso, estimación de impacto y priorización por palanca de valor en molding y ensamble.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-tag tag-analysis">Análisis · Ingeniería</span>
+      <span class="card-cta">Abrir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </div>
+  </a>
+
+  <a class="card accent-green" href="kimx-mattel-bom-business-case.html">
+    <div class="card-top"></div>
+    <div class="card-body">
+      <div class="card-number">Entregable 02</div>
       <div class="card-title">BOM Business Case</div>
-      <div class="card-desc">Análisis de valor sobre estructura de materiales — Mattel Monterrey 2026</div>
+      <div class="card-desc">Business case basado en análisis de Bill of Materials. Componentes críticos, costos de inventario y oportunidades de reducción de lead time por SKU foco.</div>
     </div>
-    <div class="card-arrow">→</div>
+    <div class="card-footer">
+      <span class="card-tag tag-business">Business Case · BOM</span>
+      <span class="card-cta">Abrir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </div>
   </a>
 
-  <a class="card" href="kimx-mattel-quality-boardgame.html" target="_blank">
-    <div class="card-num">02</div>
-    <div class="card-divider"></div>
+  <a class="card accent-red" href="kimx-mattel-quality-boardgame.html">
+    <div class="card-top"></div>
     <div class="card-body">
-      <div class="card-tag">Business Case · Calidad</div>
-      <div class="card-title">Quality Crisis Boardgame</div>
-      <div class="card-desc">Business case interactivo sobre crisis de calidad — Mattel Montoi</div>
+      <div class="card-number">Entregable 03</div>
+      <div class="card-title">Quality Boardgame</div>
+      <div class="card-desc">Dashboard de calidad productiva. Rework, scrap y defectos por área. Costo de baja calidad ($318K USD base) y oportunidades de auto-calidad en molding y ensamble.</div>
     </div>
-    <div class="card-arrow">→</div>
+    <div class="card-footer">
+      <span class="card-tag tag-quality">Calidad · Rework</span>
+      <span class="card-cta">Abrir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </div>
   </a>
 
-  <a class="card" href="value_tree_mattel_montoi.html" target="_blank">
-    <div class="card-num">03</div>
-    <div class="card-divider"></div>
+  <a class="card accent-amber" href="kimx-mattel-supply-team-boardgame.html">
+    <div class="card-top"></div>
     <div class="card-body">
-      <div class="card-tag">Análisis Estratégico · VSA</div>
-      <div class="card-title">Value Tree</div>
-      <div class="card-desc">Árbol de valor del engagement — Mattel Montoi VSA 2026</div>
+      <div class="card-number">Entregable 04</div>
+      <div class="card-title">Supply Team Boardgame</div>
+      <div class="card-desc">Análisis de cadena de suministro y planeación. Inventarios, OTIF 92.9%, flujos de material, estrategia EPEI y oportunidades en compras y programación.</div>
     </div>
-    <div class="card-arrow">→</div>
+    <div class="card-footer">
+      <span class="card-tag tag-supply">Supply Chain · Planeación</span>
+      <span class="card-cta">Abrir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </div>
   </a>
 
-  <hr class="divider">
+  <a class="card accent-navy" href="value_tree_mattel_montoi.html">
+    <div class="card-top"></div>
+    <div class="card-body">
+      <div class="card-number">Entregable 05</div>
+      <div class="card-title">Value Tree Montoi</div>
+      <div class="card-desc">Árbol de valor integral de la planta. Palancas de mejora, interrelación de KPIs y mapa visual de iniciativas con impacto en lead time, espacio y costo sostenible.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-tag tag-strategy">Estrategia · VSA</span>
+      <span class="card-cta">Abrir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </div>
+  </a>
 
-  <div class="section-label">Información del engagement</div>
-  <div class="meta-block">
-    <div class="meta-item">
-      <span class="meta-label">Cliente</span>
-      <span class="meta-value">Mattel Montoi</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Planta</span>
-      <span class="meta-value">Escobedo, NL</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Metodología</span>
-      <span class="meta-value">VSA Gemba Walk</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Año</span>
-      <span class="meta-value">2026</span>
-    </div>
-  </div>
+</div>
 
-</main>
-
-<footer>
+<div class="footer">
   Kaizen Institute México &middot; All Rights Reserved &middot; Confidencial
-</footer>
+</div>
 
 </body>
 </html>

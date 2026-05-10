@@ -206,8 +206,8 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
       <div class="sep"></div>
       <div class="gkpi">
         <div class="gkpi-label">Annual Rework Cost</div>
-        <div class="gkpi-val red">$318K</div>
-        <div class="gkpi-sub">2025 documented</div>
+        <div class="gkpi-val red">$357K</div>
+        <div class="gkpi-sub">AM 6.0 budget · Q1 real: $39K</div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
@@ -386,6 +386,19 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 <!-- ══════════════════════════════════════════ -->
 <div class="panel" id="panel-simB">
 
+  <!-- RWK Real Data Banner -->
+  <div style="background:var(--navy2);border-radius:4px;padding:14px 20px;margin-bottom:18px;display:flex;gap:28px;align-items:center;flex-wrap:wrap">
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;white-space:nowrap">📋 DATOS REALES — AM 6.0 RWK BUDGET</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Presupuesto Anual</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$357,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">AM 6.0 total</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Forecast Mensual</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:rgba(255,255,255,.8)">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">/mes</div></div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Ene</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">1,862</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Feb</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">,143</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Mar</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">0,995</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Total Real Q1</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FF7B75">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">vs $87K forecast (−55%)</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Balance al Mar</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$318,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">restante del AM 6.0</div></div>
+    </div>
+  </div>
   <div class="section-label">Simulator B — Financial Impact</div>
   <div class="section-title">Cost of Quality Calculator</div>
   <div class="section-sub">Set your PPMS target and production parameters. See the full financial impact of quality improvement — defects prevented, rework eliminated, and annual savings unlocked.</div>
@@ -919,7 +932,7 @@ function resetInterventions() {
 function updateSimA() {
   const BUDGET = 150000;
   const BASE_PPMS = 90.6;
-  const REWORK_COST = 318000;
+  const REWORK_COST = 357000; // AM 6.0 annual budget · Q1 real=$39K · Balance=$318K
   const VOL = 5490000;
   const selected = [...selectedInterventions].map(id=>interventions.find(i=>i.id===id));
   const totalCost = selected.reduce((s,iv)=>s+iv.cost,0);

@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hipótesis Senior Engineer — Mattel Montoi VSA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#162240;--navy2:#1E2F54;--red:#D63429;--red-lt:#FCEAE9;--red-dk:#8C1A14;
+  --cream:#F0EBE1;--warm:#E5DDCF;--white:#FFFFFF;--muted:#8A8070;--border:#D0C8BC;
+  --green:#2E7D32;--green-lt:#E8F5E9;--green-dk:#1B4D1E;
+  --amber:#B45309;--amber-lt:#FEF3C7;--amber-dk:#78350F;
+  --blue:#1E40AF;--blue-lt:#DBEAFE;--blue-dk:#1E3A8A;
+  --teal:#0E7490;--teal-lt:#CFFAFE;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.5}
+
+.doc-header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100}
+.header-bar{background:var(--red);height:4px}
+.header-inner{padding:24px 36px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.header-eyebrow{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:800;text-transform:uppercase;letter-spacing:1px;line-height:1.05}
+.header-title span{color:var(--red)}
+.header-sub{font-size:13px;color:rgba(255,255,255,.7);margin-top:6px;font-weight:300}
+
+.lang-toggle{display:flex;background:rgba(255,255,255,.08);border-radius:4px;padding:3px;gap:2px}
+.lang-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.6);padding:7px 14px;cursor:pointer;border:none;background:transparent;border-radius:3px;transition:all .2s}
+.lang-btn.active{background:var(--red);color:#fff}
+.lang-btn:hover:not(.active){color:#fff}
+
+.nav-strip{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:0;overflow-x:auto;padding:0 24px}
+.nav-tab{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5);padding:14px 18px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;border:none;background:transparent}
+.nav-tab:hover{color:rgba(255,255,255,.85)}
+.nav-tab.active{color:#fff;border-bottom-color:var(--red)}
+
+.content{max-width:1280px;margin:0 auto;padding:28px 24px}
+.section{display:none}
+.section.active{display:block}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.kpi-card.red::before{background:var(--red)}
+.kpi-card.green::before{background:var(--green)}
+.kpi-card.amber::before{background:var(--amber)}
+.kpi-card.blue::before{background:var(--blue)}
+.kpi-card.navy::before{background:var(--navy)}
+.kpi-card.teal::before{background:var(--teal)}
+.kpi-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--navy);margin:4px 0 2px;line-height:1}
+.kpi-value.danger{color:var(--red)}
+.kpi-value.good{color:var(--green)}
+.kpi-value.warn{color:var(--amber)}
+.kpi-note{font-size:10px;color:var(--muted)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.card-header{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--warm);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card-header .pill{font-size:9px;padding:2px 8px;border-radius:2px;font-family:'Barlow',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.pill-red{background:var(--red-lt);color:var(--red-dk)}
+.pill-green{background:var(--green-lt);color:var(--green-dk)}
+.pill-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.pill-blue{background:var(--blue-lt);color:var(--blue-dk)}
+.pill-teal{background:var(--teal-lt);color:var(--teal)}
+.pill-navy{background:var(--navy);color:#fff}
+
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:6px}
+.section-eyebrow{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:4px}
+.section-desc{font-size:13px;color:var(--muted);margin-bottom:20px;max-width:820px;line-height:1.6}
+
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:var(--navy);color:#fff;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:10px 10px;text-align:left}
+.data-table td{padding:8px 10px;border-bottom:1px solid var(--warm);color:var(--navy);vertical-align:top}
+.data-table tr:nth-child(even) td{background:#faf8f5}
+.data-table tr:hover td{background:var(--blue-lt)}
+.badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:2px 7px;border-radius:2px}
+.badge-red{background:var(--red-lt);color:var(--red-dk)}
+.badge-green{background:var(--green-lt);color:var(--green-dk)}
+.badge-amber{background:var(--amber-lt);color:var(--amber-dk)}
+.badge-blue{background:var(--blue-lt);color:var(--blue-dk)}
+.badge-teal{background:var(--teal-lt);color:var(--teal)}
+.badge-navy{background:var(--navy);color:#fff}
+
+/* Hypothesis cards */
+.hyp-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:14px;background:var(--white);transition:box-shadow .2s}
+.hyp-card:hover{box-shadow:0 2px 8px rgba(22,34,64,.08)}
+.hyp-head{padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;gap:16px}
+.hyp-head:hover{background:#fdf9f5}
+.hyp-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:800;color:var(--red);line-height:1;flex-shrink:0;width:60px}
+.hyp-info{flex:1;min-width:0}
+.hyp-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;color:var(--navy);line-height:1.2;margin-bottom:6px}
+.hyp-axes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.hyp-meta{font-size:11px;color:var(--muted)}
+.hyp-toggle{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;flex-shrink:0;align-self:center}
+.hyp-body{display:none;padding:0 20px 20px;border-top:1px solid var(--warm);background:#fdfcfa}
+.hyp-body.open{display:block;padding-top:16px}
+.hyp-section{margin-bottom:16px}
+.hyp-section-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.hyp-section-title::before{content:'';display:block;width:18px;height:2px;background:var(--red)}
+.hyp-section p{font-size:13px;line-height:1.6;color:var(--navy)}
+.hyp-section ul,.hyp-section ol{padding-left:20px;font-size:13px;line-height:1.6}
+.hyp-section li{margin-bottom:4px}
+.hyp-section blockquote{border-left:3px solid var(--red);padding:6px 14px;margin:8px 0;font-style:italic;color:var(--navy);background:var(--red-lt);font-size:12px}
+.kpi-mini{display:inline-block;background:var(--navy);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;padding:3px 8px;border-radius:2px;margin:0 2px}
+
+.mech-list{counter-reset:mech;list-style:none;padding:0}
+.mech-list li{counter-increment:mech;position:relative;padding-left:36px;margin-bottom:8px;font-size:13px}
+.mech-list li::before{content:counter(mech);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px}
+
+/* Priority matrix */
+.matrix{position:relative;background:var(--white);border:1px solid var(--border);border-radius:4px;padding:30px 30px 30px 60px;margin-bottom:14px;height:420px}
+.matrix-y-label{position:absolute;left:15px;top:50%;transform:rotate(-90deg) translateX(50%);transform-origin:left center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.matrix-x-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.matrix-grid{position:relative;width:100%;height:100%;border-left:2px solid var(--navy);border-bottom:2px solid var(--navy)}
+.matrix-grid::before,.matrix-grid::after{content:'';position:absolute;background:var(--warm)}
+.matrix-grid::before{left:50%;top:0;bottom:0;width:1px}
+.matrix-grid::after{top:50%;left:0;right:0;height:1px}
+.matrix-quadrant-label{position:absolute;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.matrix-dot{position:absolute;width:42px;height:42px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;transform:translate(-50%,50%);cursor:pointer;border:2px solid #fff;box-shadow:0 2px 6px rgba(214,52,41,.4);transition:transform .2s}
+.matrix-dot:hover{transform:translate(-50%,50%) scale(1.15);z-index:10}
+.matrix-dot.navy{background:var(--navy)}
+.matrix-dot.amber{background:var(--amber)}
+.matrix-dot.teal{background:var(--teal)}
+
+/* Day-by-day plan */
+.day-plan{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.day-card{background:var(--navy);color:#fff;border-radius:4px;padding:14px;position:relative;overflow:hidden}
+.day-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red)}
+.day-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5)}
+.day-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;margin:4px 0 10px;line-height:1.2}
+.day-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.day-tag{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px}
+.day-detail{font-size:11px;color:rgba(255,255,255,.75);line-height:1.4}
+
+/* Chips */
+.chip{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 8px;border-radius:2px}
+.chip-savings{background:#FEF3C7;color:#78350F;border:1px solid #FBBF24}
+.chip-molding{background:#DBEAFE;color:#1E3A8A;border:1px solid #60A5FA}
+.chip-flow{background:#CFFAFE;color:#0E7490;border:1px solid #22D3EE}
+.chip-space{background:#E8F5E9;color:#1B4D1E;border:1px solid #66BB6A}
+.chip-leadtime{background:#FCEAE9;color:#8C1A14;border:1px solid #EF4444}
+.chip-quick{background:var(--green);color:#fff}
+.chip-struct{background:var(--navy);color:#fff}
+
+.note-box{background:var(--cream);border-left:4px solid var(--red);padding:14px 18px;margin:12px 0;border-radius:0 4px 4px 0;font-size:13px;color:var(--navy)}
+.note-box strong{color:var(--red);text-transform:uppercase;letter-spacing:1px;font-size:11px;display:block;margin-bottom:4px}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:768px){.two-col,.three-col,.day-plan{grid-template-columns:1fr}.matrix{height:340px}}
+
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:18px 24px;font-size:11px;text-align:center;margin-top:30px;font-family:'Barlow',sans-serif}
+footer strong{color:#fff;letter-spacing:1px}
+
+[data-en],[data-es]{display:none}
+[data-lang="es"] [data-es]{display:initial}
+[data-lang="en"] [data-en]{display:initial}
+[data-lang="es"] .hyp-section [data-es],[data-lang="en"] .hyp-section [data-en]{display:block}
+[data-lang="es"] .hyp-title [data-es],[data-lang="en"] .hyp-title [data-en],[data-lang="es"] .hyp-meta [data-es],[data-lang="en"] .hyp-meta [data-en]{display:inline}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="header-bar"></div>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow"><span data-es>KIMX Consulting · VSA Mattel Montoi · Mayo 2026</span><span data-en>KIMX Consulting · VSA Mattel Montoi · May 2026</span></div>
+      <div class="header-title">
+        <span data-es>Hipótesis <span>Senior Engineer</span></span>
+        <span data-en>Senior <span>Engineer Hypotheses</span></span>
+      </div>
+      <div class="header-sub">
+        <span data-es>Cross-data analysis · Insights de Fery · Framework Pull Planning · Pre-VSA</span>
+        <span data-en>Cross-data analysis · Fery insights · Pull Planning framework · Pre-VSA</span>
+      </div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <nav class="nav-strip">
+    <button class="nav-tab active" onclick="setTab('exec')"><span data-es>Resumen Ejecutivo</span><span data-en>Executive Summary</span></button>
+    <button class="nav-tab" onclick="setTab('method')"><span data-es>Metodología</span><span data-en>Methodology</span></button>
+    <button class="nav-tab" onclick="setTab('hypotheses')"><span data-es>7 Hipótesis</span><span data-en>7 Hypotheses</span></button>
+    <button class="nav-tab" onclick="setTab('matrix')"><span data-es>Priorización</span><span data-en>Prioritization</span></button>
+    <button class="nav-tab" onclick="setTab('plan')"><span data-es>Plan VSA 5 Días</span><span data-en>5-Day VSA Plan</span></button>
+  </nav>
+</header>
+
+<main class="content">
+
+<!-- ====== EXECUTIVE SUMMARY ====== -->
+<div class="section active" id="exec">
+  <div class="section-eyebrow"><span data-es>Resumen Ejecutivo</span><span data-en>Executive Summary</span></div>
+  <h2 class="section-title"><span data-es>El sistema, no las piezas</span><span data-en>The system, not the parts</span></h2>
+  <p class="section-desc">
+    <span data-es>Análisis cruzado de 3 archivos cuantitativos (BOM, Production, Raw Material) con insights cualitativos de Fery (Singapur), entrevistas operativas (Neri, Victor, Lucy, Arka) y framework Pull Planning. Resultado: <strong>7 hipótesis senior</strong> alineadas a los 3 ejes del VSA — $500K USD savings, Molding Stability/OEE, Supply Chain Sync/Material Flow.</span>
+    <span data-en>Cross-analysis of 3 quantitative files (BOM, Production, Raw Material) with qualitative insights from Fery (Singapore), operational interviews (Neri, Victor, Lucy, Arka) and Pull Planning framework. Outcome: <strong>7 senior hypotheses</strong> aligned to the 3 VSA axes — $500K USD savings, Molding Stability/OEE, Supply Chain Sync/Material Flow.</span>
+  </p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red"><div class="kpi-label"><span data-es>Hipótesis senior</span><span data-en>Senior hypotheses</span></div><div class="kpi-value">7</div><div class="kpi-note"><span data-es>Cruces de data + cualitativo</span><span data-en>Data + qualitative crosses</span></div></div>
+    <div class="kpi-card navy"><div class="kpi-label"><span data-es>Quick Wins identificados</span><span data-en>Quick Wins identified</span></div><div class="kpi-value">4</div><div class="kpi-note"><span data-es>H1 · H4a · H5a · H6</span><span data-en>H1 · H4a · H5a · H6</span></div></div>
+    <div class="kpi-card amber"><div class="kpi-label"><span data-es>Hipótesis estructurales</span><span data-en>Structural hypotheses</span></div><div class="kpi-value">5</div><div class="kpi-note"><span data-es>H2 · H3 · H4b · H5b · H7</span><span data-en>H2 · H3 · H4b · H5b · H7</span></div></div>
+    <div class="kpi-card teal"><div class="kpi-label"><span data-es>Datos cruzados</span><span data-en>Cross-data points</span></div><div class="kpi-value">7,830+</div><div class="kpi-note"><span data-es>Filas Raw Material + 10 hojas Producción + BOM</span><span data-en>Raw Material rows + 10 Production sheets + BOM</span></div></div>
+    <div class="kpi-card blue"><div class="kpi-label"><span data-es>Target VSA</span><span data-en>VSA Target</span></div><div class="kpi-value">$500K</div><div class="kpi-note"><span data-es>USD ahorro mínimo (no negociable)</span><span data-en>USD minimum savings (non-negotiable)</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span data-es>Hallazgos cruzados más relevantes</span><span data-en>Most relevant cross-findings</span><span class="pill pill-red">DATA</span></div>
+    <div class="three-col">
+      <div>
+        <div class="hyp-section-title"><span data-es>Concentración inventario</span><span data-en>Inventory concentration</span></div>
+        <p style="font-size:13px"><span data-es>Una sola parte (<code>0013-0107</code> Screw) concentra el <span class="kpi-mini">39.2%</span> del valor total ($3.54M de $9.02M). 7 partes = 82%.</span><span data-en>A single part (<code>0013-0107</code> Screw) holds <span class="kpi-mini">39.2%</span> of total value ($3.54M of $9.02M). 7 parts = 82%.</span></p>
+      </div>
+      <div>
+        <div class="hyp-section-title"><span data-es>WIP atrapado</span><span data-en>Trapped WIP</span></div>
+        <p style="font-size:13px"><span data-es><span class="kpi-mini">28.8%</span> del valor de inventario ($2.60M) está en WIP — anormal para benchmark (<15%). 30 partes con WIP negativo (errores SAP).</span><span data-en><span class="kpi-mini">28.8%</span> of inventory value ($2.60M) sits in WIP — abnormal vs benchmark (<15%). 30 parts with negative WIP (SAP errors).</span></p>
+      </div>
+      <div>
+        <div class="hyp-section-title"><span data-es>Forecast roto</span><span data-en>Broken forecast</span></div>
+        <p style="font-size:13px"><span data-es>ExF subestima <span class="kpi-mini">3.6×</span> global, <span class="kpi-mini">11×</span> en Mega. CSCH = Producción real exacta → no hay variance medible.</span><span data-en>ExF undercasts <span class="kpi-mini">3.6×</span> globally, <span class="kpi-mini">11×</span> for Mega. CSCH = Production exact → no measurable variance.</span></p>
+      </div>
+      <div>
+        <div class="hyp-section-title"><span data-es>$0 Cst STD</span><span data-en>$0 Cst STD</span></div>
+        <p style="font-size:13px"><span data-es><span class="kpi-mini">33 partes</span> con qty positiva pero costo $0 → <span class="kpi-mini">7.88M unidades</span> sin valuar. Los $9M reportados están subestimados.</span><span data-en><span class="kpi-mini">33 parts</span> with positive qty but $0 cost → <span class="kpi-mini">7.88M units</span> unvalued. Reported $9M is understated.</span></p>
+      </div>
+      <div>
+        <div class="hyp-section-title"><span data-es>Ramp-up lento</span><span data-en>Slow ramp-up</span></div>
+        <p style="font-size:13px"><span data-es>Marcas top tardan <span class="kpi-mini">8.8 a 17.5 sem</span> en alcanzar 80% del peak. En 25 semanas activas = 30-70% en sub-régimen.</span><span data-en>Top brands take <span class="kpi-mini">8.8 to 17.5 wks</span> to reach 80% peak. In 25 active weeks = 30-70% in sub-regime.</span></p>
+      </div>
+      <div>
+        <div class="hyp-section-title"><span data-es>Sourcing concentrado</span><span data-en>Concentrated sourcing</span></div>
+        <p style="font-size:13px"><span data-es>Top 3 proveedores resina = <span class="kpi-mini">46% del gasto</span> top-10. JKG84 tiene 94 plásticos moldeados (61% del BOM).</span><span data-en>Top 3 resin suppliers = <span class="kpi-mini">46% of</span> top-10 spend. JKG84 has 94 molded plastics (61% of BOM).</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span data-es>Las 7 hipótesis</span><span data-en>The 7 hypotheses</span><span class="pill pill-navy">ÍNDICE</span></div>
+    <table class="data-table">
+      <thead><tr>
+        <th>#</th>
+        <th><span data-es>Hipótesis</span><span data-en>Hypothesis</span></th>
+        <th><span data-es>Eje VSA</span><span data-en>VSA Axis</span></th>
+        <th><span data-es>Tipo</span><span data-en>Type</span></th>
+        <th>Owner</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>H1</strong></td><td><span data-es>Concentración extrema en <code>0013-0107</code> (1 screw = 39% inventario)</span><span data-en>Extreme concentration in <code>0013-0107</code> (1 screw = 39% inventory)</span></td><td><span class="chip chip-savings">$</span> <span class="chip chip-flow">FLOW</span></td><td><span class="chip chip-quick">Quick Win</span></td><td>Arka + <span data-es>Compras</span><span data-en>Procurement</span></td></tr>
+        <tr><td><strong>H2</strong></td><td><span data-es>Forecast signal roto (ExF 3.6×–11× undercast; CSCH = Prod)</span><span data-en>Broken forecast signal (ExF 3.6×–11× undercast; CSCH = Prod)</span></td><td><span class="chip chip-flow">FLOW</span> <span class="chip chip-molding">MOLDING</span></td><td><span class="chip chip-struct">Estructural</span></td><td>Arka + Demand Planning</td></tr>
+        <tr><td><strong>H3</strong></td><td><span data-es>Ramp-up lento (8.8–17.5 sem) compounding NPI Compressed Readiness</span><span data-en>Slow ramp-up (8.8–17.5 wks) compounding NPI Compressed Readiness</span></td><td><span class="chip chip-molding">MOLDING</span> <span class="chip chip-flow">FLOW</span></td><td><span class="chip chip-struct">Estructural</span></td><td>Lucy + Engineering + Fátima</td></tr>
+        <tr><td><strong>H4</strong></td><td><span data-es>Utilización 7.7% es engaño de master data, no realidad operativa</span><span data-en>7.7% utilization is master data artifact, not operational reality</span></td><td><span class="chip chip-molding">MOLDING</span></td><td><span class="chip chip-quick">Quick</span> + <span class="chip chip-struct">Estr.</span></td><td>Victor + Lucy</td></tr>
+        <tr><td><strong>H5</strong></td><td><span data-es>Receiving bottleneck (5/20 trailers) ↔ 28.8% del valor en WIP</span><span data-en>Receiving bottleneck (5/20 trailers) ↔ 28.8% of value in WIP</span></td><td><span class="chip chip-flow">FLOW</span> <span class="chip chip-space">ESPACIO</span></td><td><span class="chip chip-quick">Quick</span> + <span class="chip chip-struct">Estr.</span></td><td>Neri + Edgar + <span data-es>Materiales</span><span data-en>Materials</span></td></tr>
+        <tr><td><strong>H6</strong></td><td><span data-es>Phantom BOMs + $0 Cst STD distorsionan MRP → compras erradas</span><span data-en>Phantom BOMs + $0 Cst STD distort MRP → wrong purchases</span></td><td><span class="chip chip-savings">$</span> <span class="chip chip-flow">FLOW</span></td><td><span class="chip chip-quick">Quick Win</span></td><td>IT + <span data-es>Finanzas + Compras</span><span data-en>Finance + Procurement</span></td></tr>
+        <tr><td><strong>H7</strong></td><td><span data-es>Single-source en top 3 resinas (46% gasto top-10) = riesgo paro Molding</span><span data-en>Single-source in top 3 resins (46% top-10 spend) = Molding stoppage risk</span></td><td><span class="chip chip-savings">$</span> <span class="chip chip-molding">MOLDING</span></td><td><span class="chip chip-struct">Estructural</span></td><td><span data-es>Compras</span><span data-en>Procurement</span> + Lucy</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <strong><span data-es>Nota estratégica</span><span data-en>Strategic note</span></strong>
+    <span data-es>El caso de los $500K USD se construye apilando ahorros de <strong>H1 + H5 + H6 + H7</strong> (cost-out directo y working capital release) más la <strong>capacidad recuperada por H3 + H4</strong> (margen via output adicional), todo sostenido por <strong>H2</strong> (signal correcto). Ninguna hipótesis aislada llega a $500K — el target requiere intervención sistémica. Toda magnitud cuantitativa quedará registrada como "dato a validar de ahorro" hasta confirmación post-VSA.</span>
+    <span data-en>The $500K USD case is built by stacking savings from <strong>H1 + H5 + H6 + H7</strong> (direct cost-out and working capital release) plus <strong>recovered capacity from H3 + H4</strong> (margin via additional output), all sustained by <strong>H2</strong> (correct signal). No single hypothesis reaches $500K alone — the target requires systemic intervention. All quantitative magnitudes recorded as "TBV savings figure" until post-VSA confirmation.</span>
+  </div>
+</div>
+
+<!-- ====== METHODOLOGY ====== -->
+<div class="section" id="method">
+  <div class="section-eyebrow"><span data-es>Cómo se construyó este análisis</span><span data-en>How this analysis was built</span></div>
+  <h2 class="section-title"><span data-es>Metodología de cruce</span><span data-en>Crossing methodology</span></h2>
+  <p class="section-desc">
+    <span data-es>Cinco cruces sistemáticos entre datos cuantitativos validados, hallazgos cualitativos de campo (Fery + entrevistas operativas) y el framework Pull Planning de Kaizen Institute. Aplicando el principio rector de Nithia: "people decide before understanding the current state" — cada hipótesis lleva su evidencia explícita y mecanismo causal trazable.</span>
+    <span data-en>Five systematic crosses between validated quantitative data, qualitative field findings (Fery + operational interviews) and the Kaizen Institute Pull Planning framework. Applying Nithia's guiding principle: "people decide before understanding the current state" — each hypothesis carries explicit evidence and traceable causal mechanism.</span>
+  </p>
+
+  <div class="card">
+    <div class="card-header"><span data-es>Cruces ejecutados</span><span data-en>Crosses executed</span></div>
+    <table class="data-table">
+      <thead><tr>
+        <th><span data-es>Cruce</span><span data-en>Cross</span></th>
+        <th><span data-es>Qué se buscó</span><span data-en>What was sought</span></th>
+        <th><span data-es>Hallazgo principal</span><span data-en>Key finding</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>BOM ↔ Raw Material</strong></td><td><span data-es>Cobertura, comunalidad, phantom BOMs</span><span data-en>Coverage, commonality, phantom BOMs</span></td><td><span data-es>2 phantom BOMs en JKG84; 33 parts con $0 Cst STD; 6 partes compartidas con bottleneck en SN100C</span><span data-en>2 phantom BOMs in JKG84; 33 parts with $0 Cst STD; 6 shared parts bottlenecked at SN100C</span></td></tr>
+        <tr><td><strong>Raw Material ↔ Production</strong></td><td><span data-es>Inventario vs demanda real</span><span data-en>Inventory vs real demand</span></td><td><span data-es>1 screw concentra 39% del valor; 28.8% en WIP</span><span data-en>1 screw holds 39% of value; 28.8% in WIP</span></td></tr>
+        <tr><td><strong>Production ↔ Pull Planning</strong></td><td><span data-es>Lead time, ramp-up, forecast accuracy</span><span data-en>Lead time, ramp-up, forecast accuracy</span></td><td><span data-es>LT uniforme 14d sin variación (default, no medición); ExF subestima 3.6×; ramp-up 8.8–17.5 sem</span><span data-en>Uniform 14d LT no variation (default, not measurement); ExF undercasts 3.6×; ramp-up 8.8–17.5 wks</span></td></tr>
+        <tr><td><strong>Datos ↔ Insights Fery</strong></td><td><span data-es>Validación cualitativa</span><span data-en>Qualitative validation</span></td><td><span data-es>Receiving 5/20 trailers; 50% racks con obsoleto; NPI Compressed Readiness</span><span data-en>Receiving 5/20 trailers; 50% racks with obsolete; NPI Compressed Readiness</span></td></tr>
+        <tr><td><strong>Pol (lead time) ↔ Concentración</strong></td><td><span data-es>Política de stock</span><span data-en>Stock policy</span></td><td><span data-es>Pol=56d concentra 49% del valor en 15 parts → política conservadora ata capital</span><span data-en>Pol=56d concentrates 49% of value in 15 parts → conservative policy ties up capital</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><span data-es>Fuentes cuantitativas</span><span data-en>Quantitative sources</span><span class="pill pill-blue">DATA</span></div>
+      <ul style="padding-left:18px;line-height:1.8">
+        <li><strong>BOM_Analysis_Hipotesis.xlsx</strong> — <span data-es>hojas Análisis BOM + BOM (excluida hoja Hipótesis)</span><span data-en>Análisis BOM + BOM sheets (Hipótesis sheet excluded)</span></li>
+        <li><strong>Production Analisis.xlsx</strong> — <span data-es>10 hojas: Production History, LT Distribution, Dashboard, Critical SKUs, Concentration 80-20, Ramp Analysis, Forecast vs Actual, Seasonality, Raw Materials X-Ref</span><span data-en>10 sheets: Production History, LT Distribution, Dashboard, Critical SKUs, Concentration 80-20, Ramp Analysis, Forecast vs Actual, Seasonality, Raw Materials X-Ref</span></li>
+        <li><strong>Raw Material Analysis.xlsx</strong> — <span data-es>5 hojas, 7,597 filas en Raw Material</span><span data-en>5 sheets, 7,597 rows in Raw Material</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><span data-es>Fuentes cualitativas</span><span data-en>Qualitative sources</span><span class="pill pill-amber">FIELD</span></div>
+      <ul style="padding-left:18px;line-height:1.8">
+        <li><span data-es>Visita Fery 8-may-2026 — entrevistas Nithia, Jorge, Warehouse, Planeación</span><span data-en>Fery's visit May 8 — interviews with Nithia, Jorge, Warehouse, Planning</span></li>
+        <li><span data-es>Entrevistas Fery 9-may-2026 — Neri, Victor, Lucy, Arka</span><span data-en>Fery interviews May 9 — Neri, Victor, Lucy, Arka</span></li>
+        <li><span data-es>MOM Alineación VSA 9-may-2026 — Fery + Fátima + Alberto</span><span data-en>VSA Alignment MoM May 9 — Fery + Fátima + Alberto</span></li>
+        <li><strong>Pull Planning Training DIEHL CONTROLS</strong> + <strong>Production System Introduction (KI)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong><span data-es>Reglas aplicadas</span><span data-en>Rules applied</span></strong>
+    <ul style="padding-left:18px;line-height:1.7;margin-top:6px">
+      <li><span data-es>❌ Cero referencias a fuentes excluidas por project instructions</span><span data-en>❌ Zero references to sources excluded by project instructions</span></li>
+      <li><span data-es>❌ Cero ahorros cuantitativos asumidos → siempre "dato a validar de ahorro"</span><span data-en>❌ Zero assumed quantitative savings → always "TBV savings figure"</span></li>
+      <li><span data-es>✅ Toda cifra cuantitativa lleva su fuente (archivo + hoja)</span><span data-en>✅ Every quantitative figure carries its source (file + sheet)</span></li>
+      <li><span data-es>✅ Toda hipótesis lleva mecanismo causal explícito (5 Whys preliminar)</span><span data-en>✅ Every hypothesis carries explicit causal mechanism (preliminary 5 Whys)</span></li>
+      <li><span data-es>✅ Vínculos sistémicos declarados entre hipótesis</span><span data-en>✅ Systemic links declared between hypotheses</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== HYPOTHESES ====== -->
+<div class="section" id="hypotheses">
+  <div class="section-eyebrow"><span data-es>Las 7 hipótesis senior</span><span data-en>The 7 senior hypotheses</span></div>
+  <h2 class="section-title"><span data-es>Click en cada hipótesis para expandir</span><span data-en>Click each hypothesis to expand</span></h2>
+  <p class="section-desc">
+    <span data-es>Cada hipótesis incluye: enunciado, evidencia cuantitativa cruzada, evidencia cualitativa, mecanismo causal (5 Whys preliminar), magnitud potencial (siempre "dato a validar"), validación a ejecutar en el VSA, y owner sugerido.</span>
+    <span data-en>Each hypothesis includes: statement, cross-quantitative evidence, qualitative evidence, causal mechanism (preliminary 5 Whys), potential magnitude (always "TBV"), validation to execute in VSA, and suggested owner.</span>
+  </p>
+
+  <!-- H1 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H1</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>Concentración extrema en una sola parte (<code>0013-0107</code>) revela política de stock no calibrada</span>
+          <span data-en>Extreme concentration in a single part (<code>0013-0107</code>) reveals uncalibrated stock policy</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-savings">💰 Savings</span><span class="chip chip-flow">📦 SC Flow</span><span class="chip chip-quick">Quick Win</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> Arka (Supply Chain) + <span data-es>Compras</span><span data-en>Procurement</span></div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>La parte <code>0013-0107</code> "Screw 3.5mm 10mm CBV76" concentra el <strong>39.2% del valor de inventario total</strong> ($3.54M de $9.02M), con 3.19M unidades en stock. Si extendemos el análisis, <strong>7 partes (3% del catálogo) concentran el 82% del valor</strong>. Esta concentración no es resultado de demanda — es resultado de una política de reposición Pol=56 días aplicada a parts de bajo costo unitario y MOQ alto, lo que genera meses de cobertura sobre la demanda real.</p>
+        <p data-en>Part <code>0013-0107</code> "Screw 3.5mm 10mm CBV76" holds <strong>39.2% of total inventory value</strong> ($3.54M of $9.02M), with 3.19M units in stock. Extending the analysis, <strong>7 parts (3% of catalog) hold 82% of value</strong>. This concentration is not demand-driven — it results from a Pol=56-day replenishment policy applied to low-unit-cost / high-MOQ parts, generating months of coverage over real demand.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cuantitativa</span><span data-en>Quantitative evidence</span></div>
+        <table class="data-table">
+          <tr><td><span data-es>Valor <code>0013-0107</code> en stock</span><span data-en><code>0013-0107</code> stock value</span></td><td><strong>$3,540,051</strong></td><td>Raw Material Analysis · Raw Material</td></tr>
+          <tr><td><span data-es>% del valor total</span><span data-en>% of total value</span></td><td><strong>39.2%</strong></td><td><span data-es>Cálculo cruzado</span><span data-en>Cross-calculation</span></td></tr>
+          <tr><td><span data-es>Cantidad en stock</span><span data-en>Stock quantity</span></td><td>3,187,053 <span data-es>unidades</span><span data-en>units</span></td><td>Raw Material</td></tr>
+          <tr><td>Cst STD <span data-es>unitario</span><span data-en>unit</span></td><td>$6.51</td><td>Raw Material</td></tr>
+          <tr><td>Pol (lead time policy)</td><td>56 <span data-es>días</span><span data-en>days</span></td><td>Raw Material</td></tr>
+          <tr><td><span data-es>Top 7 parts → 82% del valor</span><span data-en>Top 7 parts → 82% of value</span></td><td>7 <span data-es>partes</span><span data-en>parts</span></td><td><span data-es>Pareto cruzado</span><span data-en>Cross Pareto</span></td></tr>
+          <tr><td><span data-es>Pol=56d concentra 49% en 15 parts</span><span data-en>Pol=56d concentrates 49% in 15 parts</span></td><td>15 parts</td><td><span data-es>Cross-tabla Pol × valor</span><span data-en>Pol × value cross-tab</span></td></tr>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Cuando alguien dice 'mi lead time es 40 días', rara vez sabe cuánto es cada componente." — Pull Planning training</blockquote>
+        <blockquote data-en>"When someone says 'my lead time is 40 days', they rarely know what each component is." — Pull Planning training</blockquote>
+        <blockquote data-es>"People decide the answer before understanding the current state." — Nithia (GM)</blockquote>
+        <blockquote data-en>"People decide the answer before understanding the current state." — Nithia (GM)</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Mecanismo causal (5 Whys preliminar)</span><span data-en>Causal mechanism (preliminary 5 Whys)</span></div>
+        <ol class="mech-list">
+          <li data-es>¿Por qué 39% del valor en una pieza? → Pol=56d × MOQ alto × consumo alto</li>
+          <li data-en>Why 39% of value in one part? → Pol=56d × high MOQ × high consumption</li>
+          <li data-es>¿Por qué Pol=56d? → Política heredada del proveedor sin re-evaluación</li>
+          <li data-en>Why Pol=56d? → Supplier-inherited policy without re-evaluation</li>
+          <li data-es>¿Por qué no se re-evalúa? → Sin mecanismo S&OP que cuestione parámetros base</li>
+          <li data-en>Why not re-evaluated? → No S&OP mechanism questioning base parameters</li>
+          <li data-es>¿Por qué sin S&OP que cuestione? → Foco operativo en firefighting (per Fery)</li>
+          <li data-en>Why no S&OP challenging? → Operational focus on firefighting (per Fery)</li>
+          <li data-es>¿Por qué firefighting? → Inestabilidad upstream (NPI, planeación, molding) absorbe ancho de banda gerencial</li>
+          <li data-en>Why firefighting? → Upstream instability (NPI, planning, molding) absorbs management bandwidth</li>
+        </ol>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Magnitud potencial</span><span data-en>Potential magnitude</span></div>
+        <p><strong style="color:var(--red)"><span data-es>dato a validar de ahorro</span><span data-en>TBV savings figure</span></strong></p>
+        <p data-es><em>Hipótesis a probar:</em> si el consumo real implica 12-16 semanas de cobertura (vs Pol=56d), reducir cobertura a 4-6 semanas libera dato a validar de capital de trabajo y espacio físico de almacén.</p>
+        <p data-en><em>Hypothesis to test:</em> if real consumption implies 12-16 weeks of coverage (vs Pol=56d), reducing to 4-6 weeks releases TBV in working capital and warehouse physical space.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 1-2)</span><span data-en>VSA Validation (Day 1-2)</span></div>
+        <ul>
+          <li data-es>Spot-check físico de cantidad real vs SAP</li>
+          <li data-en>Physical spot-check of real quantity vs SAP</li>
+          <li data-es>Cruzar yield del part con producción real anual → derivar consumo semanal</li>
+          <li data-en>Cross part yield with real annual production → derive weekly consumption</li>
+          <li data-es>Entrevistar Compras: ¿MOQ del proveedor obliga a este nivel? ¿Hay alternativa?</li>
+          <li data-en>Interview Procurement: does supplier MOQ force this level? Any alternative?</li>
+          <li data-es>Calcular días de cobertura real = Stock ÷ (Consumo semanal × 7)</li>
+          <li data-en>Calculate real days of cover = Stock ÷ (Weekly consumption × 7)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- H2 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H2</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>La señal de pronóstico está rota: ExF subestima 3.6× a 11×, y CSCH = Production por construcción</span>
+          <span data-en>The forecast signal is broken: ExF undercasts 3.6× to 11×, and CSCH = Production by construction</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-flow">📦 SC Flow</span><span class="chip chip-molding">🏭 Molding</span><span class="chip chip-struct">Estructural</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> Arka (Supply Chain) + Demand Planning</div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>El sistema de planeación opera con dos forecasts fundamentalmente incoherentes: <strong>ExF (Execution Forecast) está sistemáticamente subestimado 3.6× a 11× contra Producción real</strong>, y <strong>CSCH (Customer Schedule) = Producción exacta en el 100% de los casos</strong>, lo que indica que el schedule se ajusta al actual y no al revés. Resultado: no existe variance medible que permita aprender, mientras Procurement compra basado en señales infladas (FCH = 8.5× la producción real).</p>
+        <p data-en>The planning system operates on two fundamentally inconsistent forecasts: <strong>ExF (Execution Forecast) is systematically undercast 3.6× to 11× vs real Production</strong>, and <strong>CSCH (Customer Schedule) = exact Production in 100% of cases</strong>, which indicates schedule adjusts to actual rather than the reverse. Result: no measurable variance that enables learning, while Procurement buys against inflated signals (FCH = 8.5× real production).</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Forecast accuracy por marca</span><span data-en>Forecast accuracy by brand</span></div>
+        <table class="data-table">
+          <thead><tr><th>Brand</th><th>ExF (k)</th><th><span data-es>Producción real (k)</span><span data-en>Real Prod (k)</span></th><th>Ratio Prod/ExF</th><th>MAPE ExF</th></tr></thead>
+          <tbody>
+            <tr><td>5CA Mega</td><td>487</td><td>5,441</td><td><strong style="color:var(--red)">11.17×</strong></td><td>11.43</td></tr>
+            <tr><td>1A5 Barbie</td><td>575</td><td>2,313</td><td>4.02×</td><td>4.01</td></tr>
+            <tr><td>3C1 Infant</td><td>1,587</td><td>6,018</td><td>3.79×</td><td>3.95</td></tr>
+            <tr><td>3C6 LittleP</td><td>1,477</td><td>2,230</td><td>1.51×</td><td>1.87</td></tr>
+            <tr style="background:var(--cream)"><td><strong>TOTAL</strong></td><td><strong>4,516</strong></td><td><strong>16,262</strong></td><td><strong style="color:var(--red)">3.60×</strong></td><td>—</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:10px"><span data-es>FCH total (capacidad teórica) = </span><span data-en>Total FCH (theoretical capacity) = </span><span class="kpi-mini">139,478 k</span> = 8.57× <span data-es>la producción real</span><span data-en>real production</span>. CSCH total = 16,261 k = <span data-es>idéntico a producción</span><span data-en>identical to production</span>.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Cambios de plan diarios → materiales críticos cambian constantemente; planes completos que se cancelan después de que materiales ya fueron comprados." — Arka</blockquote>
+        <blockquote data-en>"Daily plan changes → critical materials change constantly; full plans cancelled after materials are already purchased." — Arka</blockquote>
+        <blockquote data-es>"Horario congelado de 4 semanas existe pero es violado — cambios hasta 1 semana antes de ejecución." — Planeación (Fery)</blockquote>
+        <blockquote data-en>"4-week frozen schedule exists but is violated — changes up to 1 week before execution." — Planning (Fery)</blockquote>
+        <blockquote data-es>"5% en cliente → 40% en materia prima — Efecto Látigo." — Pull Planning framework</blockquote>
+        <blockquote data-en>"5% at customer → 40% at raw material — Bullwhip Effect." — Pull Planning framework</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Mecanismo causal</span><span data-en>Causal mechanism</span></div>
+        <p data-es>ExF (parcial) + FCH (capacidad teórica máxima) + CSCH (auto-ajustado) = Procurement no tiene forecast confiable → compra "para cubrir el peor escenario" → exceso de inventario en parts críticas → WIP alto + obsoletos. Cuando el plan cambia diariamente, los pedidos ya colocados llegan sin demanda real → inventario varado → racks llenos → Receiving no descarga.</p>
+        <p data-en>ExF (partial) + FCH (max theoretical capacity) + CSCH (auto-adjusted) = Procurement has no reliable forecast → buys "to cover worst-case" → excess inventory in critical parts → high WIP + obsoletes. When plan changes daily, already-placed orders arrive without real demand → stranded inventory → full racks → Receiving cannot offload.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Vínculo sistémico</span><span data-en>Systemic link</span></div>
+        <p data-es>Este es el <strong>driver upstream</strong> de H1 (concentración inventario), H5 (Receiving bottleneck), H7 (sourcing) y de buena parte del WIP. Si la señal no se arregla, los Quick Wins regresan al estado anterior — exactamente lo que Victor reportó: "mejoras implementadas que después regresan al estado anterior".</p>
+        <p data-en>This is the <strong>upstream driver</strong> of H1 (inventory concentration), H5 (Receiving bottleneck), H7 (sourcing) and most of the WIP. If signal is not fixed, Quick Wins revert — exactly what Victor reported: "improvements implemented that later regress".</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Magnitud potencial</span><span data-en>Potential magnitude</span></div>
+        <p><strong style="color:var(--red)"><span data-es>dato a validar de ahorro</span><span data-en>TBV savings figure</span></strong></p>
+        <p data-es><em>Hipótesis a probar:</em> pasar de ExF parcial a forecast colaborativo (Sales + Plan + Ops) con tolerancias documentadas (PrL+V) reduciría sobrecompra y obsolescencia en dato a validar de USD/año.</p>
+        <p data-en><em>Hypothesis to test:</em> moving from partial ExF to collaborative forecast (Sales + Plan + Ops) with documented tolerances (PrL+V) would reduce over-buying and obsolescence by TBV USD/year.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 2-3)</span><span data-en>VSA Validation (Day 2-3)</span></div>
+        <ul>
+          <li data-es>Mapear el proceso S&OP actual: ¿quién genera ExF?, ¿con qué cadencia?, ¿con qué horizonte?</li>
+          <li data-en>Map current S&OP process: who generates ExF? what cadence? what horizon?</li>
+          <li data-es>Documentar las últimas 4 instancias de "plan cambiado a 1 semana" → root cause</li>
+          <li data-en>Document last 4 instances of "plan changed at 1 week" → root cause</li>
+          <li data-es>Diseñar el contrato PrL+V con Plan, Sales y Ops</li>
+          <li data-en>Design PrL+V contract with Plan, Sales and Ops</li>
+          <li data-es>Establecer KPI de Forecast Accuracy (MAPE rolling 8 semanas, no MAPE de ExF)</li>
+          <li data-en>Establish Forecast Accuracy KPI (rolling 8-week MAPE, not ExF MAPE)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- H3 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H3</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>Ramp-up lento (8.8 a 17.5 semanas a 80% del peak) refleja NPI Compressed Readiness — no es Molding, es upstream</span>
+          <span data-en>Slow ramp-up (8.8 to 17.5 weeks to 80% peak) reflects NPI Compressed Readiness — not Molding, it's upstream</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-molding">🏭 Molding</span><span class="chip chip-flow">📦 Flow</span><span class="chip chip-leadtime">⏱️ Lead Time</span><span class="chip chip-struct">Estructural</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> Lucy (Molding) + Engineering + Fátima</div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>Las marcas con mayor volumen tardan <strong>entre 8.8 y 17.5 semanas en alcanzar el 80% de su peak de producción</strong>. En una temporada de 25 semanas activas, esto representa <strong>30-70% del ciclo en sub-régimen</strong>. La causa raíz no es capacidad de molding ni curva de aprendizaje normal — es el patrón <strong>NPI Compressed Readiness</strong> que Fery diagnosticó: la producción inicia antes de que ingeniería, tooling, validación y materiales estén estabilizados.</p>
+        <p data-en>Higher-volume brands take <strong>between 8.8 and 17.5 weeks to reach 80% of their production peak</strong>. In a 25-active-week season, this represents <strong>30-70% of the cycle in sub-regime</strong>. Root cause is not molding capacity or normal learning curve — it's the <strong>NPI Compressed Readiness</strong> pattern Fery diagnosed: production starts before engineering, tooling, validation and materials are stabilized.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Ramp-up por marca</span><span data-en>Ramp-up by brand</span></div>
+        <table class="data-table">
+          <thead><tr><th>Brand</th><th># SKUs</th><th><span data-es>Avg Span (sem)</span><span data-en>Avg Span (wks)</span></th><th><span data-es>Sem a 80% Peak</span><span data-en>Wks to 80% Peak</span></th><th><span data-es>Avg Peak (k/sem)</span><span data-en>Avg Peak (k/wk)</span></th></tr></thead>
+          <tbody>
+            <tr><td>1BC MONSTER HIGH</td><td>2</td><td>33.5</td><td><strong style="color:var(--red)">17.5</strong></td><td>8.76</td></tr>
+            <tr><td>3J2 RideOns</td><td>5</td><td>18.4</td><td>16.6</td><td>5.90</td></tr>
+            <tr><td>3C1 Infant</td><td>84</td><td>29.7</td><td><strong style="color:var(--red)">8.8</strong></td><td>9.21</td></tr>
+            <tr><td>1A5 Barbie</td><td>16</td><td>26.9</td><td>7.7</td><td>12.68</td></tr>
+            <tr><td>5CA Mega</td><td>45</td><td>25.0</td><td>6.6</td><td>19.34</td></tr>
+            <tr><td>3C6 LittleP</td><td>55</td><td>20.2</td><td>5.5</td><td>7.83</td></tr>
+            <tr><td>3FA Thomas</td><td>3</td><td>10.7</td><td><strong style="color:var(--green)">1.0</strong></td><td>5.72</td></tr>
+            <tr style="background:var(--cream)"><td><strong>TOTAL/AVG</strong></td><td>210</td><td><strong>25.5</strong></td><td><strong>7.6</strong></td><td>11.15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Retrasos de arranque recurrentes: resina/pigmento no listo, problemas de molde, máquina, robot, tool room, soporte técnico ausente." — Lucy</blockquote>
+        <blockquote data-en>"Recurring start-up delays: resin/pigment not ready, mold/machine/robot/tool room issues, missing technical support." — Lucy</blockquote>
+        <blockquote data-es>"Solo un técnico capaz de resolver problemas de robot → cuello de botella estructural y riesgo operativo alto." — Lucy</blockquote>
+        <blockquote data-en>"Only one technician able to solve robot issues → structural bottleneck and high operational risk." — Lucy</blockquote>
+        <blockquote data-es>"Materiales llegan antes de que la producción esté lista → se almacenan sin fluir; molding ya produce mientras calidad/ingeniería aún no aprueban → inventario varado." — Neri</blockquote>
+        <blockquote data-en>"Materials arrive before production is ready → stored without flowing; molding produces while quality/engineering still pending → stranded inventory." — Neri</blockquote>
+        <blockquote data-es>"Compressed Readiness — productos entran a ejecución antes de estabilización." — Fery</blockquote>
+        <blockquote data-en>"Compressed Readiness — products enter execution before stabilization." — Fery</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Mecanismo causal</span><span data-en>Causal mechanism</span></div>
+        <p data-es>NPI mal estabilizado → primer arranque con issues → ajustes iterativos en piso → semanas perdidas en producción sub-régimen → cuando finalmente se estabiliza, el SKU ya está cerca del fin de temporada. Esto es lo que aparece en data como <strong>8.8-17.5 semanas a 80% del peak</strong>.</p>
+        <p data-en>Poorly stabilized NPI → first run with issues → iterative shop-floor adjustments → weeks lost in sub-regime production → by the time it stabilizes, SKU is near season end. This is what shows in data as <strong>8.8-17.5 weeks to 80% peak</strong>.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Magnitud potencial</span><span data-en>Potential magnitude</span></div>
+        <p><strong style="color:var(--red)"><span data-es>dato a validar de ahorro</span><span data-en>TBV savings figure</span></strong></p>
+        <p data-es><em>Hipótesis a probar:</em> si reducimos ramp-up promedio 50% (de 7.6 a 3.8 sem), recuperamos ~3-4 semanas/SKU de capacidad efectiva. Aplicado al portafolio activo (210 SKUs), el output adicional incremental representa una palanca importante para el target.</p>
+        <p data-en><em>Hypothesis to test:</em> if average ramp-up is cut 50% (from 7.6 to 3.8 wks), we recover ~3-4 weeks/SKU of effective capacity. Applied to active portfolio (210 SKUs), incremental output is a major lever for the target.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 3-4)</span><span data-en>VSA Validation (Day 3-4)</span></div>
+        <ul>
+          <li data-es>Cruzar fechas First Prod con engineering-release, tooling-ready y resin-ready</li>
+          <li data-en>Cross First Prod dates with engineering-release, tooling-ready, resin-ready</li>
+          <li data-es>Para 5 SKUs piloto: medir tiempo desde "primer disparo molde" a "primera unidad OK"</li>
+          <li data-en>For 5 pilot SKUs: measure time from "first mold shot" to "first OK unit"</li>
+          <li data-es>Diseñar NPI Readiness Gate (semáforo) antes de autorizar primera producción</li>
+          <li data-en>Design NPI Readiness Gate (traffic light) before authorizing first production</li>
+          <li data-es>Definir métrica: "Time to 80% peak" como KPI maestro de Engineering+Plan</li>
+          <li data-en>Define metric: "Time to 80% peak" as Engineering+Plan master KPI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- H4 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H4</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>La utilización 7.7% es un artefacto de master data, no una realidad operativa — el OEE real está oculto</span>
+          <span data-en>The 7.7% utilization is a master data artifact, not operational reality — real OEE is hidden</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-molding">🏭 Molding</span><span class="chip chip-quick">Quick Win</span><span class="chip chip-struct">+ Estructural</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> Victor (Lean) + Lucy (Molding)</div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>La utilización agregada reportada de <strong>7.7%</strong> es engañosa por tres razones combinadas: (a) <strong>5CA Mega tiene Line Rate = 0</strong> en master data — sus 149 SKUs (33% de la producción) están fuera del cálculo; (b) <strong>FCH = 139M unidades</strong> representa capacidad teórica nominal, no operable; (c) la utilización por SKU diluye porque solo 211 de 475 SKUs produjeron. La utilización real medida en piso por máquina/turno probablemente esté en rangos típicos de molding (50-75%), pero hoy no existe una medición que lo demuestre.</p>
+        <p data-en>The aggregate reported utilization of <strong>7.7%</strong> is misleading for three combined reasons: (a) <strong>5CA Mega has Line Rate = 0</strong> in master data — its 149 SKUs (33% of production) are excluded from the calculation; (b) <strong>FCH = 139M units</strong> represents nominal theoretical capacity, not operable; (c) per-SKU utilization dilutes because only 211 of 475 SKUs produced. Real shop-floor utilization per machine/shift is likely in typical molding ranges (50-75%), but no measurement today demonstrates it.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Utilización por marca</span><span data-en>Utilization by brand</span></div>
+        <table class="data-table">
+          <thead><tr><th>Brand</th><th># SKUs</th><th>Line Rate (k/wk)</th><th><span data-es>FY Prod / Line Rate</span><span data-en>FY Prod / Line Rate</span></th><th><span data-es>Util. aparente</span><span data-en>Apparent util.</span></th></tr></thead>
+          <tbody>
+            <tr><td>1A5 Barbie</td><td>26</td><td>348.2</td><td>6.64</td><td><strong>12.78%</strong></td></tr>
+            <tr><td>1BC MONSTER HIGH</td><td>2</td><td>18.7</td><td>7.23</td><td>13.91%</td></tr>
+            <tr><td>3C1 Infant</td><td>131</td><td>1,579</td><td>3.81</td><td>7.33%</td></tr>
+            <tr><td>3C6 LittleP</td><td>142</td><td>1,836</td><td>1.21</td><td><strong style="color:var(--red)">2.33%</strong></td></tr>
+            <tr><td>3FA Thomas</td><td>3</td><td>40.5</td><td>1.50</td><td>2.88%</td></tr>
+            <tr><td>3J2 RideOns</td><td>12</td><td>163.6</td><td>0.39</td><td>0.75%</td></tr>
+            <tr style="background:var(--red-lt)"><td><strong>5CA Mega</strong></td><td>149</td><td><strong>0 ⚠️</strong></td><td>0</td><td><strong>0% ⚠️</strong></td></tr>
+            <tr style="background:var(--cream)"><td><strong>TOTAL</strong></td><td>473</td><td>4,057</td><td>4.01</td><td><strong>7.71%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Mejoras implementadas que después regresan al estado anterior." — Victor</blockquote>
+        <blockquote data-en>"Improvements implemented that later regress." — Victor</blockquote>
+        <blockquote data-es>"Débil registro histórico de causas de retraso → baja trazabilidad, difícil análisis." — Lucy</blockquote>
+        <blockquote data-en>"Weak historical record of delay causes → low traceability, hard analysis." — Lucy</blockquote>
+        <blockquote data-es>"Máquinas esperando decisiones de ingeniería." — Fery</blockquote>
+        <blockquote data-en>"Machines waiting for engineering decisions." — Fery</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA</span><span data-en>VSA Validation</span></div>
+        <p style="font-weight:700;color:var(--green-dk)"><span data-es>Quick Win — corregir master:</span><span data-en>Quick Win — fix master:</span></p>
+        <ul>
+          <li data-es>Auditar Line Rate de 5CA Mega — fuente única de verdad con Engineering</li>
+          <li data-en>Audit 5CA Mega Line Rate — single source of truth with Engineering</li>
+          <li data-es>Distinguir FCH (teórica) vs Demonstrated Capacity (operable) en el reporte</li>
+          <li data-en>Distinguish FCH (theoretical) vs Demonstrated Capacity (operable) in report</li>
+        </ul>
+        <p style="font-weight:700;color:var(--navy);margin-top:10px"><span data-es>Estructural — medir OEE real:</span><span data-en>Structural — measure real OEE:</span></p>
+        <ul>
+          <li data-es>Seleccionar 3-5 líneas piloto (1 por brand top)</li>
+          <li data-en>Select 3-5 pilot lines (1 per top brand)</li>
+          <li data-es>Capturar manual durante 1 turno: Tiempo planeado, Paros (causa), Velocidad real, Defectos</li>
+          <li data-en>Manually capture during 1 shift: Planned time, Stops (cause), Real speed, Defects</li>
+          <li data-es>Calcular OEE_real y compararlo con utilización reportada</li>
+          <li data-en>Calculate OEE_real and compare to reported utilization</li>
+          <li data-es>Establecer dashboard semanal de OEE por línea — no por SKU</li>
+          <li data-en>Establish weekly OEE dashboard per line — not per SKU</li>
+        </ul>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Por qué importa para los $500K</span><span data-en>Why it matters for $500K</span></div>
+        <p data-es>La narrativa "utilización 7.7%" es defensiva (no creíble para Mattel corporativo); la narrativa "OEE real X% con palancas Y, Z, W" es accionable. Esta hipótesis es prerrequisito de credibilidad para cualquier business case de Molding.</p>
+        <p data-en>The "7.7% utilization" narrative is defensive (not credible to Mattel corporate); "real OEE X% with levers Y, Z, W" is actionable. This hypothesis is a credibility prerequisite for any Molding business case.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- H5 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H5</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>El colapso de Receiving (5/20 trailers) y los $2.60M (28.8%) atrapados en WIP son la misma falla: el sistema no fluye</span>
+          <span data-en>The Receiving collapse (5/20 trailers) and $2.60M (28.8%) trapped in WIP are the same failure: the system doesn't flow</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-flow">📦 Flow</span><span class="chip chip-space">📐 Espacio</span><span class="chip chip-quick">Quick Win</span><span class="chip chip-struct">+ Estructural</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> Neri (Receiving) + Edgar Luna (KIMX) + <span data-es>Materiales</span><span data-en>Materials</span></div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es><strong>El 28.8% del valor de inventario ($2.60M) está en WIP</strong> — un nivel anormalmente alto para benchmarks de toy manufacturing (típicamente <15%). Combinado con <strong>30 partes con WIP negativo</strong> (errores transaccionales) y los <strong>50% de racks con inventario lento u obsoleto</strong> que reportó Neri, la señal es clara: <strong>el problema de Receiving (5 vs 20 trailers/día) no es de capacidad de descarga — es de espacio ocupado y de gobierno de inventario</strong>. No hay dónde poner lo nuevo porque lo viejo no se libera.</p>
+        <p data-en><strong>28.8% of inventory value ($2.60M) is in WIP</strong> — abnormally high vs toy manufacturing benchmarks (typically <15%). Combined with <strong>30 parts with negative WIP</strong> (transactional errors) and the <strong>50% of racks with slow or obsolete inventory</strong> Neri reported, the signal is clear: <strong>the Receiving problem (5 vs 20 trailers/day) is not unloading capacity — it's occupied space and inventory governance</strong>. There's nowhere to put new because old isn't released.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Distribución del valor</span><span data-en>Value distribution</span></div>
+        <table class="data-table">
+          <thead><tr><th><span data-es>Ubicación</span><span data-en>Location</span></th><th>$</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Receiving</td><td>945,084</td><td>10.5%</td></tr>
+            <tr><td><strong>Store</strong></td><td><strong>5,468,230</strong></td><td><strong>60.6%</strong></td></tr>
+            <tr style="background:var(--red-lt)"><td><strong>WIP</strong> ⚠️</td><td><strong>2,598,049</strong></td><td><strong>28.8%</strong></td></tr>
+            <tr><td>Quarantine</td><td>10,551</td><td>0.1%</td></tr>
+            <tr style="background:var(--cream)"><td><strong>TOTAL OH</strong></td><td><strong>9,021,915</strong></td><td><strong>100%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Anomalías cuantitativas</span><span data-en>Quantitative anomalies</span></div>
+        <ul>
+          <li data-es><strong>30 parts con WIP negativo</strong> (-80,253 unidades) — errores SAP / mal posteo</li>
+          <li data-en><strong>30 parts with negative WIP</strong> (-80,253 units) — SAP errors / mis-posting</li>
+          <li data-es><strong>33 parts con $0 Cst STD pero qty > 0</strong> = 7.88M unidades sin valuar</li>
+          <li data-en><strong>33 parts with $0 Cst STD but qty > 0</strong> = 7.88M unvalued units</li>
+          <li data-es>Top 5 parts con $0 cost stuck: 411-A1900 (5.6M), 0003-0011 (1.0M), 3800-9163 (457K), 0001-3003 (279K), 0002-5087 (87K)</li>
+          <li data-en>Top 5 stuck parts with $0 cost: 411-A1900 (5.6M), 0003-0011 (1.0M), 3800-9163 (457K), 0001-3003 (279K), 0002-5087 (87K)</li>
+        </ul>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Antes ~20 trailers/día → ahora ~5; 50% del espacio en racks ocupado por inventario lento u obsoleto (~11 de 22 racks)." — Neri</blockquote>
+        <blockquote data-en>"Before ~20 trailers/day → now ~5; 50% of rack space occupied by slow or obsolete inventory (~11 of 22 racks)." — Neri</blockquote>
+        <blockquote data-es>"Inventario con antigüedad desde 2019; equipos dudan en desechar por aprobaciones corporativas." — Neri</blockquote>
+        <blockquote data-en>"Inventory aged since 2019; teams hesitant to scrap due to corporate approvals." — Neri</blockquote>
+        <blockquote data-es>"Tarima plástica: sin dueño asignado, sin plan de transición, sin inventario suficiente." → re-palletizing manual cuello de botella</blockquote>
+        <blockquote data-en>"Plastic pallets: no owner assigned, no transition plan, insufficient inventory." → manual re-palletizing bottleneck</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Mecanismo causal</span><span data-en>Causal mechanism</span></div>
+        <ol class="mech-list">
+          <li data-es>ExF roto (H2) → Procurement sobre-compra</li>
+          <li data-en>Broken ExF (H2) → Procurement over-buys</li>
+          <li data-es>Material llega → Receiving lleno → Store sobre-saturado</li>
+          <li data-en>Material arrives → Receiving full → Store oversaturated</li>
+          <li data-es>Producción jala parcial → resto queda en WIP</li>
+          <li data-en>Production pulls partial → remainder stays in WIP</li>
+          <li data-es>Sin trigger para desechar → racks ocupados con material 2019+</li>
+          <li data-en>No scrap trigger → racks occupied with 2019+ material</li>
+          <li data-es>Llega trailer nuevo → no hay espacio → cola crece</li>
+          <li data-en>New trailer arrives → no space → queue grows</li>
+        </ol>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Magnitud potencial</span><span data-en>Potential magnitude</span></div>
+        <p><strong style="color:var(--red)"><span data-es>dato a validar de ahorro</span><span data-en>TBV savings figure</span></strong></p>
+        <p data-es><em>Hipótesis a probar:</em> liberar 20-30% del WIP ($520K-780K) y 30-50% de obsoletos (dato a validar) reduce ocupación de espacio en racks y restablece capacidad de Receiving sin inversión de CAPEX.</p>
+        <p data-en><em>Hypothesis to test:</em> releasing 20-30% of WIP ($520K-780K) and 30-50% of obsoletes (TBV) reduces rack space occupation and restores Receiving capacity without CAPEX.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 2-4)</span><span data-en>VSA Validation (Day 2-4)</span></div>
+        <p style="font-weight:700;color:var(--green-dk)">Quick Win:</p>
+        <ul>
+          <li data-es>Día 2: identificar y proponer scrap/donation/sale de obsoletos pre-aprobados</li>
+          <li data-en>Day 2: identify and propose scrap/donation/sale of pre-approved obsoletes</li>
+          <li data-es>Día 2: definir owner de tarimas plásticas con SLA de transición</li>
+          <li data-en>Day 2: define plastic pallet owner with transition SLA</li>
+          <li data-es>Día 3: corregir 30 parts con WIP negativo (auditoría transaccional)</li>
+          <li data-en>Day 3: fix 30 parts with negative WIP (transactional audit)</li>
+        </ul>
+        <p style="font-weight:700;color:var(--navy);margin-top:10px"><span data-es>Estructural:</span><span data-en>Structural:</span></p>
+        <ul>
+          <li data-es>Política de obsolescencia con triggers automáticos (180/365 días sin movimiento)</li>
+          <li data-en>Obsolescence policy with auto triggers (180/365 days without movement)</li>
+          <li data-es>Layout redesign con zoning: alta rotación cerca de líneas, baja rotación al fondo</li>
+          <li data-en>Layout redesign with zoning: high rotation near lines, low rotation at back</li>
+          <li data-es>Implementar Mizusumashi (tugger train) — Nithia ya aprobó, falta ejecución</li>
+          <li data-en>Implement Mizusumashi (tugger train) — Nithia already approved, execution pending</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- H6 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H6</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>Phantom BOMs y partes con costo $0 distorsionan MRP — el inventario reportado de $9M está sobre data corrupta</span>
+          <span data-en>Phantom BOMs and parts with $0 cost distort MRP — the reported $9M inventory rests on corrupt data</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-savings">💰 Savings</span><span class="chip chip-flow">📦 Flow</span><span class="chip chip-quick">Quick Win</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> IT + <span data-es>Finanzas + Compras</span><span data-en>Finance + Procurement</span></div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>La maestra de SAP tiene tres patologías que distorsionan <strong>el cálculo de cualquier business case</strong>: (a) <strong>2 phantom BOMs en JKG84</strong> (<code>11037-96779</code>, <code>11037-96780</code>) que aparecen en el BOM pero no en Raw Material; (b) <strong>33 parts con Cst STD = $0 y Total Qty OH > 0</strong> sumando 7.88M unidades sin valor; (c) <strong>30 parts con WIP negativo</strong>. Antes de cuantificar cualquier ahorro, esta data debe limpiarse.</p>
+        <p data-en>SAP master has three pathologies distorting <strong>any business case calculation</strong>: (a) <strong>2 phantom BOMs in JKG84</strong> (<code>11037-96779</code>, <code>11037-96780</code>) appearing in BOM but not in Raw Material; (b) <strong>33 parts with Cst STD = $0 and Total Qty OH > 0</strong> totaling 7.88M unvalued units; (c) <strong>30 parts with negative WIP</strong>. Before quantifying any savings, this data must be cleaned.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Patologías de la maestra</span><span data-en>Master pathologies</span></div>
+        <table class="data-table">
+          <thead><tr><th><span data-es>Patología</span><span data-en>Pathology</span></th><th><span data-es>Conteo</span><span data-en>Count</span></th><th><span data-es>Magnitud</span><span data-en>Magnitude</span></th></tr></thead>
+          <tbody>
+            <tr><td><span data-es>Phantom BOMs en JKG84</span><span data-en>Phantom BOMs in JKG84</span></td><td>2 parts</td><td><span data-es>Bloquean producción de Master Assembly + PUPPY-SL</span><span data-en>Block Master Assembly + PUPPY-SL production</span></td></tr>
+            <tr><td>Cst STD = $0 + Qty > 0</td><td>33</td><td>7,877,540 <span data-es>unidades sin valor</span><span data-en>unvalued units</span></td></tr>
+            <tr><td><code>411-A1900 SCREW</code></td><td>1</td><td>5,575,577 <span data-es>unidades sin valor</span><span data-en>unvalued units</span></td></tr>
+            <tr><td><code>0003-0011 SCREW</code></td><td>1</td><td>1,031,560 <span data-es>unidades sin valor</span><span data-en>unvalued units</span></td></tr>
+            <tr><td><span data-es>Parts con WIP negativo</span><span data-en>Parts with negative WIP</span></td><td>30</td><td>-80,253 <span data-es>unidades</span><span data-en>units</span></td></tr>
+            <tr><td><span data-es>Cobertura RM vs BOM JKG84</span><span data-en>RM vs BOM JKG84 coverage</span></td><td>152/154</td><td>98.7% <span data-es>(los 2 missing son los phantom)</span><span data-en>(missing 2 are the phantoms)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Mecanismo causal</span><span data-en>Causal mechanism</span></div>
+        <ol class="mech-list">
+          <li data-es>ECOs frecuentes pero BOMs no se actualizan disciplinadamente</li>
+          <li data-en>Frequent ECOs but BOMs not disciplined updated</li>
+          <li data-es>Materiales nuevos sin Cst STD asignado por Finanzas</li>
+          <li data-en>New materials without Cst STD assigned by Finance</li>
+          <li data-es>MRP corre sobre BOM con phantoms → genera órdenes para componentes que no existen</li>
+          <li data-en>MRP runs on BOM with phantoms → generates orders for non-existent components</li>
+          <li data-es>Procurement no valida y compra → llega material no necesario</li>
+          <li data-en>Procurement doesn't validate and buys → unnecessary material arrives</li>
+          <li data-es>Inventory accounting no captura el valor → P&L subestimado → decisiones erróneas</li>
+          <li data-en>Inventory accounting doesn't capture value → P&L understated → wrong decisions</li>
+        </ol>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Vínculo sistémico</span><span data-en>Systemic link</span></div>
+        <p data-es>Esta es la <strong>hipótesis de habilitación</strong>: sin H6 resuelta, las cifras de H1, H5 y H7 son cuestionables. Es el primer entregable de credibilidad técnica del VSA.</p>
+        <p data-en>This is the <strong>enabling hypothesis</strong>: without H6 resolved, figures from H1, H5 and H7 are questionable. It's the VSA's first technical credibility deliverable.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 1)</span><span data-en>VSA Validation (Day 1)</span></div>
+        <ol>
+          <li data-es><strong>IT/Planeación:</strong> validar <code>11037-96779</code> y <code>11037-96780</code> — ¿son HALB (semi) o FERT (final)? ¿deberían ser phantom flag = X en SAP?</li>
+          <li data-en><strong>IT/Planning:</strong> validate <code>11037-96779</code> and <code>11037-96780</code> — are they HALB (semi) or FERT (final)? should they be phantom flag = X in SAP?</li>
+          <li data-es><strong>Finanzas:</strong> revaluar las 33 parts con $0 → calcular impacto en valor reportado</li>
+          <li data-en><strong>Finance:</strong> revalue the 33 parts with $0 → calculate impact on reported value</li>
+          <li data-es><strong>Auditoría transaccional:</strong> 30 parts con WIP negativo → identificar patrón</li>
+          <li data-en><strong>Transactional audit:</strong> 30 parts with negative WIP → identify pattern</li>
+          <li data-es><strong>Spot-check físico</strong> de top 5 parts con $0 cost para validar qty real</li>
+          <li data-en><strong>Physical spot-check</strong> of top 5 parts with $0 cost to validate real qty</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- H7 -->
+  <div class="hyp-card">
+    <div class="hyp-head" onclick="toggleHyp(this)">
+      <div class="hyp-num">H7</div>
+      <div class="hyp-info">
+        <div class="hyp-title">
+          <span data-es>Concentración en top 3 proveedores de resina (46% del gasto top-10) genera riesgo de paro Molding no cuantificado</span>
+          <span data-en>Concentration in top 3 resin suppliers (46% of top-10 spend) generates unquantified Molding stoppage risk</span>
+        </div>
+        <div class="hyp-axes"><span class="chip chip-savings">💰 Savings</span><span class="chip chip-molding">🏭 Molding</span><span class="chip chip-struct">Estructural</span></div>
+        <div class="hyp-meta"><strong>Owner:</strong> <span data-es>Compras</span><span data-en>Procurement</span> + Lucy + Procurement Strategy</div>
+      </div>
+      <div class="hyp-toggle">+</div>
+    </div>
+    <div class="hyp-body">
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Enunciado</span><span data-en>Statement</span></div>
+        <p data-es>Los <strong>top 3 proveedores 2025 representan ~46% del gasto del top-10</strong> (~$33.8M de ~$73.4M), todos polímeros/resinas. JKG84 tiene <strong>94 plásticos moldeados (61% del BOM)</strong> y la planta tiene <strong>142 partes "Make"</strong> vs 85 "Purchase". Si cualquiera de estos proveedores opera como sole-source, el riesgo de paro de la línea de moldeo —cuya valuación nunca se ha calculado— supera con margen el costo de tener un dual-source o un safety stock dedicado.</p>
+        <p data-en>The <strong>top 3 suppliers 2025 represent ~46% of top-10 spend</strong> (~$33.8M of ~$73.4M), all polymers/resins. JKG84 has <strong>94 molded plastics (61% of BOM)</strong> and the plant has <strong>142 "Make" parts</strong> vs 85 "Purchase". If any of these suppliers operates as sole-source, the cost of a molding line stoppage —which has never been valued— widely exceeds the cost of dual-sourcing or dedicated safety stock.</p>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Concentración top 3</span><span data-en>Top 3 concentration</span></div>
+        <table class="data-table">
+          <thead><tr><th><span data-es>Proveedor</span><span data-en>Supplier</span></th><th><span data-es>Gasto 2025</span><span data-en>2025 Spend</span></th><th>% top-10</th></tr></thead>
+          <tbody>
+            <tr><td>INEOS OLEFINS & POLYMERS</td><td>$13.8M</td><td>18.8%</td></tr>
+            <tr><td>POLYTRON INDUSTRIAL CO.</td><td>$13.0M</td><td>17.7%</td></tr>
+            <tr><td>EMPRESAS BENGON SA DE CV</td><td>$6.98M</td><td>9.5%</td></tr>
+            <tr style="background:var(--red-lt)"><td><strong>Subtotal top-3</strong></td><td><strong>~$33.8M</strong></td><td><strong>~46%</strong></td></tr>
+            <tr style="background:var(--cream)"><td>Top 10 total</td><td>~$73.4M</td><td>100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Cross-references</span><span data-en>Cross-references</span></div>
+        <ul>
+          <li data-es>JKG84 — % plásticos moldeados: <strong>94/154 = 61%</strong> → cualquier paro de resina detiene 61% del BOM</li>
+          <li data-en>JKG84 — % molded plastics: <strong>94/154 = 61%</strong> → any resin stoppage halts 61% of BOM</li>
+          <li data-es>Total parts categorizadas Make (M): 142 (62.5% del catálogo)</li>
+          <li data-en>Total parts categorized Make (M): 142 (62.5% of catalog)</li>
+          <li data-es>Pol=56d en parts críticas: 15 parts = 49% del valor → safety stock implícito de 8 semanas, no asignado por riesgo</li>
+          <li data-en>Pol=56d in critical parts: 15 parts = 49% of value → implicit 8-week safety stock, not assigned by risk</li>
+        </ul>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Evidencia cualitativa</span><span data-en>Qualitative evidence</span></div>
+        <blockquote data-es>"Resina/pigmento no listo" es causa #1 de retrasos de arranque recurrentes. — Lucy</blockquote>
+        <blockquote data-en>"Resin/pigment not ready" is cause #1 of recurring start-up delays. — Lucy</blockquote>
+        <blockquote data-es>"Solo un técnico capaz de resolver problemas de robot → cuello de botella estructural." — Lucy</blockquote>
+        <blockquote data-en>"Only one technician able to solve robot issues → structural bottleneck." — Lucy</blockquote>
+      </div>
+      <div class="hyp-section">
+        <div class="hyp-section-title"><span data-es>Validación en VSA (Día 2-4)</span><span data-en>VSA Validation (Day 2-4)</span></div>
+        <ol>
+          <li data-es>Confirmar con Compras: ¿los top 3 son sole-source, dual-source o aprobados con backup?</li>
+          <li data-en>Confirm with Procurement: are top 3 sole-source, dual-source, or approved with backup?</li>
+          <li data-es>Mapear contrato actual con cada proveedor: lead time, MOQ, flexibilidad, SS</li>
+          <li data-en>Map current contract per supplier: lead time, MOQ, flexibility, SS</li>
+          <li data-es>Calcular costo de hora-paro de Molding (con Lucy + Finanzas)</li>
+          <li data-en>Calculate Molding hour-stoppage cost (with Lucy + Finance)</li>
+          <li data-es>Para 5 parts piloto: re-diseñar política Pol con esta lógica</li>
+          <li data-en>For 5 pilot parts: redesign Pol policy with this logic</li>
+          <li data-es>Cruzar con framework Pull Planning: matriz FMS × ABC</li>
+          <li data-en>Cross with Pull Planning framework: FMS × ABC matrix</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PRIORITY MATRIX ====== -->
+<div class="section" id="matrix">
+  <div class="section-eyebrow"><span data-es>Matriz de priorización</span><span data-en>Prioritization matrix</span></div>
+  <h2 class="section-title"><span data-es>Impacto sistémico × Facilidad de validación</span><span data-en>Systemic impact × Validation ease</span></h2>
+  <p class="section-desc">
+    <span data-es>Cada hipótesis posicionada según su impacto sistémico potencial (1=local, 5=transformacional) y su facilidad de validación durante los 5 días del VSA (1=difícil, 5=fácil). Las prioridades surgen del cuadrante.</span>
+    <span data-en>Each hypothesis positioned by potential systemic impact (1=local, 5=transformational) and validation ease during the 5-day VSA (1=difficult, 5=easy). Priorities emerge from the quadrant.</span>
+  </p>
+
+  <div class="matrix">
+    <div class="matrix-y-label"><span data-es>IMPACTO SISTÉMICO</span><span data-en>SYSTEMIC IMPACT</span></div>
+    <div class="matrix-x-label"><span data-es>FACILIDAD DE VALIDACIÓN</span><span data-en>VALIDATION EASE</span></div>
+    <div class="matrix-grid">
+      <div class="matrix-quadrant-label" style="left:8px;top:8px"><span data-es>Big Bets</span><span data-en>Big Bets</span></div>
+      <div class="matrix-quadrant-label" style="right:8px;top:8px"><span data-es>Quick Wins de alto impacto</span><span data-en>High-impact Quick Wins</span></div>
+      <div class="matrix-quadrant-label" style="left:8px;bottom:14px"><span data-es>Estratégicos a largo plazo</span><span data-en>Long-term strategic</span></div>
+      <div class="matrix-quadrant-label" style="right:8px;bottom:14px"><span data-es>Tácticos rápidos</span><span data-en>Quick tactical</span></div>
+
+      <!-- H2 — high impact (5), medium-low ease (2.5) -->
+      <div class="matrix-dot navy" style="left:30%;bottom:90%" title="H2 — Forecast roto">H2</div>
+      <!-- H3 — high impact (5), low ease (2) -->
+      <div class="matrix-dot navy" style="left:25%;bottom:90%" title="H3 — Ramp-up NPI">H3</div>
+      <!-- H7 — high impact (4), medium ease (2.5) -->
+      <div class="matrix-dot amber" style="left:30%;bottom:75%" title="H7 — Sourcing">H7</div>
+      <!-- H5 — high impact (4), high ease (4) -->
+      <div class="matrix-dot" style="left:65%;bottom:75%" title="H5 — Receiving + WIP">H5</div>
+      <!-- H4 — medium impact (3), medium ease (3) -->
+      <div class="matrix-dot teal" style="left:55%;bottom:55%" title="H4 — Utilización">H4</div>
+      <!-- H1 — medium impact (3), high ease (4.5) -->
+      <div class="matrix-dot" style="left:75%;bottom:55%" title="H1 — Concentración">H1</div>
+      <!-- H6 — high enabling impact, very high ease -->
+      <div class="matrix-dot" style="left:85%;bottom:45%" title="H6 — Phantom BOMs">H6</div>
+    </div>
+  </div>
+
+  <div class="three-col">
+    <div class="card">
+      <div class="card-header"><span data-es>🟢 Quick Wins</span><span data-en>🟢 Quick Wins</span><span class="pill pill-green">DÍA 1-2</span></div>
+      <p style="font-size:13px"><span data-es>Alto impacto + fácil validación. Ejecutar primero para construir credibilidad.</span><span data-en>High impact + easy validation. Execute first to build credibility.</span></p>
+      <ul style="padding-left:18px;font-size:13px;line-height:1.7;margin-top:8px">
+        <li><strong>H6</strong> — <span data-es>limpieza de datos (habilitador)</span><span data-en>data cleanup (enabler)</span></li>
+        <li><strong>H1</strong> — <span data-es>concentración 0013-0107</span><span data-en>0013-0107 concentration</span></li>
+        <li><strong>H5a</strong> — <span data-es>governance obsoletos</span><span data-en>obsolete governance</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><span data-es>🟡 Big Bets</span><span data-en>🟡 Big Bets</span><span class="pill pill-amber">DÍA 3-4</span></div>
+      <p style="font-size:13px"><span data-es>Alto impacto pero requieren más profundidad. Diseño en VSA.</span><span data-en>High impact but require more depth. Design in VSA.</span></p>
+      <ul style="padding-left:18px;font-size:13px;line-height:1.7;margin-top:8px">
+        <li><strong>H2</strong> — <span data-es>forecast / S&OP</span><span data-en>forecast / S&OP</span></li>
+        <li><strong>H3</strong> — <span data-es>NPI ramp-up</span><span data-en>NPI ramp-up</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><span data-es>🔵 Estructurales</span><span data-en>🔵 Structural</span><span class="pill pill-blue">90 DÍAS</span></div>
+      <p style="font-size:13px"><span data-es>Diseño en VSA, ejecución 90 días post-workshop.</span><span data-en>Design in VSA, execution 90 days post-workshop.</span></p>
+      <ul style="padding-left:18px;font-size:13px;line-height:1.7;margin-top:8px">
+        <li><strong>H7</strong> — <span data-es>sourcing strategy</span><span data-en>sourcing strategy</span></li>
+        <li><strong>H4b</strong> — <span data-es>OEE real medido</span><span data-en>real measured OEE</span></li>
+        <li><strong>H5b</strong> — <span data-es>layout redesign</span><span data-en>layout redesign</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 5-DAY PLAN ====== -->
+<div class="section" id="plan">
+  <div class="section-eyebrow"><span data-es>Plan de validación</span><span data-en>Validation plan</span></div>
+  <h2 class="section-title"><span data-es>5 días del VSA — 11 al 15 de Mayo 2026</span><span data-en>5 VSA days — May 11 to 15, 2026</span></h2>
+  <p class="section-desc">
+    <span data-es>Cada hipótesis tiene asignado al menos un día de validación específica. La secuencia respeta dependencias: H6 (data clean) primero porque habilita el resto; H2 (forecast) tras la data limpia; H3 (ramp-up) tras tener S&OP mapeado.</span>
+    <span data-en>Each hypothesis has at least one specific validation day. Sequence respects dependencies: H6 (data clean) first as enabler; H2 (forecast) after clean data; H3 (ramp-up) after S&OP mapped.</span>
+  </p>
+
+  <div class="day-plan">
+    <div class="day-card">
+      <div class="day-num"><span data-es>Día 1 · Lun 11</span><span data-en>Day 1 · Mon 11</span></div>
+      <div class="day-title"><span data-es>Apertura + Estado actual</span><span data-en>Opening + Current State</span></div>
+      <div class="day-tags"><span class="day-tag">H6</span><span class="day-tag">H1</span><span class="day-tag">H4a</span></div>
+      <div class="day-detail"><span data-es>Walk-the-floor; sesión IT/Finanzas para limpiar phantom BOMs y $0 cost; spot-check físico 0013-0107; auditar Line Rate 5CA Mega.</span><span data-en>Walk-the-floor; IT/Finance session cleaning phantom BOMs and $0 cost; physical spot-check 0013-0107; audit 5CA Mega Line Rate.</span></div>
+    </div>
+    <div class="day-card">
+      <div class="day-num"><span data-es>Día 2 · Mar 12</span><span data-en>Day 2 · Tue 12</span></div>
+      <div class="day-title"><span data-es>Mapa de flujo material</span><span data-en>Material Flow Mapping</span></div>
+      <div class="day-tags"><span class="day-tag">H5</span><span class="day-tag">H6</span><span class="day-tag">H7</span></div>
+      <div class="day-detail"><span data-es>Mapeo Receiving, racks, obsoletos; lista de scrap pre-aprobado; owner tarimas plásticas; levantamiento sourcing top 3 resinas.</span><span data-en>Receiving, racks, obsolete mapping; pre-approved scrap list; plastic pallet owner; top 3 resin sourcing assessment.</span></div>
+    </div>
+    <div class="day-card">
+      <div class="day-num"><span data-es>Día 3 · Mié 13</span><span data-en>Day 3 · Wed 13</span></div>
+      <div class="day-title"><span data-es>Pull Planning + S&OP</span><span data-en>Pull Planning + S&OP</span></div>
+      <div class="day-tags"><span class="day-tag">H2</span><span class="day-tag">H4</span></div>
+      <div class="day-detail"><span data-es>Training Pull Planning JC+Edgar; mapeo proceso S&OP con Arka; corrección master Line Rate; arranque captura OEE piloto.</span><span data-en>Pull Planning training JC+Edgar; S&OP process mapping with Arka; master Line Rate fix; pilot OEE capture launch.</span></div>
+    </div>
+    <div class="day-card">
+      <div class="day-num"><span data-es>Día 4 · Jue 14</span><span data-en>Day 4 · Thu 14</span></div>
+      <div class="day-title"><span data-es>Causa raíz + diseño</span><span data-en>Root Cause + Design</span></div>
+      <div class="day-tags"><span class="day-tag">H3</span><span class="day-tag">H7</span><span class="day-tag">H4b</span></div>
+      <div class="day-detail"><span data-es>Workshop diseño futuro estado; matriz FMS×ABC para top 15 parts Pol=56; NPI Readiness Gate; OEE real piloto comparado.</span><span data-en>Future state design workshop; FMS×ABC matrix for top 15 Pol=56 parts; NPI Readiness Gate; real OEE pilot comparison.</span></div>
+    </div>
+    <div class="day-card">
+      <div class="day-num"><span data-es>Día 5 · Vie 15</span><span data-en>Day 5 · Fri 15</span></div>
+      <div class="day-title"><span data-es>Roadmap + presentación</span><span data-en>Roadmap + Presentation</span></div>
+      <div class="day-tags"><span class="day-tag">TODAS</span></div>
+      <div class="day-detail"><span data-es>Síntesis; Business Case con magnitudes a validar post-workshop; Roadmap 90 días con owners; presentación final a Liderazgo.</span><span data-en>Synthesis; Business Case with TBV magnitudes post-workshop; 90-day Roadmap with owners; final presentation to Leadership.</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px">
+    <div class="card-header"><span data-es>Riesgos del análisis</span><span data-en>Analysis risks</span><span class="pill pill-red">⚠️</span></div>
+    <table class="data-table">
+      <thead><tr><th><span data-es>Riesgo</span><span data-en>Risk</span></th><th><span data-es>Mitigación</span><span data-en>Mitigation</span></th></tr></thead>
+      <tbody>
+        <tr><td><span data-es>Cifras de inventario aún más subestimadas si phantom BOMs son numerosos</span><span data-en>Inventory figures even more understated if phantom BOMs are numerous</span></td><td><span data-es>H6 Día 1 = piso firme antes de cuantificar</span><span data-en>H6 Day 1 = solid floor before quantifying</span></td></tr>
+        <tr><td><span data-es>Line Rate de 5CA Mega no es cero, sino dato faltante (149 SKUs no medidos)</span><span data-en>5CA Mega Line Rate is not zero, but missing data (149 SKUs not measured)</span></td><td><span data-es>H4a corregir master Día 1</span><span data-en>H4a fix master Day 1</span></td></tr>
+        <tr><td><span data-es>ExF puede ser intencionalmente parcial (solo cubre ciertos clientes)</span><span data-en>ExF may be intentionally partial (covers only certain customers)</span></td><td><span data-es>H2 validar con Demand Planning antes de concluir</span><span data-en>H2 validate with Demand Planning before concluding</span></td></tr>
+        <tr><td><span data-es>Top 3 proveedores ya tienen dual-source aprobado pero no activo</span><span data-en>Top 3 suppliers may have approved-but-inactive dual-source</span></td><td><span data-es>H7 confirmar Día 2 con Compras</span><span data-en>H7 confirm Day 2 with Procurement</span></td></tr>
+        <tr><td><span data-es>Ramp-up lento puede ser efecto de mix de SKUs nuevos, no de NPI Compressed Readiness</span><span data-en>Slow ramp-up may be effect of new-SKU mix, not NPI Compressed Readiness</span></td><td><span data-es>H3 cruzar con calendario NPI</span><span data-en>H3 cross with NPI calendar</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <strong>KIMX CONSULTING</strong> · Mattel Montoi VSA · 2026-05-09 · v1.0 · <span data-es>Documento pre-VSA · Toda magnitud cuantitativa = "dato a validar de ahorro"</span><span data-en>Pre-VSA document · All quantitative magnitudes = "TBV savings figure"</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+}
+function setTab(id){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.nav-tab[onclick="setTab('${id}')"]`).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function toggleHyp(headEl){
+  const body = headEl.nextElementSibling;
+  const toggle = headEl.querySelector('.hyp-toggle');
+  body.classList.toggle('open');
+  toggle.textContent = body.classList.contains('open') ? '−' : '+';
+}
+</script>
+</body>
+</html>
