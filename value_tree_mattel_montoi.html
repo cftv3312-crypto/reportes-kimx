@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -556,7 +556,18 @@
     color: var(--amber);
     letter-spacing: 0.1em;
   }
-</style>
+
+  /* LANG TOGGLE */
+  .lang-toggle{display:flex;background:rgba(255,255,255,.08);border-radius:6px;padding:3px;gap:2px}
+  .lang-btn{font-family:var(--font-mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:rgba(242,237,228,.55);padding:6px 12px;cursor:pointer;border:none;background:transparent;border-radius:4px;transition:all .2s}
+  .lang-btn.active{background:var(--red);color:#fff}
+  .lang-btn:hover:not(.active){color:var(--cream)}
+  [data-en],[data-es]{display:none}
+  html[data-lang="es"] [data-es]{display:initial}
+  html[data-lang="en"] [data-en]{display:initial}
+  html[data-lang="es"] .action-item [data-es],html[data-lang="en"] .action-item [data-en]{display:flex}
+
+  </style>
 </head>
 <body>
 
@@ -564,17 +575,19 @@
 <div class="header">
   <div class="header-left">
     <span class="header-label">Mattel Montoi · General Escobedo, N.L. · VSA 2026</span>
-    <div class="header-title">VALUE <span>TREE</span> — RUTA A LOS $500K</div>
-    <span class="workshop-date">🗓 Workshop on-site: 11–15 Mayo 2026</span>
+    <div class="header-title"><span data-es>VALUE <span>TREE</span> — RUTA A LOS $500K</span><span data-en>VALUE <span>TREE</span> — PATH TO $500K</span></div>
+    <span class="workshop-date">🗓 <span data-es>Workshop on-site: 11–15 Mayo 2026</span><span data-en>On-site Workshop: May 11–15, 2026</span></span>
   </div>
   <div class="header-right">
+      <div class="lang-toggle"><button class="lang-btn active" onclick="setLang('es')">ES</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+      
     <div class="status-chips">
-      <div class="chip ok"><div class="dot"></div>✅ Dato confirmado</div>
-      <div class="chip warn"><div class="dot"></div>⚠️ Dato parcial</div>
-      <div class="chip miss"><div class="dot"></div>❌ A validar en planta</div>
+      <div class="chip ok"><div class="dot"></div>✅ <span data-es>Dato confirmado</span><span data-en>Confirmed data</span></div>
+      <div class="chip warn"><div class="dot"></div>⚠️ <span data-es>Dato parcial</span><span data-en>Partial data</span></div>
+      <div class="chip miss"><div class="dot"></div>❌ <span data-es>A validar en planta</span><span data-en>To validate on-site</span></div>
     </div>
     <div class="target-badge">
-      <div class="lbl">Objetivo USD</div>
+      <div class="lbl"><span data-es>Objetivo USD</span><span data-en>USD Target</span></div>
       <div class="amt">$500K</div>
     </div>
   </div>
@@ -589,25 +602,25 @@
     <!-- PROGRESS -->
     <div class="progress-section">
       <div class="progress-header">
-        <span class="progress-title">Cobertura de datos hacia el objetivo</span>
+        <span class="progress-title"><span data-es>Cobertura de datos hacia el objetivo</span><span data-en>Data coverage toward target</span></span>
         <span class="progress-pct" id="pct-display">Calculando...</span>
       </div>
       <div class="progress-bar-track">
         <div class="progress-bar-fill" id="main-progress-bar"></div>
       </div>
       <div class="progress-breakdown">
-        <div class="pb-item"><div class="pb-dot" style="background:var(--green)"></div><span style="color:var(--green)">Baseline confirmado: <strong>$318K</strong> (retrabajo)</span></div>
-        <div class="pb-item"><div class="pb-dot" style="background:var(--amber)"></div><span style="color:var(--amber)">Parcial/cuantificable en workshop: ~$182K+ potencial</span></div>
-        <div class="pb-item"><div class="pb-dot" style="background:rgba(139,163,192,0.3)"></div><span style="color:var(--muted)">Sin dato: requiere validación</span></div>
+        <div class="pb-item"><div class="pb-dot" style="background:var(--green)"></div><span style="color:var(--green)"><span data-es>Baseline confirmado: <strong>$318K</strong> (retrabajo)</span><span data-en>Confirmed baseline: <strong>$318K</strong> (rework)</span></span></div>
+        <div class="pb-item"><div class="pb-dot" style="background:var(--amber)"></div><span style="color:var(--amber)"><span data-es>Parcial/cuantificable en workshop: ~$182K+ potencial</span><span data-en>Partial/quantifiable at workshop: ~$182K+ potential</span></span></div>
+        <div class="pb-item"><div class="pb-dot" style="background:rgba(139,163,192,0.3)"></div><span style="color:var(--muted)"><span data-es>Sin dato: requiere validación</span><span data-en>No data: validation required</span></span></div>
       </div>
     </div>
 
     <!-- ROOT NODE -->
     <div class="root-node">
-      <div class="rn-label">META SOSTENIBLE — VSA KAIZEN 2026</div>
-      <div class="rn-title">AHORROS TOTALES</div>
+      <div class="rn-label"><span data-es>META SOSTENIBLE — VSA KAIZEN 2026</span><span data-en>SUSTAINABLE TARGET — VSA KAIZEN 2026</span></div>
+      <div class="rn-title"><span data-es>AHORROS TOTALES</span><span data-en>TOTAL SAVINGS</span></div>
       <div class="rn-amount">$500,000 USD</div>
-      <div class="rn-sub">JKG84 Barbie Dream House · JHG61 Little People Nintendo Playset · ~25% del volumen de planta</div>
+      <div class="rn-sub"><span data-es>JKG84 Barbie Dream House · JHG61 Little People Nintendo Playset · ~25% del volumen de planta</span><span data-en>JKG84 Barbie Dream House · JHG61 Little People Nintendo Playset · ~25% of plant volume</span></div>
     </div>
 
     <!-- 4 PILLARS -->
@@ -616,46 +629,46 @@
       <!-- PILAR 1: CALIDAD -->
       <div class="pilar-column">
         <div class="pilar-header" style="background: linear-gradient(135deg, rgba(196,30,58,0.2) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--red);">
-          <div class="ph-num">PILAR 01</div>
-          <div class="ph-title">CALIDAD<br>& RETRABAJO</div>
+          <div class="ph-num"><span data-es>PILAR 01</span><span data-en>PILLAR 01</span></div>
+          <div class="ph-title"><span data-es>CALIDAD<br>& RETRABAJO</span><span data-en>QUALITY<br>& REWORK</span></div>
           <div class="ph-sub">CoQ · Rework · Scrap</div>
         </div>
         <div class="lever-area">
 
           <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L1')" id="card-L1">
             <div class="lever-top">
-              <div class="lever-name">Reducción costo de retrabajo (Rework)</div>
+              <div class="lever-name"><span data-es>Reducción costo de retrabajo (Rework)</span><span data-en>Rework cost reduction</span></div>
               <div class="status-badge">⚠️</div>
             </div>
-            <div class="lever-baseline">Baseline: <span class="val">$318K/año</span> confirmado</div>
-            <div class="lever-savings validate">Ahorro potencial: dato a validar (% reducción)</div>
+            <div class="lever-baseline"><span data-es>Baseline: </span><span data-en>Baseline: </span><span class="val">$318K/año</span> confirmado</div>
+            <div class="lever-savings validate"><span data-es>Ahorro potencial: dato a validar (% reducción)</span><span data-en>Potential savings: TBV (% reduction)</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L2')" id="card-L2">
             <div class="lever-top">
-              <div class="lever-name">Reducción de scrap por tipo de pieza</div>
+              <div class="lever-name"><span data-es>Reducción de scrap por tipo de pieza</span><span data-en>Scrap reduction by part type</span></div>
               <div class="status-badge">❌</div>
             </div>
-            <div class="lever-baseline">Baseline: <span class="val">No disponible</span></div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
+            <div class="lever-baseline"><span data-es>Baseline: </span><span data-en>Baseline: </span><span class="val"><span data-es>No disponible</span><span data-en>Not available</span></span></div>
+            <div class="lever-savings missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L3')" id="card-L3">
             <div class="lever-top">
-              <div class="lever-name">CoQ — Costo Total de Calidad (retrabajo + scrap + tiempo línea)</div>
+              <div class="lever-name"><span data-es>CoQ — Costo Total de Calidad (retrabajo + scrap + tiempo línea)</span><span data-en>CoQ — Total Cost of Quality (rework + scrap + line time)</span></div>
               <div class="status-badge">❌</div>
             </div>
             <div class="lever-baseline">Baseline parcial: <span class="val">$318K</span> (sin desglose)</div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
+            <div class="lever-savings missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--red)" onclick="showDetail('L4')" id="card-L4">
             <div class="lever-top">
-              <div class="lever-name">Calidad en ensamble (In-Process Control)</div>
+              <div class="lever-name"><span data-es>Calidad en ensamble (In-Process Control)</span><span data-en>Assembly quality (In-Process Control)</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">PPMS moldeo: <span class="val">Confirmado 106 semanas</span></div>
-            <div class="lever-savings validate">Ahorro indirecto: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Ahorro indirecto: dato a validar</span><span data-en>Indirect savings: TBV</span></div>
           </div>
 
         </div>
@@ -664,55 +677,55 @@
       <!-- PILAR 2: INVENTARIO & 3PL -->
       <div class="pilar-column">
         <div class="pilar-header" style="background: linear-gradient(135deg, rgba(232,160,32,0.18) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--gold);">
-          <div class="ph-num">PILAR 02</div>
-          <div class="ph-title">INVENTARIO<br>& CAPITAL</div>
+          <div class="ph-num"><span data-es>PILAR 02</span><span data-en>PILLAR 02</span></div>
+          <div class="ph-title"><span data-es>INVENTARIO<br>& CAPITAL</span><span data-en>INVENTORY<br>& CAPITAL</span></div>
           <div class="ph-sub">3PL · RM · FG · Cuarentena</div>
         </div>
         <div class="lever-area">
 
           <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L5')" id="card-L5">
             <div class="lever-top">
-              <div class="lever-name">Costo 3PL CargoKey — inventario externo</div>
+              <div class="lever-name"><span data-es>Costo 3PL CargoKey — inventario externo</span><span data-en>3PL CargoKey cost — external inventory</span></div>
               <div class="status-badge">❌</div>
             </div>
             <div class="lever-baseline">Partes 699-XXX identificadas: <span class="val">Confirmado</span></div>
-            <div class="lever-savings missing">Dato a validar de ahorro (tarifa 3PL)</div>
+            <div class="lever-savings missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span> (tarifa 3PL)</div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L6')" id="card-L6">
             <div class="lever-top">
-              <div class="lever-name">Reducción días cobertura RM (piezas pequeñas)</div>
+              <div class="lever-name"><span data-es>Reducción días cobertura RM (piezas pequeñas)</span><span data-en>RM coverage-days reduction (small parts)</span></div>
               <div class="status-badge">✅</div>
             </div>
-            <div class="lever-baseline">Baseline: <span class="val">21 días</span> · objetivo: reducir</div>
-            <div class="lever-savings validate">Capital liberado: dato a validar (costo financiero)</div>
+            <div class="lever-baseline"><span data-es>Baseline: </span><span data-en>Baseline: </span><span class="val">21 días</span> · objetivo: reducir</div>
+            <div class="lever-savings validate"><span data-es>Capital liberado: dato a validar</span><span data-en>Capital released: TBV</span> (costo financiero)</div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L7')" id="card-L7">
             <div class="lever-top">
-              <div class="lever-name">Reducción días cobertura China-sourced</div>
+              <div class="lever-name"><span data-es>Reducción días cobertura China-sourced</span><span data-en>China-sourced coverage-days reduction</span></div>
               <div class="status-badge">⚠️</div>
             </div>
-            <div class="lever-baseline">Baseline: <span class="val">14 días</span> · origen China</div>
-            <div class="lever-savings validate">Capital liberado: dato a validar</div>
+            <div class="lever-baseline"><span data-es>Baseline: </span><span data-en>Baseline: </span><span class="val">14 días</span> · origen China</div>
+            <div class="lever-savings validate"><span data-es>Capital liberado: dato a validar</span><span data-en>Capital released: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L8')" id="card-L8">
             <div class="lever-top">
-              <div class="lever-name">Liquidación inventario en cuarentena</div>
+              <div class="lever-name"><span data-es>Liquidación inventario en cuarentena</span><span data-en>Quarantine inventory liquidation</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Quarantine Qty + Cost: <span class="val">7,597 partes analizadas</span></div>
-            <div class="lever-savings validate">Liberación capital: dato a validar ($ cuarentena total)</div>
+            <div class="lever-savings validate"><span data-es>Liberación capital: dato a validar</span><span data-en>Capital release: TBV</span> ($ cuarentena total)</div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--gold)" onclick="showDetail('L9')" id="card-L9">
             <div class="lever-top">
-              <div class="lever-name">Reducción low-turnover SKUs (~60% no movers)</div>
+              <div class="lever-name"><span data-es>Reducción low-turnover SKUs (~60% no movers)</span><span data-en>Low-turnover SKU reduction (~60% non-movers)</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Racks almacén: <span class="val">60% sin movimiento</span></div>
-            <div class="lever-savings validate">Ahorro espacio + capital: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Ahorro espacio + capital: dato a validar</span><span data-en>Space + capital savings: TBV</span></div>
           </div>
 
         </div>
@@ -721,55 +734,55 @@
       <!-- PILAR 3: FLUJO DE MATERIAL -->
       <div class="pilar-column">
         <div class="pilar-header" style="background: linear-gradient(135deg, rgba(42,157,92,0.18) 0%, rgba(21,35,54,0.9) 100%); --accent-color: var(--green);">
-          <div class="ph-num">PILAR 03</div>
-          <div class="ph-title">FLUJO DE<br>MATERIAL</div>
+          <div class="ph-num"><span data-es>PILAR 03</span><span data-en>PILLAR 03</span></div>
+          <div class="ph-title"><span data-es>FLUJO DE<br>MATERIAL</span><span data-en>MATERIAL<br>FLOW</span></div>
           <div class="ph-sub">IDL · NVA · Staging · Espacio</div>
         </div>
         <div class="lever-area">
 
           <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L10')" id="card-L10">
             <div class="lever-top">
-              <div class="lever-name">Optimización rutas logística interna (NVA)</div>
+              <div class="lever-name"><span data-es>Optimización rutas logística interna (NVA)</span><span data-en>Internal logistics route optimization (NVA)</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">IDL: <span class="val">77 montacarguistas + 107 material handlers</span></div>
-            <div class="lever-savings validate">Costo operativo/FTE: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Costo operativo/FTE: dato a validar</span><span data-en>Operating cost/FTE: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L11')" id="card-L11">
             <div class="lever-top">
-              <div class="lever-name">Eliminación pasos NVA del flujo (5 etapas → target)</div>
+              <div class="lever-name"><span data-es>Eliminación pasos NVA del flujo (5 etapas → target)</span><span data-en>NVA-step elimination from flow (5 stages → target)</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">Flujo actual: <span class="val">Moldeo→Ventana→WH→Staging→Línea</span></div>
-            <div class="lever-savings validate">Tiempo NVA eliminado: dato a validar en gemba</div>
+            <div class="lever-savings validate"><span data-es>Tiempo NVA eliminado: dato a validar en gemba</span><span data-en>NVA time eliminated: TBV on gemba</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L12')" id="card-L12">
             <div class="lever-top">
-              <div class="lever-name">Descongestión staging (sobrecarga 62%)</div>
+              <div class="lever-name"><span data-es>Descongestión staging (sobrecarga 62%)</span><span data-en>Staging decongestion (62% overload)</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Capacidad: <span class="val">106 pallets · Real: ~172 pallets</span></div>
-            <div class="lever-savings validate">Costo almacenaje extra / 3PL: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Costo almacenaje extra / 3PL: dato a validar</span><span data-en>Extra storage / 3PL cost: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L13')" id="card-L13">
             <div class="lever-top">
-              <div class="lever-name">Mejora utilización de espacio (+30% objetivo)</div>
+              <div class="lever-name"><span data-es>Mejora utilización de espacio (+30% objetivo)</span><span data-en>Space-utilization improvement (+30% target)</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Floor: <span class="val">~90% ocupado por inventario</span></div>
-            <div class="lever-savings validate">Ahorro m² / costo de oportunidad: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Ahorro m² / costo de oportunidad: dato a validar</span><span data-en>m² savings / opportunity cost: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: var(--green)" onclick="showDetail('L14')" id="card-L14">
             <div class="lever-top">
-              <div class="lever-name">Reducción equipos logística (84 equipos vs rutas reales)</div>
+              <div class="lever-name"><span data-es>Reducción equipos logística (84 equipos vs rutas reales)</span><span data-en>Logistics fleet reduction (84 units vs real routes)</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Equipos: <span class="val">52 HS · 11 Reach · etc.</span></div>
-            <div class="lever-savings validate">Costo operativo equipos: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Costo operativo equipos: dato a validar</span><span data-en>Equipment operating cost: TBV</span></div>
           </div>
 
         </div>
@@ -778,55 +791,55 @@
       <!-- PILAR 4: PLANEACIÓN & SETUP -->
       <div class="pilar-column">
         <div class="pilar-header" style="background: linear-gradient(135deg, rgba(139,163,192,0.15) 0%, rgba(21,35,54,0.9) 100%); --accent-color: #8BBCD8;">
-          <div class="ph-num">PILAR 04</div>
-          <div class="ph-title">PLANEACIÓN<br>& SETUP</div>
+          <div class="ph-num"><span data-es>PILAR 04</span><span data-en>PILLAR 04</span></div>
+          <div class="ph-title"><span data-es>PLANEACIÓN<br>& SETUP</span><span data-en>PLANNING<br>& SETUP</span></div>
           <div class="ph-sub">EPEI · Changeover · OTIF · SC</div>
         </div>
         <div class="lever-area">
 
           <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L15')" id="card-L15">
             <div class="lever-top">
-              <div class="lever-name">Reducción tiempo de changeover (3-4 días → objetivo)</div>
+              <div class="lever-name"><span data-es>Reducción tiempo de changeover (3-4 días → objetivo)</span><span data-en>Changeover-time reduction (3–4 days → target)</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">Setup actual: <span class="val">3–4 días/línea</span> (estimado)</div>
-            <div class="lever-savings validate">Impacto OEE ensamble: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Impacto OEE ensamble: dato a validar</span><span data-en>Assembly OEE impact: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L16')" id="card-L16">
             <div class="lever-top">
-              <div class="lever-name">EPEI — Reducción safety stock por variabilidad</div>
+              <div class="lever-name"><span data-es>EPEI — Reducción safety stock por variabilidad</span><span data-en>EPEI — Safety-stock reduction by variability</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">Buffer: <span class="val">3–4 días</span> · Supply Match: <span class="val">94%</span></div>
-            <div class="lever-savings validate">Capital en safety stock: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Capital en safety stock: dato a validar</span><span data-en>Safety-stock capital: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L17')" id="card-L17">
             <div class="lever-top">
-              <div class="lever-name">Revenue en riesgo por gap Supply Match (94% → 95%+)</div>
+              <div class="lever-name"><span data-es>Revenue en riesgo por gap Supply Match (94% → 95%+)</span><span data-en>Revenue at risk from Supply Match gap (94% → 95%+)</span></div>
               <div class="status-badge">✅</div>
             </div>
             <div class="lever-baseline">Supply Match: <span class="val">94%</span> · Target: <span class="val">95%</span> 🔴</div>
-            <div class="lever-savings validate">Revenue protegido: dato a validar (unidades × precio)</div>
+            <div class="lever-savings validate"><span data-es>Revenue protegido: dato a validar (unidades × precio)</span><span data-en>Revenue protected: TBV (units × price)</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L18')" id="card-L18">
             <div class="lever-top">
-              <div class="lever-name">Mejora OTIF comercial (92.9% → target)</div>
+              <div class="lever-name"><span data-es>Mejora OTIF comercial (92.9% → target)</span><span data-en>Commercial OTIF improvement (92.9% → target)</span></div>
               <div class="status-badge">⚠️</div>
             </div>
             <div class="lever-baseline">OTIF 2026: <span class="val">92.9%</span></div>
-            <div class="lever-savings validate">Penalidades / costo de servicio: dato a validar</div>
+            <div class="lever-savings validate"><span data-es>Penalidades / costo de servicio: dato a validar</span><span data-en>Penalties / service cost: TBV</span></div>
           </div>
 
           <div class="lever-card" style="--lever-color: #8BBCD8" onclick="showDetail('L19')" id="card-L19">
             <div class="lever-top">
-              <div class="lever-name">Optimización subcontratistas (3 activos)</div>
+              <div class="lever-name"><span data-es>Optimización subcontratistas (3 activos)</span><span data-en>Subcontractor optimization (3 active)</span></div>
               <div class="status-badge">❌</div>
             </div>
             <div class="lever-baseline">Subcon: <span class="val">3 activos</span> (ex 6–7)</div>
-            <div class="lever-savings missing">Dato a validar de ahorro</div>
+            <div class="lever-savings missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
           </div>
 
         </div>
@@ -838,7 +851,7 @@
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;">
 
       <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
-        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">📊 DATOS CRÍTICOS DISPONIBLES</div>
+        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">📊 <span data-es>DATOS CRÍTICOS DISPONIBLES</span><span data-en>CRITICAL DATA AVAILABLE</span></div>
         <div style="display: flex; flex-direction: column; gap: 6px;">
           <div style="display: flex; justify-content: space-between; font-size: 11px;">
             <span style="color:var(--cream)">Raw Material BOM · 7,597 partes</span>
@@ -876,7 +889,7 @@
       </div>
 
       <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
-        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">🎯 PRIORIDADES DATOS — SEMANA 11-15 MAYO</div>
+        <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">🎯 <span data-es>PRIORIDADES DATOS — SEMANA 11-15 MAYO</span><span data-en>DATA PRIORITIES — WEEK MAY 11-15</span></div>
         <div style="display: flex; flex-direction: column; gap: 8px;">
           <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4;">
             <span style="color:var(--red); flex-shrink:0; font-weight:700">P1</span>
@@ -910,7 +923,7 @@
 
     <div class="detail-empty" id="detail-empty">
       <div class="icon">🌲</div>
-      <p>Haz clic en cualquier<br>palanca de ahorro<br>para ver el detalle</p>
+      <p><span data-es>Haz clic en cualquier<br>palanca de ahorro<br>para ver el detalle</span><span data-en>Click any savings lever<br>to view its detail</span></p>
     </div>
 
     <!-- DETAIL CONTENTS -->
@@ -927,7 +940,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro proyectado</div>
-        <div class="svalue validate">Dato a validar de ahorro</div>
+        <div class="svalue validate"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Fuentes de datos</div>
@@ -953,11 +966,11 @@
       <div class="detail-name">Reducción de Scrap por Tipo de Pieza</div>
       <div class="savings-box">
         <div class="slabel">Baseline scrap</div>
-        <div class="svalue missing">No disponible</div>
+        <div class="svalue missing"><span data-es>No disponible</span><span data-en>Not available</span></div>
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro proyectado</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Acción prioritaria</div>
@@ -979,7 +992,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">CoQ total estimado</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Acción</div>
@@ -1006,7 +1019,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro por mejora OEE</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
     </div>
 
@@ -1020,7 +1033,7 @@
       </div>
       <div class="savings-box">
         <div class="slabel">Costo mensual 3PL CargoKey</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Lógica del ahorro</div>
@@ -1039,7 +1052,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Capital liberado potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Lógica del cálculo</div>
@@ -1058,7 +1071,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Capital liberado potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Punto crítico</div>
@@ -1080,7 +1093,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro por disposición</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Acción pre-workshop</div>
@@ -1101,7 +1114,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro capital + espacio</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
     </div>
 
@@ -1116,7 +1129,7 @@
       </div>
       <div class="savings-box">
         <div class="slabel">Costo por FTE logística/año</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">⚠️ Nota cultural Mattel</div>
@@ -1143,7 +1156,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro por eliminación NVA</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Herramienta: Spaghetti Diagram</div>
@@ -1165,7 +1178,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro por descongestión</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Vinculación directa</div>
@@ -1187,7 +1200,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro m² liberados</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Vinculación con objetivo VSA</div>
@@ -1206,7 +1219,7 @@
       </div>
       <div class="savings-box">
         <div class="slabel">Costo operativo total de equipos/año</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Análisis posible</div>
@@ -1228,7 +1241,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro por reducción setup</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Cálculo posible en workshop</div>
@@ -1251,7 +1264,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Capital en safety stock</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Lógica EPEI</div>
@@ -1278,7 +1291,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro/protección de revenue</div>
-        <div class="svalue missing">Dato a validar de ahorro (% recuperable)</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span> (% recuperable)</div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Fuentes disponibles</div>
@@ -1301,7 +1314,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro en penalidades / servicio</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Dato crítico faltante</div>
@@ -1324,7 +1337,7 @@
       </div>
       <div class="savings-box" style="margin-top:8px">
         <div class="slabel">Ahorro potencial</div>
-        <div class="svalue missing">Dato a validar de ahorro</div>
+        <div class="svalue missing"><span data-es>Dato a validar de ahorro</span><span data-en>TBV savings figure</span></div>
       </div>
       <div class="detail-section" style="margin-top:14px">
         <div class="detail-section-title">Acción</div>
@@ -1387,6 +1400,15 @@
     if (e.key === 'ArrowDown' && idx < detailIds.length - 1) showDetail(detailIds[idx + 1]);
     if (e.key === 'ArrowUp' && idx > 0) showDetail(detailIds[idx - 1]);
   });
+
+function setLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  var btn = document.querySelector(".lang-btn[onclick=\"setLang('" + lang + "')\"]");
+  if(btn) btn.classList.add('active');
+  document.documentElement.lang = lang;
+}
+
 </script>
 
 </body>

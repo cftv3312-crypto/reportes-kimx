@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracker Validación Hipótesis — VSA Día 1</title>
+<style>
+  :root {
+    --navy: #0F2A47;
+    --navy-soft: #1d3a5f;
+    --ink: #1a1f2e;
+    --bg: #f6f4ee;
+    --paper: #ffffff;
+    --rule: #d8d4c8;
+    --muted: #6b6b6b;
+    --coral: #d34a3a;
+    --teal: #2d8a7f;
+    --amber: #d49a2c;
+    --grey-pill: #e6e2d5;
+    --red-soft: #f3d6d0;
+    --green-soft: #d4ebd6;
+    --amber-soft: #fbe9c4;
+    --orange-soft: #fad8b6;
+    --focus-yellow: #fff7d6;
+    --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(15, 42, 71, 0.06);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  header.topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand .badge {
+    background: var(--coral); color: #fff;
+    padding: 4px 10px; border-radius: 4px;
+    font-weight: 700; font-size: 12px; letter-spacing: 0.5px;
+  }
+  .brand h1 {
+    margin: 0; font-size: 16px; font-weight: 600; letter-spacing: 0.2px;
+  }
+  .brand .sub {
+    font-size: 12px; color: #b8c4d4; margin-top: 2px;
+  }
+  .topbar-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .lang-toggle {
+    display: inline-flex; background: rgba(255,255,255,0.08); border-radius: 6px; padding: 3px;
+  }
+  .lang-toggle button {
+    background: transparent; color: #b8c4d4; border: 0;
+    padding: 6px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
+    border-radius: 4px; letter-spacing: 0.5px;
+  }
+  .lang-toggle button.active {
+    background: #fff; color: var(--navy);
+  }
+  .print-btn, .reset-btn {
+    background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.18);
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;
+  }
+  .print-btn:hover, .reset-btn:hover { background: rgba(255,255,255,0.16); }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 28px 80px;
+  }
+
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule);
+  }
+  .meta-row strong { color: var(--ink); }
+
+  .callout {
+    background: var(--focus-yellow);
+    border-left: 4px solid var(--amber);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+    font-size: 14px;
+  }
+  .callout strong { color: var(--ink); }
+
+  h2.section {
+    font-size: 22px;
+    color: var(--navy);
+    margin: 34px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--navy);
+    letter-spacing: -0.2px;
+  }
+
+  /* Focus block */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .focus-card {
+    background: var(--paper); border: 1px solid var(--rule);
+    border-left: 5px solid var(--coral);
+    padding: 16px 18px; border-radius: 6px;
+    box-shadow: var(--shadow);
+  }
+  .focus-card .h-id {
+    font-weight: 700; color: var(--coral); font-size: 13px; letter-spacing: 1px;
+  }
+  .focus-card h3 {
+    margin: 4px 0 8px; font-size: 16px; color: var(--navy);
+  }
+  .focus-card .focus-meta {
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* Logistics checklist */
+  .logistics {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 18px 22px; margin-bottom: 24px; box-shadow: var(--shadow);
+  }
+  .logistics ul {
+    list-style: none; padding: 0; margin: 8px 0 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px;
+  }
+  .logistics label {
+    display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;
+  }
+  .logistics input[type="checkbox"] { accent-color: var(--teal); transform: scale(1.15); }
+
+  /* Hypothesis cards */
+  .hyp-card {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 8px;
+    margin-bottom: 22px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .hyp-card.priority { border-top: 4px solid var(--coral); }
+  .hyp-card.secondary { border-top: 4px solid var(--navy-soft); }
+  .hyp-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 22px; background: #fafaf6;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+  }
+  .hyp-header-left { display: flex; align-items: center; gap: 14px; }
+  .hyp-id {
+    background: var(--navy); color: #fff;
+    width: 46px; height: 46px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px;
+  }
+  .hyp-card.priority .hyp-id { background: var(--coral); }
+  .hyp-title {
+    margin: 0; font-size: 16px; color: var(--navy); font-weight: 600;
+  }
+  .hyp-subtitle {
+    font-size: 12px; color: var(--muted); margin-top: 2px;
+  }
+  .status-pills {
+    display: flex; gap: 4px;
+  }
+  .pill {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 4px 10px; border-radius: 20px; font-size: 11px; cursor: pointer;
+    user-select: none;
+    transition: all 0.15s;
+  }
+  .pill:hover { background: #f0ede4; }
+  .pill[data-active="true"][data-status="pendiente"] { background: var(--grey-pill); border-color: var(--muted); }
+  .pill[data-active="true"][data-status="validacion"] { background: var(--amber-soft); border-color: var(--amber); font-weight: 600; }
+  .pill[data-active="true"][data-status="validada"] { background: var(--green-soft); border-color: var(--teal); font-weight: 600; }
+  .pill[data-active="true"][data-status="refutada"] { background: var(--red-soft); border-color: var(--coral); font-weight: 600; }
+  .pill[data-active="true"][data-status="parcial"] { background: var(--orange-soft); border-color: #c87a2c; font-weight: 600; }
+
+  .hyp-body { padding: 18px 22px; }
+  .hyp-body.collapsed { display: none; }
+
+  .know-block, .validate-block, .capture-block {
+    margin-bottom: 16px;
+  }
+  .know-block h4, .validate-block h4, .capture-block h4 {
+    margin: 0 0 8px; font-size: 13px; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700;
+  }
+  .know-block ul { margin: 0; padding-left: 20px; font-size: 14px; }
+  .know-block li { margin-bottom: 4px; }
+  .validate-block ul { list-style: none; padding: 0; margin: 0; }
+  .validate-block li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; font-size: 14px; }
+  .validate-block input[type="checkbox"] { accent-color: var(--teal); transform: scale(1.1); margin-top: 4px; }
+
+  .capture-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
+    margin-bottom: 10px;
+  }
+  .capture-grid .full { grid-column: 1 / -1; }
+  .capture-grid label {
+    display: flex; flex-direction: column; font-size: 12px;
+    color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .capture-grid input[type="text"], .capture-grid textarea {
+    margin-top: 4px;
+    font-family: inherit; font-size: 14px; color: var(--ink);
+    padding: 8px 10px;
+    background: #fdfcf8;
+    border: 1px solid var(--rule); border-radius: 4px;
+    width: 100%;
+  }
+  .capture-grid textarea { min-height: 64px; resize: vertical; }
+  .capture-grid input:focus, .capture-grid textarea:focus {
+    outline: 2px solid var(--teal); border-color: var(--teal);
+  }
+  .magnitude {
+    background: var(--focus-yellow); padding: 8px 12px; border-radius: 4px;
+    font-size: 13px; color: var(--ink); border-left: 3px solid var(--amber);
+    margin-top: 4px;
+  }
+  .magnitude strong { color: var(--coral); }
+
+  /* Cheat sheet */
+  .cheat-sheet {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 8px 0; margin-top: 16px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  table.cheat {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  table.cheat th, table.cheat td {
+    text-align: left; padding: 10px 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.cheat th {
+    background: #fafaf6; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;
+  }
+  table.cheat tr:last-child td { border-bottom: 0; }
+
+  /* Bitácora */
+  table.log {
+    width: 100%; border-collapse: collapse;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  table.log th, table.log td {
+    text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+  }
+  table.log th { background: #fafaf6; color: var(--navy); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  table.log input { width: 100%; border: 0; background: transparent; font-family: inherit; font-size: 13px; padding: 4px; }
+  table.log input:focus { outline: 1px solid var(--teal); background: #fdfcf8; }
+  .add-row-btn {
+    margin-top: 10px; background: var(--navy); color: #fff; border: 0;
+    padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;
+  }
+
+  .rules-footer {
+    margin-top: 40px; padding: 18px 22px;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+    font-size: 13px; color: var(--muted);
+  }
+  .rules-footer strong { color: var(--ink); }
+  .rules-footer ul { margin: 6px 0 0; padding-left: 22px; }
+  .rules-footer li { margin-bottom: 4px; }
+
+  /* Status legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+  }
+  .legend .pill { cursor: default; }
+
+  /* Print */
+  @media print {
+    header.topbar { position: static; box-shadow: none; }
+    .print-btn, .reset-btn, .lang-toggle { display: none; }
+    main { max-width: 100%; padding: 16px; }
+    .hyp-body.collapsed { display: block !important; }
+    .hyp-card { page-break-inside: avoid; box-shadow: none; }
+    body { background: #fff; }
+  }
+
+  @media (max-width: 900px) {
+    .focus-grid { grid-template-columns: 1fr; }
+    .capture-grid { grid-template-columns: 1fr; }
+    .logistics ul { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="badge" data-i18n="badge">DÍA 1</span>
+    <div>
+      <h1 data-i18n="title">Tracker Validación Hipótesis — VSA Mattel Montoi</h1>
+      <div class="sub" data-i18n="subtitle">Lunes 11 de mayo 2026 · Kickoff + Walk-the-floor + Sesión IT/Finanzas</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="lang-toggle" role="tablist">
+      <button id="lang-es" class="active" onclick="setLang('es')">ES</button>
+      <button id="lang-en" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="print-btn" onclick="window.print()" data-i18n="print">Imprimir</button>
+    <button class="reset-btn" onclick="resetAll()" data-i18n="reset">Reset</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="meta-row">
+    <span><strong data-i18n="client">Cliente:</strong> Mattel Montoi</span>
+    <span><strong data-i18n="contact">Contacto:</strong> Fátima Ruiz — Mejora Continua</span>
+    <span><strong data-i18n="team">Equipo KIMX:</strong> JC + Edgar Luna + Fery (KI Singapur)</span>
+    <span><strong data-i18n="goal">Objetivo:</strong> <span data-i18n="goalValue">Min. $500K USD ahorro · Reducir espacio · Mejorar lead time</span></span>
+  </div>
+
+  <div class="callout">
+    <strong data-i18n="rule">📌 Regla activa:</strong>
+    <span data-i18n="ruleBody"> Documento vivo. Capturar evidencia en tiempo real. Magnitudes cuantitativas SIEMPRE como "dato a validar de ahorro". Cero referencias a Indonesia.</span>
+  </div>
+
+  <h2 class="section" data-i18n="legendTitle">Leyenda de Estado</h2>
+  <div class="legend">
+    <span class="pill" data-active="true" data-status="pendiente" data-i18n="stPendiente">⬜ Pendiente</span>
+    <span class="pill" data-active="true" data-status="validacion" data-i18n="stValidacion">🟡 En validación</span>
+    <span class="pill" data-active="true" data-status="validada" data-i18n="stValidada">🟢 Validada</span>
+    <span class="pill" data-active="true" data-status="refutada" data-i18n="stRefutada">🔴 Refutada</span>
+    <span class="pill" data-active="true" data-status="parcial" data-i18n="stParcial">🟠 Parcial / Pivota</span>
+  </div>
+
+  <h2 class="section" data-i18n="focusTitle">🎯 Foco del Día 1</h2>
+  <div class="focus-grid">
+    <div class="focus-card">
+      <div class="h-id">H6</div>
+      <h3 data-i18n="h6focus">Phantom BOMs + Costos $0</h3>
+      <div class="focus-meta" data-i18n="h6focusMeta">Quick Win — limpieza master (HABILITADOR) · Sesión IT + Finanzas</div>
+    </div>
+    <div class="focus-card">
+      <div class="h-id">H1</div>
+      <h3 data-i18n="h1focus">Concentración `0013-0107` 39%</h3>
+      <div class="focus-meta" data-i18n="h1focusMeta">Spot-check físico · Walk-the-floor + Compras</div>
+    </div>
+    <div class="focus-card">
+      <div class="h-id">H4a</div>
+      <h3 data-i18n="h4focus">Master Data 5CA Mega</h3>
+      <div class="focus-meta" data-i18n="h4focusMeta">Auditar Line Rate · Engineering + Lucy</div>
+    </div>
+  </div>
+
+  <h2 class="section" data-i18n="logTitle">Logística Pre-Kickoff</h2>
+  <div class="logistics">
+    <ul id="logistics-list">
+      <li><label><input type="checkbox" data-storage="log-fatima"><span data-i18n="logFatima">Sala confirmada con Fátima Ruiz</span></label></li>
+      <li><label><input type="checkbox" data-storage="log-materiales"><span data-i18n="logMat">Materiales (post-its VSM, plumones, papel kraft)</span></label></li>
+      <li><label><input type="checkbox" data-storage="log-asistencia"><span data-i18n="logAsist">Asistencia confirmada de los 24–25 participantes</span></label></li>
+      <li><label><input type="checkbox" data-storage="log-deck"><span data-i18n="logDeck">Deck "06 - Production System Introduction - EN" abierto</span></label></li>
+      <li><label><input type="checkbox" data-storage="log-tracker"><span data-i18n="logTrack">Cuaderno de hipótesis abierto en laptop</span></label></li>
+      <li><label><input type="checkbox" data-storage="log-wsp"><span data-i18n="logWsp">WhatsApp con Fátima — confirmación final</span></label></li>
+    </ul>
+  </div>
+
+  <h2 class="section" data-i18n="hypTitle">Hipótesis — Captura en Vivo</h2>
+
+  <!-- H6 -->
+  <article class="hyp-card priority" data-hyp="H6">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H6</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h6title">Phantom BOMs + Costos $0 distorsionan MRP</h3>
+          <div class="hyp-subtitle" data-i18n="h6sub">IT + Finanzas + Compras · Día 1 · Quick Win HABILITADOR</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente" data-i18n="stPendiente">⬜</span>
+        <span class="pill" data-status="validacion" data-i18n="stValidacion">🟡</span>
+        <span class="pill" data-status="validada" data-i18n="stValidada">🟢</span>
+        <span class="pill" data-status="refutada" data-i18n="stRefutada">🔴</span>
+        <span class="pill" data-status="parcial" data-i18n="stParcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h6k1">2 phantom BOMs en JKG84: <code>11037-96779</code>, <code>11037-96780</code></li>
+          <li data-i18n="h6k2">33 parts con Cst STD = $0 y Qty > 0 → 7,877,540 unidades sin valor</li>
+          <li data-i18n="h6k3">30 parts con WIP negativo (-80,253 unidades) → posteos rotos</li>
+          <li data-i18n="h6k4">Top phantom-cost: <code>411-A1900 SCREW</code> (5,575,577 unidades)</li>
+        </ul>
+      </div>
+      <div class="validate-block">
+        <h4 data-i18n="toValidate">A validar hoy</h4>
+        <ul>
+          <li><label><input type="checkbox" data-storage="h6-v1"><span data-i18n="h6v1">IT: ¿phantoms 11037-96779/780 deberían tener flag = X en SAP?</span></label></li>
+          <li><label><input type="checkbox" data-storage="h6-v2"><span data-i18n="h6v2">Finanzas: revaluar las 33 parts con $0</span></label></li>
+          <li><label><input type="checkbox" data-storage="h6-v3"><span data-i18n="h6v3">Auditoría transaccional 30 parts WIP negativo</span></label></li>
+          <li><label><input type="checkbox" data-storage="h6-v4"><span data-i18n="h6v4">Spot-check físico top 5 parts $0 cost</span></label></li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="capture">Captura en vivo</h4>
+        <div class="capture-grid">
+          <label data-i18n="who">Quién<input type="text" data-storage="h6-who"></label>
+          <label data-i18n="when">Hora sesión<input type="text" data-storage="h6-when"></label>
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h6-findings"></textarea></label>
+          <label class="full" data-i18n="blockers">Bloqueadores / Open items<textarea data-storage="h6-blockers"></textarea></label>
+          <label class="full" data-i18n="next">Siguiente paso<input type="text" data-storage="h6-next"></label>
+        </div>
+        <div class="magnitude" data-i18n="magH6"><strong>Magnitud:</strong> dato a validar de ahorro (efecto multiplicador — habilita H1, H5, H7)</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H1 -->
+  <article class="hyp-card priority" data-hyp="H1">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H1</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h1title">Concentración `0013-0107` = 39% del valor de inventario</h3>
+          <div class="hyp-subtitle" data-i18n="h1sub">Arka + Compras · Día 1 · Spot-check físico</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h1k1"><code>0013-0107</code> Screw 3.5mm 10mm CBV76 — $3,540,051 en stock (39.2%)</li>
+          <li data-i18n="h1k2">3,187,053 unidades · Cst STD $6.51 · Pol = 56 días</li>
+          <li data-i18n="h1k3">Top 7 parts = 82% del valor; Pol=56d concentra 49% en 15 parts</li>
+        </ul>
+      </div>
+      <div class="validate-block">
+        <h4 data-i18n="toValidate">A validar hoy</h4>
+        <ul>
+          <li><label><input type="checkbox" data-storage="h1-v1"><span data-i18n="h1v1">Spot-check físico cantidad real vs SAP</span></label></li>
+          <li><label><input type="checkbox" data-storage="h1-v2"><span data-i18n="h1v2">Compras: ¿MOQ proveedor obliga? ¿LT alternativo?</span></label></li>
+          <li><label><input type="checkbox" data-storage="h1-v3"><span data-i18n="h1v3">Cruzar yield × producción → consumo semanal real</span></label></li>
+          <li><label><input type="checkbox" data-storage="h1-v4"><span data-i18n="h1v4">Calcular días cobertura real</span></label></li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="capture">Captura en vivo</h4>
+        <div class="capture-grid">
+          <label data-i18n="who">Quién<input type="text" data-storage="h1-who"></label>
+          <label data-i18n="location">Ubicación física<input type="text" data-storage="h1-where"></label>
+          <label data-i18n="qty">Conteo físico estimado<input type="text" data-storage="h1-qty"></label>
+          <label data-i18n="cover">Días cobertura estimados<input type="text" data-storage="h1-cover"></label>
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h1-findings"></textarea></label>
+          <label class="full" data-i18n="next">Siguiente paso<input type="text" data-storage="h1-next"></label>
+        </div>
+        <div class="magnitude" data-i18n="magH1"><strong>Magnitud:</strong> dato a validar de ahorro (working capital release)</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H4a -->
+  <article class="hyp-card priority" data-hyp="H4">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H4a</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h4title">Utilización 7.7% es artefacto de master data</h3>
+          <div class="hyp-subtitle" data-i18n="h4sub">Victor + Lucy + Engineering · Día 1 · Master Data Fix</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h4k1">5CA Mega tiene Line Rate = 0 en master (149 SKUs, 33% de producción fuera del cálculo)</li>
+          <li data-i18n="h4k2">FCH global = 139,478k unidades = 8.57× producción real (capacidad teórica, no operable)</li>
+          <li data-i18n="h4k3">Solo 211 de 475 SKUs produjeron — utilización por SKU diluye</li>
+        </ul>
+      </div>
+      <div class="validate-block">
+        <h4 data-i18n="toValidate">A validar hoy</h4>
+        <ul>
+          <li><label><input type="checkbox" data-storage="h4-v1"><span data-i18n="h4v1">Auditar Line Rate 5CA Mega con Engineering</span></label></li>
+          <li><label><input type="checkbox" data-storage="h4-v2"><span data-i18n="h4v2">Distinguir FCH (teórica) vs Demonstrated Capacity</span></label></li>
+          <li><label><input type="checkbox" data-storage="h4-v3"><span data-i18n="h4v3">Listar líneas 5CA Mega activas + Line Rates reales</span></label></li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="capture">Captura en vivo</h4>
+        <div class="capture-grid">
+          <label data-i18n="who">Quién<input type="text" data-storage="h4-who"></label>
+          <label data-i18n="when">Hora sesión<input type="text" data-storage="h4-when"></label>
+          <label class="full" data-i18n="linerate">Line Rate real 5CA Mega<input type="text" data-storage="h4-linerate"></label>
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h4-findings"></textarea></label>
+          <label class="full" data-i18n="next">Siguiente paso<input type="text" data-storage="h4-next"></label>
+        </div>
+        <div class="magnitude" data-i18n="magH4"><strong>Magnitud:</strong> dato a validar de ahorro (prerrequisito de credibilidad)</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H2 -->
+  <article class="hyp-card secondary" data-hyp="H2">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H2</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h2title">Forecast roto (ExF 3.6×–11× undercast)</h3>
+          <div class="hyp-subtitle" data-i18n="h2sub">Arka + Demand Planning · Día 2-3 · Hoy solo señales</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body collapsed">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h2k1">ExF subestima 3.6× global, 11.17× en 5CA Mega</li>
+          <li data-i18n="h2k2">CSCH = Producción exacta (100%) → no hay variance medible</li>
+          <li data-i18n="h2k3">FCH = 8.57× producción real · LT delivery 14d uniforme (default)</li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="signals">Señales Día 1 (upstream)</h4>
+        <div class="capture-grid">
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h2-findings"></textarea></label>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H3 -->
+  <article class="hyp-card secondary" data-hyp="H3">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H3</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h3title">Ramp-up lento — NPI Compressed Readiness</h3>
+          <div class="hyp-subtitle" data-i18n="h3sub">Lucy + Engineering + Fátima · Día 3-4 · Hoy solo señales</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body collapsed">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h3k1">Ramp-up 8.8 a 17.5 sem a 80% del peak</li>
+          <li data-i18n="h3k2">1BC Monster High 17.5 sem · 3C1 Infant 8.8 sem · 3FA Thomas 1.0 sem (referencia)</li>
+          <li data-i18n="h3k3">Causa raíz: NPI Compressed Readiness (Fery)</li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="signals">Señales Día 1 (líneas en ramp-up)</h4>
+        <div class="capture-grid">
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h3-findings"></textarea></label>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H5 -->
+  <article class="hyp-card secondary" data-hyp="H5">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H5</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h5title">Receiving 5/20 trailers + WIP 28.8%</h3>
+          <div class="hyp-subtitle" data-i18n="h5sub">Neri + Edgar + Materiales · Día 2-4 · Hoy solo señales</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body collapsed">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h5k1">Receiving: 5 vs 20 trailers/día (Neri)</li>
+          <li data-i18n="h5k2">50% racks con obsoleto desde 2019</li>
+          <li data-i18n="h5k3">WIP = 28.8% del valor ($2.60M) — alto vs benchmark &lt;15%</li>
+          <li data-i18n="h5k4">Distribución: Receiving 10.5% / Store 60.6% / WIP 28.8% / Quarantine 0.1%</li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="signals">Señales Día 1 (walk-the-floor Receiving + racks)</h4>
+        <div class="capture-grid">
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h5-findings"></textarea></label>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- H7 -->
+  <article class="hyp-card secondary" data-hyp="H7">
+    <div class="hyp-header" onclick="toggleBody(this)">
+      <div class="hyp-header-left">
+        <div class="hyp-id">H7</div>
+        <div>
+          <h3 class="hyp-title" data-i18n="h7title">Single-source top 3 resinas = 46% gasto top-10</h3>
+          <div class="hyp-subtitle" data-i18n="h7sub">Compras + Lucy · Día 2-4 · Hoy solo señales</div>
+        </div>
+      </div>
+      <div class="status-pills" onclick="event.stopPropagation()">
+        <span class="pill" data-active="true" data-status="pendiente">⬜</span>
+        <span class="pill" data-status="validacion">🟡</span>
+        <span class="pill" data-status="validada">🟢</span>
+        <span class="pill" data-status="refutada">🔴</span>
+        <span class="pill" data-status="parcial">🟠</span>
+      </div>
+    </div>
+    <div class="hyp-body collapsed">
+      <div class="know-block">
+        <h4 data-i18n="known">Lo que sabemos (pre-VSA)</h4>
+        <ul>
+          <li data-i18n="h7k1">Top 3 2025: INEOS Olefins $13.8M + POLYTRON $13.0M + BENGON $6.98M = ~46% top-10</li>
+          <li data-i18n="h7k2">JKG84: 94 plásticos moldeados = 61% del BOM</li>
+          <li data-i18n="h7k3">142 parts Make / 85 Purchase (94% del valor en Purchase)</li>
+        </ul>
+      </div>
+      <div class="capture-block">
+        <h4 data-i18n="signals">Señales Día 1 (dependencia de resina en piso)</h4>
+        <div class="capture-grid">
+          <label class="full" data-i18n="findings">Hallazgos<textarea data-storage="h7-findings"></textarea></label>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <h2 class="section" data-i18n="cheatTitle">Cheat Sheet — Números Clave Pre-VSA</h2>
+  <div class="cheat-sheet">
+    <table class="cheat">
+      <thead>
+        <tr><th data-i18n="metric">Métrica</th><th data-i18n="value">Valor</th><th data-i18n="source">Fuente</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="m1">Valor total inventario</td><td>$9.02M</td><td>Raw Material Analysis</td></tr>
+        <tr><td data-i18n="m2"><code>0013-0107</code> Screw</td><td>$3.54M (39.2%)</td><td>Raw Material</td></tr>
+        <tr><td data-i18n="m3">Top 7 parts</td><td data-i18n="m3v">82% del valor</td><td data-i18n="paretox">Pareto cruzado</td></tr>
+        <tr><td data-i18n="m4">WIP atrapado</td><td>$2.60M (28.8%)</td><td>Raw Material</td></tr>
+        <tr><td data-i18n="m5">Parts $0 Cst STD</td><td>33 / 7.88M u</td><td>Raw Material</td></tr>
+        <tr><td data-i18n="m6">Parts WIP negativo</td><td>30 / -80,253 u</td><td>Raw Material</td></tr>
+        <tr><td data-i18n="m7">ExF undercast global</td><td>3.6×</td><td>Production Analisis</td></tr>
+        <tr><td data-i18n="m8">FCH vs Producción</td><td>8.57×</td><td>Production Analisis</td></tr>
+        <tr><td data-i18n="m9">Ramp-up promedio</td><td data-i18n="m9v">7.6 sem a 80% peak</td><td>Production Analisis</td></tr>
+        <tr><td data-i18n="m10">Utilización aparente</td><td data-i18n="m10v">7.7% (5CA LR=0)</td><td>Production Analisis</td></tr>
+        <tr><td data-i18n="m11">Top 3 resinas</td><td>~46% top-10 ($33.8M)</td><td>BOM Analysis</td></tr>
+        <tr><td data-i18n="m12">JKG84 plásticos moldeados</td><td>94 / 154 (61%)</td><td>BOM Analysis</td></tr>
+        <tr><td data-i18n="m13">Phantom BOMs JKG84</td><td>2 (11037-96779/780)</td><td>BOM ↔ Raw Material</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section" data-i18n="logbookTitle">Bitácora de Decisiones Día 1</h2>
+  <table class="log">
+    <thead>
+      <tr>
+        <th data-i18n="time">Hora</th>
+        <th data-i18n="decision">Decisión / Hallazgo</th>
+        <th data-i18n="who2">Quién</th>
+        <th data-i18n="hyp">Hipótesis</th>
+      </tr>
+    </thead>
+    <tbody id="logbook">
+      <tr><td><input type="text" data-storage="lb-1-time"></td><td><input type="text" data-storage="lb-1-dec"></td><td><input type="text" data-storage="lb-1-who"></td><td><input type="text" data-storage="lb-1-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-2-time"></td><td><input type="text" data-storage="lb-2-dec"></td><td><input type="text" data-storage="lb-2-who"></td><td><input type="text" data-storage="lb-2-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-3-time"></td><td><input type="text" data-storage="lb-3-dec"></td><td><input type="text" data-storage="lb-3-who"></td><td><input type="text" data-storage="lb-3-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-4-time"></td><td><input type="text" data-storage="lb-4-dec"></td><td><input type="text" data-storage="lb-4-who"></td><td><input type="text" data-storage="lb-4-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-5-time"></td><td><input type="text" data-storage="lb-5-dec"></td><td><input type="text" data-storage="lb-5-who"></td><td><input type="text" data-storage="lb-5-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-6-time"></td><td><input type="text" data-storage="lb-6-dec"></td><td><input type="text" data-storage="lb-6-who"></td><td><input type="text" data-storage="lb-6-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-7-time"></td><td><input type="text" data-storage="lb-7-dec"></td><td><input type="text" data-storage="lb-7-who"></td><td><input type="text" data-storage="lb-7-hyp"></td></tr>
+      <tr><td><input type="text" data-storage="lb-8-time"></td><td><input type="text" data-storage="lb-8-dec"></td><td><input type="text" data-storage="lb-8-who"></td><td><input type="text" data-storage="lb-8-hyp"></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section" data-i18n="nextTitle">Próximos Pasos al Cierre del Día 1</h2>
+  <div style="background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 22px; box-shadow: var(--shadow);">
+    <label style="display:block; font-size:13px; margin-bottom:8px;"><input type="checkbox" data-storage="next-1"> <input type="text" data-storage="next-1-text" style="width:90%; border:0; border-bottom:1px dotted var(--rule); padding:4px;"></label>
+    <label style="display:block; font-size:13px; margin-bottom:8px;"><input type="checkbox" data-storage="next-2"> <input type="text" data-storage="next-2-text" style="width:90%; border:0; border-bottom:1px dotted var(--rule); padding:4px;"></label>
+    <label style="display:block; font-size:13px; margin-bottom:8px;"><input type="checkbox" data-storage="next-3"> <input type="text" data-storage="next-3-text" style="width:90%; border:0; border-bottom:1px dotted var(--rule); padding:4px;"></label>
+    <label style="display:block; font-size:13px; margin-bottom:8px;"><input type="checkbox" data-storage="next-4"> <input type="text" data-storage="next-4-text" style="width:90%; border:0; border-bottom:1px dotted var(--rule); padding:4px;"></label>
+    <label style="display:block; font-size:13px;"><input type="checkbox" data-storage="next-5"> <input type="text" data-storage="next-5-text" style="width:90%; border:0; border-bottom:1px dotted var(--rule); padding:4px;"></label>
+  </div>
+
+  <div class="rules-footer">
+    <strong data-i18n="rulesTitle">Reglas activas en este documento</strong>
+    <ul>
+      <li data-i18n="r1">❌ Cero ahorros cuantitativos asumidos → siempre "dato a validar de ahorro"</li>
+      <li data-i18n="r2">❌ Cero referencias a data de Indonesia</li>
+      <li data-i18n="r3">✅ Toda evidencia capturada con quién/dónde/cuándo</li>
+      <li data-i18n="r4">✅ Cambios de estado de hipótesis registrados en bitácora</li>
+    </ul>
+    <p style="margin-top:14px; font-style:italic;" data-i18n="footer">Documento generado el 2026-05-11 — Día 1 del VSA Mattel Montoi.</p>
+  </div>
+
+</main>
+
+<script>
+  // ============ i18n ============
+  const i18n = {
+    es: {
+      badge: "DÍA 1",
+      title: "Tracker Validación Hipótesis — VSA Mattel Montoi",
+      subtitle: "Lunes 11 de mayo 2026 · Kickoff + Walk-the-floor + Sesión IT/Finanzas",
+      print: "Imprimir",
+      reset: "Reset",
+      client: "Cliente:", contact: "Contacto:", team: "Equipo KIMX:", goal: "Objetivo:",
+      goalValue: "Min. $500K USD ahorro · Reducir espacio · Mejorar lead time",
+      rule: "📌 Regla activa:",
+      ruleBody: " Documento vivo. Capturar evidencia en tiempo real. Magnitudes cuantitativas SIEMPRE como \"dato a validar de ahorro\". Cero referencias a Indonesia.",
+      legendTitle: "Leyenda de Estado",
+      stPendiente: "⬜ Pendiente", stValidacion: "🟡 En validación", stValidada: "🟢 Validada", stRefutada: "🔴 Refutada", stParcial: "🟠 Parcial / Pivota",
+      focusTitle: "🎯 Foco del Día 1",
+      h6focus: "Phantom BOMs + Costos $0", h6focusMeta: "Quick Win — limpieza master (HABILITADOR) · Sesión IT + Finanzas",
+      h1focus: "Concentración `0013-0107` 39%", h1focusMeta: "Spot-check físico · Walk-the-floor + Compras",
+      h4focus: "Master Data 5CA Mega", h4focusMeta: "Auditar Line Rate · Engineering + Lucy",
+      logTitle: "Logística Pre-Kickoff",
+      logFatima: "Sala confirmada con Fátima Ruiz",
+      logMat: "Materiales (post-its VSM, plumones, papel kraft)",
+      logAsist: "Asistencia confirmada de los 24–25 participantes",
+      logDeck: "Deck \"06 - Production System Introduction - EN\" abierto",
+      logTrack: "Cuaderno de hipótesis abierto en laptop",
+      logWsp: "WhatsApp con Fátima — confirmación final",
+      hypTitle: "Hipótesis — Captura en Vivo",
+      h6title: "Phantom BOMs + Costos $0 distorsionan MRP", h6sub: "IT + Finanzas + Compras · Día 1 · Quick Win HABILITADOR",
+      h6k1: "2 phantom BOMs en JKG84: <code>11037-96779</code>, <code>11037-96780</code>",
+      h6k2: "33 parts con Cst STD = $0 y Qty > 0 → 7,877,540 unidades sin valor",
+      h6k3: "30 parts con WIP negativo (-80,253 unidades) → posteos rotos",
+      h6k4: "Top phantom-cost: <code>411-A1900 SCREW</code> (5,575,577 unidades)",
+      h6v1: "IT: ¿phantoms 11037-96779/780 deberían tener flag = X en SAP?",
+      h6v2: "Finanzas: revaluar las 33 parts con $0",
+      h6v3: "Auditoría transaccional 30 parts WIP negativo",
+      h6v4: "Spot-check físico top 5 parts $0 cost",
+      magH6: "<strong>Magnitud:</strong> dato a validar de ahorro (efecto multiplicador — habilita H1, H5, H7)",
+      h1title: "Concentración `0013-0107` = 39% del valor de inventario", h1sub: "Arka + Compras · Día 1 · Spot-check físico",
+      h1k1: "<code>0013-0107</code> Screw 3.5mm 10mm CBV76 — $3,540,051 en stock (39.2%)",
+      h1k2: "3,187,053 unidades · Cst STD $6.51 · Pol = 56 días",
+      h1k3: "Top 7 parts = 82% del valor; Pol=56d concentra 49% en 15 parts",
+      h1v1: "Spot-check físico cantidad real vs SAP",
+      h1v2: "Compras: ¿MOQ proveedor obliga? ¿LT alternativo?",
+      h1v3: "Cruzar yield × producción → consumo semanal real",
+      h1v4: "Calcular días cobertura real",
+      magH1: "<strong>Magnitud:</strong> dato a validar de ahorro (working capital release)",
+      h4title: "Utilización 7.7% es artefacto de master data", h4sub: "Victor + Lucy + Engineering · Día 1 · Master Data Fix",
+      h4k1: "5CA Mega tiene Line Rate = 0 en master (149 SKUs, 33% de producción fuera del cálculo)",
+      h4k2: "FCH global = 139,478k unidades = 8.57× producción real (capacidad teórica, no operable)",
+      h4k3: "Solo 211 de 475 SKUs produjeron — utilización por SKU diluye",
+      h4v1: "Auditar Line Rate 5CA Mega con Engineering",
+      h4v2: "Distinguir FCH (teórica) vs Demonstrated Capacity",
+      h4v3: "Listar líneas 5CA Mega activas + Line Rates reales",
+      magH4: "<strong>Magnitud:</strong> dato a validar de ahorro (prerrequisito de credibilidad)",
+      h2title: "Forecast roto (ExF 3.6×–11× undercast)", h2sub: "Arka + Demand Planning · Día 2-3 · Hoy solo señales",
+      h2k1: "ExF subestima 3.6× global, 11.17× en 5CA Mega",
+      h2k2: "CSCH = Producción exacta (100%) → no hay variance medible",
+      h2k3: "FCH = 8.57× producción real · LT delivery 14d uniforme (default)",
+      h3title: "Ramp-up lento — NPI Compressed Readiness", h3sub: "Lucy + Engineering + Fátima · Día 3-4 · Hoy solo señales",
+      h3k1: "Ramp-up 8.8 a 17.5 sem a 80% del peak",
+      h3k2: "1BC Monster High 17.5 sem · 3C1 Infant 8.8 sem · 3FA Thomas 1.0 sem (referencia)",
+      h3k3: "Causa raíz: NPI Compressed Readiness (Fery)",
+      h5title: "Receiving 5/20 trailers + WIP 28.8%", h5sub: "Neri + Edgar + Materiales · Día 2-4 · Hoy solo señales",
+      h5k1: "Receiving: 5 vs 20 trailers/día (Neri)",
+      h5k2: "50% racks con obsoleto desde 2019",
+      h5k3: "WIP = 28.8% del valor ($2.60M) — alto vs benchmark &lt;15%",
+      h5k4: "Distribución: Receiving 10.5% / Store 60.6% / WIP 28.8% / Quarantine 0.1%",
+      h7title: "Single-source top 3 resinas = 46% gasto top-10", h7sub: "Compras + Lucy · Día 2-4 · Hoy solo señales",
+      h7k1: "Top 3 2025: INEOS Olefins $13.8M + POLYTRON $13.0M + BENGON $6.98M = ~46% top-10",
+      h7k2: "JKG84: 94 plásticos moldeados = 61% del BOM",
+      h7k3: "142 parts Make / 85 Purchase (94% del valor en Purchase)",
+      known: "Lo que sabemos (pre-VSA)", toValidate: "A validar hoy", capture: "Captura en vivo", signals: "Señales Día 1",
+      who: "Quién", when: "Hora sesión", findings: "Hallazgos", blockers: "Bloqueadores / Open items", next: "Siguiente paso",
+      location: "Ubicación física", qty: "Conteo físico estimado", cover: "Días cobertura estimados", linerate: "Line Rate real 5CA Mega",
+      cheatTitle: "Cheat Sheet — Números Clave Pre-VSA", metric: "Métrica", value: "Valor", source: "Fuente",
+      m1: "Valor total inventario", m2: "<code>0013-0107</code> Screw", m3: "Top 7 parts", m3v: "82% del valor", paretox: "Pareto cruzado",
+      m4: "WIP atrapado", m5: "Parts $0 Cst STD", m6: "Parts WIP negativo", m7: "ExF undercast global", m8: "FCH vs Producción",
+      m9: "Ramp-up promedio", m9v: "7.6 sem a 80% peak", m10: "Utilización aparente", m10v: "7.7% (5CA LR=0)",
+      m11: "Top 3 resinas", m12: "JKG84 plásticos moldeados", m13: "Phantom BOMs JKG84",
+      logbookTitle: "Bitácora de Decisiones Día 1", time: "Hora", decision: "Decisión / Hallazgo", who2: "Quién", hyp: "Hipótesis",
+      nextTitle: "Próximos Pasos al Cierre del Día 1",
+      rulesTitle: "Reglas activas en este documento",
+      r1: "❌ Cero ahorros cuantitativos asumidos → siempre \"dato a validar de ahorro\"",
+      r2: "❌ Cero referencias a data de Indonesia",
+      r3: "✅ Toda evidencia capturada con quién/dónde/cuándo",
+      r4: "✅ Cambios de estado de hipótesis registrados en bitácora",
+      footer: "Documento generado el 2026-05-11 — Día 1 del VSA Mattel Montoi."
+    },
+    en: {
+      badge: "DAY 1",
+      title: "Hypothesis Validation Tracker — Mattel Montoi VSA",
+      subtitle: "Monday, May 11, 2026 · Kickoff + Walk-the-floor + IT/Finance Session",
+      print: "Print",
+      reset: "Reset",
+      client: "Client:", contact: "Contact:", team: "KIMX Team:", goal: "Goal:",
+      goalValue: "Min. $500K USD savings · Space reduction · Lead time improvement",
+      rule: "📌 Active rule:",
+      ruleBody: " Living document. Capture evidence in real time. Quantitative magnitudes ALWAYS as \"data to be validated\". Zero references to Indonesia.",
+      legendTitle: "Status Legend",
+      stPendiente: "⬜ Pending", stValidacion: "🟡 In validation", stValidada: "🟢 Validated", stRefutada: "🔴 Refuted", stParcial: "🟠 Partial / Pivot",
+      focusTitle: "🎯 Day 1 Focus",
+      h6focus: "Phantom BOMs + $0 Costs", h6focusMeta: "Quick Win — master data cleanup (ENABLER) · IT + Finance session",
+      h1focus: "`0013-0107` Screw concentration 39%", h1focusMeta: "Physical spot-check · Walk-the-floor + Purchasing",
+      h4focus: "Master Data 5CA Mega", h4focusMeta: "Audit Line Rate · Engineering + Lucy",
+      logTitle: "Pre-Kickoff Logistics",
+      logFatima: "Room confirmed with Fátima Ruiz",
+      logMat: "Materials (VSM post-its, markers, kraft paper)",
+      logAsist: "24–25 participants attendance confirmed",
+      logDeck: "Deck \"06 - Production System Introduction - EN\" open",
+      logTrack: "Hypothesis tracker open on laptop",
+      logWsp: "WhatsApp with Fátima — final confirmation",
+      hypTitle: "Hypotheses — Live Capture",
+      h6title: "Phantom BOMs + $0 Costs distort MRP", h6sub: "IT + Finance + Purchasing · Day 1 · Quick Win ENABLER",
+      h6k1: "2 phantom BOMs in JKG84: <code>11037-96779</code>, <code>11037-96780</code>",
+      h6k2: "33 parts with Std Cost = $0 and Qty > 0 → 7,877,540 units without value",
+      h6k3: "30 parts with negative WIP (-80,253 units) → broken postings",
+      h6k4: "Top phantom-cost: <code>411-A1900 SCREW</code> (5,575,577 units)",
+      h6v1: "IT: should phantoms 11037-96779/780 have flag = X in SAP?",
+      h6v2: "Finance: revalue the 33 parts with $0",
+      h6v3: "Transactional audit of 30 parts with negative WIP",
+      h6v4: "Physical spot-check top 5 parts with $0 cost",
+      magH6: "<strong>Magnitude:</strong> data to be validated (multiplier effect — enables H1, H5, H7)",
+      h1title: "`0013-0107` concentration = 39% of inventory value", h1sub: "Arka + Purchasing · Day 1 · Physical spot-check",
+      h1k1: "<code>0013-0107</code> Screw 3.5mm 10mm CBV76 — $3,540,051 in stock (39.2%)",
+      h1k2: "3,187,053 units · Std Cost $6.51 · Pol = 56 days",
+      h1k3: "Top 7 parts = 82% of value; Pol=56d concentrates 49% in 15 parts",
+      h1v1: "Physical spot-check actual quantity vs SAP",
+      h1v2: "Purchasing: does supplier MOQ force this? Alternative LT?",
+      h1v3: "Cross yield × production → real weekly consumption",
+      h1v4: "Calculate real coverage days",
+      magH1: "<strong>Magnitude:</strong> data to be validated (working capital release)",
+      h4title: "7.7% utilization is master data artifact", h4sub: "Victor + Lucy + Engineering · Day 1 · Master Data Fix",
+      h4k1: "5CA Mega has Line Rate = 0 in master (149 SKUs, 33% of production outside calculation)",
+      h4k2: "Global FCH = 139,478k units = 8.57× real production (theoretical capacity, not operable)",
+      h4k3: "Only 211 of 475 SKUs produced — utilization per SKU dilutes",
+      h4v1: "Audit Line Rate of 5CA Mega with Engineering",
+      h4v2: "Distinguish FCH (theoretical) vs Demonstrated Capacity",
+      h4v3: "List active 5CA Mega lines + real Line Rates",
+      magH4: "<strong>Magnitude:</strong> data to be validated (credibility prerequisite)",
+      h2title: "Broken forecast (ExF 3.6×–11× undercast)", h2sub: "Arka + Demand Planning · Day 2-3 · Today only signals",
+      h2k1: "ExF undercasts 3.6× globally, 11.17× in 5CA Mega",
+      h2k2: "CSCH = exact Production (100%) → no measurable variance",
+      h2k3: "FCH = 8.57× real production · LT delivery 14d uniform (default)",
+      h3title: "Slow ramp-up — NPI Compressed Readiness", h3sub: "Lucy + Engineering + Fátima · Day 3-4 · Today only signals",
+      h3k1: "Ramp-up 8.8 to 17.5 weeks to 80% peak",
+      h3k2: "1BC Monster High 17.5 wks · 3C1 Infant 8.8 wks · 3FA Thomas 1.0 wk (reference)",
+      h3k3: "Root cause: NPI Compressed Readiness (Fery)",
+      h5title: "Receiving 5/20 trailers + WIP 28.8%", h5sub: "Neri + Edgar + Materials · Day 2-4 · Today only signals",
+      h5k1: "Receiving: 5 vs 20 trailers/day (Neri)",
+      h5k2: "50% of racks with obsolete since 2019",
+      h5k3: "WIP = 28.8% of value ($2.60M) — high vs benchmark &lt;15%",
+      h5k4: "Distribution: Receiving 10.5% / Store 60.6% / WIP 28.8% / Quarantine 0.1%",
+      h7title: "Single-source top 3 resins = 46% top-10 spend", h7sub: "Purchasing + Lucy · Day 2-4 · Today only signals",
+      h7k1: "Top 3 2025: INEOS Olefins $13.8M + POLYTRON $13.0M + BENGON $6.98M = ~46% top-10",
+      h7k2: "JKG84: 94 molded plastics = 61% of BOM",
+      h7k3: "142 Make parts / 85 Purchase (94% of value in Purchase)",
+      known: "What we know (pre-VSA)", toValidate: "To validate today", capture: "Live capture", signals: "Day 1 signals",
+      who: "Who", when: "Session time", findings: "Findings", blockers: "Blockers / Open items", next: "Next step",
+      location: "Physical location", qty: "Estimated physical count", cover: "Estimated coverage days", linerate: "5CA Mega real Line Rate",
+      cheatTitle: "Cheat Sheet — Key Pre-VSA Numbers", metric: "Metric", value: "Value", source: "Source",
+      m1: "Total inventory value", m2: "<code>0013-0107</code> Screw", m3: "Top 7 parts", m3v: "82% of value", paretox: "Cross Pareto",
+      m4: "WIP trapped", m5: "Parts $0 Std Cost", m6: "Parts negative WIP", m7: "ExF global undercast", m8: "FCH vs Production",
+      m9: "Avg ramp-up", m9v: "7.6 wks to 80% peak", m10: "Apparent utilization", m10v: "7.7% (5CA LR=0)",
+      m11: "Top 3 resins", m12: "JKG84 molded plastics", m13: "Phantom BOMs JKG84",
+      logbookTitle: "Day 1 Decision Log", time: "Time", decision: "Decision / Finding", who2: "Who", hyp: "Hypothesis",
+      nextTitle: "Next Steps at End of Day 1",
+      rulesTitle: "Active rules in this document",
+      r1: "❌ Zero assumed quantitative savings → always \"data to be validated\"",
+      r2: "❌ Zero references to Indonesia data",
+      r3: "✅ All evidence captured with who/where/when",
+      r4: "✅ Hypothesis status changes logged in decision log",
+      footer: "Document generated on 2026-05-11 — Day 1 of Mattel Montoi VSA."
+    }
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[lang] && i18n[lang][key]) {
+        el.innerHTML = i18n[lang][key];
+      }
+    });
+    document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    localStorage.setItem('vsa-tracker-lang', lang);
+  }
+
+  // ============ Persistence (localStorage) ============
+  const STORAGE_PREFIX = 'vsa-tracker-d1-';
+  function saveField(el) {
+    const key = STORAGE_PREFIX + el.getAttribute('data-storage');
+    if (el.type === 'checkbox') {
+      localStorage.setItem(key, el.checked ? '1' : '0');
+    } else {
+      localStorage.setItem(key, el.value);
+    }
+  }
+  function loadFields() {
+    document.querySelectorAll('[data-storage]').forEach(el => {
+      const key = STORAGE_PREFIX + el.getAttribute('data-storage');
+      const val = localStorage.getItem(key);
+      if (val !== null) {
+        if (el.type === 'checkbox') el.checked = val === '1';
+        else el.value = val;
+      }
+      el.addEventListener('change', () => saveField(el));
+      el.addEventListener('input', () => saveField(el));
+    });
+  }
+
+  // ============ Status pills ============
+  function bindStatusPills() {
+    document.querySelectorAll('.hyp-card').forEach(card => {
+      const hyp = card.getAttribute('data-hyp');
+      const pills = card.querySelectorAll('.status-pills .pill');
+      const storageKey = STORAGE_PREFIX + 'status-' + hyp;
+      const saved = localStorage.getItem(storageKey) || 'pendiente';
+      pills.forEach(p => p.setAttribute('data-active', p.getAttribute('data-status') === saved ? 'true' : 'false'));
+      pills.forEach(p => {
+        p.addEventListener('click', () => {
+          pills.forEach(x => x.setAttribute('data-active', 'false'));
+          p.setAttribute('data-active', 'true');
+          localStorage.setItem(storageKey, p.getAttribute('data-status'));
+        });
+      });
+    });
+  }
+
+  // ============ Toggle body ============
+  function toggleBody(headerEl) {
+    const body = headerEl.nextElementSibling;
+    body.classList.toggle('collapsed');
+  }
+
+  // ============ Reset ============
+  function resetAll() {
+    if (!confirm('¿Borrar todas las notas y resetear estados? / Clear all notes and reset?')) return;
+    Object.keys(localStorage).filter(k => k.startsWith(STORAGE_PREFIX)).forEach(k => localStorage.removeItem(k));
+    location.reload();
+  }
+
+  // ============ Init ============
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('vsa-tracker-lang') || 'es';
+    setLang(savedLang);
+    loadFields();
+    bindStatusPills();
+  });
+</script>
+
+</body>
+</html>

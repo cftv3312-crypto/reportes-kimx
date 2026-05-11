@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +15,24 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.4;}
-.header{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .header-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
 .header-title{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;text-transform:uppercase;color:var(--white);letter-spacing:1px;line-height:1;}
 .header-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:5px;}
+.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .header-badge{background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:3px;white-space:nowrap;}
-.mission-section{background:var(--navy2);padding:18px 32px;display:flex;gap:12px;align-items:stretch;}
+.lang-toggle{display:flex;background:rgba(255,255,255,.08);border-radius:4px;padding:3px;gap:2px}
+.lang-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.6);padding:7px 14px;cursor:pointer;border:none;background:transparent;border-radius:3px;transition:all .2s}
+.lang-btn.active{background:var(--red);color:#fff}
+.lang-btn:hover:not(.active){color:#fff}
+[data-en],[data-es]{display:none}
+[data-lang="es"] [data-es]{display:initial}
+[data-lang="en"] [data-en]{display:initial}
+.mission-section{background:var(--navy2);padding:18px 32px;display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;}
 .mission-intro{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding-right:8px;}
 .mission-intro-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
 .mission-intro-sub{font-size:9px;color:rgba(255,255,255,0.35);margin-top:5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-.mission-card{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--red);border-radius:4px;padding:12px 16px;}
+.mission-card{flex:1;min-width:220px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--red);border-radius:4px;padding:12px 16px;}
 .mission-card .ask-to{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:5px;}
 .mission-card .q-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
 .mission-card .question{font-size:11.5px;color:rgba(255,255,255,0.78);font-style:italic;line-height:1.45;}
@@ -93,32 +101,53 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
 <div class="header">
   <div>
-    <div class="header-label">VSA Mattel Montoi &middot; 11&ndash;15 Mayo 2026</div>
-    <div class="header-title">Supply Chain Team &mdash; Board Game</div>
-    <div class="header-sub">Plan de juego &middot; 11 participantes &middot; $500K USD en oportunidades de ahorro</div>
+    <div class="header-label">VSA Mattel Montoi · <span data-es>11–15 Mayo 2026</span><span data-en>May 11–15, 2026</span></div>
+    <div class="header-title">Supply Chain Team — Board Game</div>
+    <div class="header-sub">
+      <span data-es>Plan de juego · 11 participantes · $500K USD en oportunidades de ahorro</span>
+      <span data-en>Game plan · 11 participants · $500K USD in savings opportunities</span>
+    </div>
   </div>
-  <div class="header-badge">JC Torres &middot; Facilitador Principal</div>
+  <div class="header-right">
+    <div class="header-badge"><span data-es>JC Torres · Facilitador Principal</span><span data-en>JC Torres · Lead Facilitator</span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </div>
 
 <div class="mission-section">
   <div class="mission-intro">
-    <div class="mission-intro-label">3 Preguntas<br>que abren todo</div>
-    <div class="mission-intro-sub">Hacer el Lunes</div>
+    <div class="mission-intro-label">
+      <span data-es>3 Preguntas<br>que abren todo</span>
+      <span data-en>3 Questions<br>that open everything</span>
+    </div>
+    <div class="mission-intro-sub"><span data-es>Hacer el Lunes</span><span data-en>Ask on Monday</span></div>
   </div>
   <div class="mission-card">
-    <div class="ask-to">&rarr; Elizabeth Neri</div>
-    <div class="q-name">Desviaciones del Schedule</div>
-    <div class="question">&ldquo;&iquest;Con qu&eacute; frecuencia se generan desviaciones al schedule congelado y cu&aacute;ntos d&iacute;as de anticipaci&oacute;n tiene el aviso t&iacute;picamente?&rdquo;</div>
+    <div class="ask-to">→ Elizabeth Neri</div>
+    <div class="q-name"><span data-es>Desviaciones del Schedule</span><span data-en>Schedule Deviations</span></div>
+    <div class="question">
+      <span data-es>"¿Con qué frecuencia se generan desviaciones al schedule congelado y cuántos días de anticipación tiene el aviso típicamente?"</span>
+      <span data-en>"How frequently do deviations from the frozen schedule happen and how many days of advance notice do they typically come with?"</span>
+    </div>
   </div>
   <div class="mission-card">
-    <div class="ask-to">&rarr; Dionicio Zuniga</div>
-    <div class="q-name">NPIs Activos</div>
-    <div class="question">&ldquo;&iquest;Cu&aacute;ntos NPIs activos tienes corriendo simult&aacute;neamente hoy y cu&aacute;l es el % que llega a producci&oacute;n fuera del readiness est&aacute;ndar?&rdquo;</div>
+    <div class="ask-to">→ Dionicio Zuniga</div>
+    <div class="q-name"><span data-es>NPIs Activos</span><span data-en>Active NPIs</span></div>
+    <div class="question">
+      <span data-es>"¿Cuántos NPIs activos tienes corriendo simultáneamente hoy y cuál es el % que llega a producción fuera del readiness estándar?"</span>
+      <span data-en>"How many active NPIs are you running simultaneously today and what % reach production outside standard readiness?"</span>
+    </div>
   </div>
   <div class="mission-card">
-    <div class="ask-to">&rarr; Marcela Tovar</div>
-    <div class="q-name">Inventario en Hold</div>
-    <div class="question">&ldquo;&iquest;Cu&aacute;ntos m&sup2; estimas que est&aacute; ocupando el inventario en hold esperando autorizaci&oacute;n de disposici&oacute;n corporativa?&rdquo;</div>
+    <div class="ask-to">→ Marcela Tovar</div>
+    <div class="q-name"><span data-es>Inventario en Hold</span><span data-en>Inventory on Hold</span></div>
+    <div class="question">
+      <span data-es>"¿Cuántos m² estimas que está ocupando el inventario en hold esperando autorización de disposición corporativa?"</span>
+      <span data-en>"How many m² do you estimate the on-hold inventory is occupying while waiting for corporate disposition authorization?"</span>
+    </div>
   </div>
 </div>
 
@@ -126,7 +155,7 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="zone-header">
     <div class="zone-pip pip-cmd"></div>
-    <div class="zone-name">Comando &amp; Soporte</div>
+    <div class="zone-name"><span data-es>Comando & Soporte</span><span data-en>Command & Support</span></div>
     <div class="zone-line"></div>
   </div>
   <div class="cards-grid">
@@ -135,14 +164,20 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
       <div class="card-body">
         <div class="card-header-row"><div class="card-name">Carlos Gutierrez</div><div class="role-badge">Leader</div></div>
         <div class="card-title">Manager Industrial Engineering</div>
-        <div class="section-label">Qu&eacute; aporta</div>
-        <div class="owns-text">Validaci&oacute;n de hip&oacute;tesis y firma de n&uacute;meros del future state. Ve el sistema completo. Desbloquea tensiones entre &aacute;reas.</div>
+        <div class="section-label"><span data-es>Qué aporta</span><span data-en>What he brings</span></div>
+        <div class="owns-text">
+          <span data-es>Validación de hipótesis y firma de números del future state. Ve el sistema completo. Desbloquea tensiones entre áreas.</span>
+          <span data-en>Hypothesis validation and sign-off of future-state numbers. Sees the full system. Unblocks tensions between areas.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">C&oacute;mo usarlo</div>
-          <div class="question-text">No atascarle en detalles. Usarlo para alinear decisiones y validar cada n&uacute;mero antes de que entre al business case.</div>
+          <div class="question-label"><span data-es>Cómo usarlo</span><span data-en>How to use him</span></div>
+          <div class="question-text">
+            <span data-es>No atascarle en detalles. Usarlo para alinear decisiones y validar cada número antes de que entre al business case.</span>
+            <span data-en>Don't bog him down in details. Use him to align decisions and validate every number before it enters the business case.</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge all">Todos los d&iacute;as</div></div>
+          <div class="day-badges"><div class="day-badge all"><span data-es>Todos los días</span><span data-en>All days</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -150,16 +185,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-cmd">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Zuleiby Juarez</div><div class="role-badge">Co-facilitadora</div></div>
+        <div class="card-header-row"><div class="card-name">Zuleiby Juarez</div><div class="role-badge"><span data-es>Co-facilitadora</span><span data-en>Co-facilitator</span></div></div>
         <div class="card-title">Lean Engineer</div>
-        <div class="section-label">Qu&eacute; aporta</div>
-        <div class="owns-text">Apoyo t&eacute;cnico Lean dentro del equipo Mattel. Conoce el lenguaje, puede co-facilitar el mapeo y mantener el pace del grupo.</div>
+        <div class="section-label"><span data-es>Qué aporta</span><span data-en>What she brings</span></div>
+        <div class="owns-text">
+          <span data-es>Apoyo técnico Lean dentro del equipo Mattel. Conoce el lenguaje, puede co-facilitar el mapeo y mantener el pace del grupo.</span>
+          <span data-en>Lean technical support inside the Mattel team. Knows the language, can co-facilitate the mapping and keep the group's pace.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">C&oacute;mo usarla</div>
-          <div class="question-text">Tratarla como extensi&oacute;n del equipo KIMX. Delegar captura de datos y facilitaci&oacute;n de sub-grupos.</div>
+          <div class="question-label"><span data-es>Cómo usarla</span><span data-en>How to use her</span></div>
+          <div class="question-text">
+            <span data-es>Tratarla como extensión del equipo KIMX. Delegar captura de datos y facilitación de sub-grupos.</span>
+            <span data-en>Treat her as an extension of the KIMX team. Delegate data capture and sub-group facilitation.</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge all">Todos los d&iacute;as</div></div>
+          <div class="day-badges"><div class="day-badge all"><span data-es>Todos los días</span><span data-en>All days</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -168,23 +209,29 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="zone-header">
     <div class="zone-pip pip-npi"></div>
-    <div class="zone-name">NPI &mdash; Causa Ra&iacute;z</div>
+    <div class="zone-name"><span data-es>NPI — Causa Raíz</span><span data-en>NPI — Root Cause</span></div>
     <div class="zone-line"></div>
   </div>
   <div class="cards-grid">
     <div class="player-card z-npi leader">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Dionicio Zuniga</div><div class="role-badge">&#9873; Causa Ra&iacute;z</div></div>
+        <div class="card-header-row"><div class="card-name">Dionicio Zuniga</div><div class="role-badge"><span data-es>⚑ Causa Raíz</span><span data-en>⚑ Root Cause</span></div></div>
         <div class="card-title">Manager NPI</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">D&iacute;as promedio de retraso entre frozen schedule y ejecuci&oacute;n real. NPIs activos simult&aacute;neos. % que llega fuera de readiness est&aacute;ndar.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Días promedio de retraso entre frozen schedule y ejecución real. NPIs activos simultáneos. % que llega fuera de readiness estándar.</span>
+          <span data-en>Average days of lag between frozen schedule and actual execution. Concurrent active NPIs. % arriving outside standard readiness.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta de apertura</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos NPIs activos tienes corriendo simult&aacute;neamente y cu&aacute;l es el % que llega a producci&oacute;n fuera de readiness?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuántos NPIs activos tienes corriendo simultáneamente y cuál es el % que llega a producción fuera de readiness?"</span>
+            <span data-en>"How many active NPIs are running simultaneously and what % reach production outside readiness?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: deep dive</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: deep dive</span><span data-en>Thu: deep dive</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -192,16 +239,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-npi">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Elizabeth Neri</div><div class="role-badge">Datos Duros</div></div>
+        <div class="card-header-row"><div class="card-name">Elizabeth Neri</div><div class="role-badge"><span data-es>Datos Duros</span><span data-en>Hard Data</span></div></div>
         <div class="card-title">Master Planner</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Tasas de violaci&oacute;n del periodo congelado. Frecuencia de cambios NPI. Variabilidad de demanda. Inventory excess y expediting costs.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Tasas de violación del periodo congelado. Frecuencia de cambios NPI. Variabilidad de demanda. Inventory excess y expediting costs.</span>
+          <span data-en>Frozen-period violation rates. NPI change frequency. Demand variability. Inventory excess and expediting costs.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta de apertura</div>
-          <div class="question-text">&ldquo;&iquest;Con qu&eacute; frecuencia se generan desviaciones al schedule congelado y cu&aacute;ntos d&iacute;as de anticipaci&oacute;n tiene el aviso?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Con qué frecuencia se generan desviaciones al schedule congelado y cuántos días de anticipación tiene el aviso?"</span>
+            <span data-en>"How frequently do deviations from the frozen schedule occur and how many days of advance notice do they get?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -210,23 +263,29 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="zone-header">
     <div class="zone-pip pip-log"></div>
-    <div class="zone-name">Log&iacute;stica &amp; Almac&eacute;n</div>
+    <div class="zone-name"><span data-es>Logística & Almacén</span><span data-en>Logistics & Warehouse</span></div>
     <div class="zone-line"></div>
   </div>
   <div class="cards-grid">
     <div class="player-card z-log">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Jorge Pineda</div><div class="role-badge">Flujo Materiales</div></div>
+        <div class="card-header-row"><div class="card-name">Jorge Pineda</div><div class="role-badge"><span data-es>Flujo Materiales</span><span data-en>Material Flow</span></div></div>
         <div class="card-title">Manager Logistics</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Distancias recorridas, frecuencia de reabastecimiento, interacci&oacute;n montacargas/peatones. Spaghetti diagram del flujo actual.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Distancias recorridas, frecuencia de reabastecimiento, interacción montacargas/peatones. Spaghetti diagram del flujo actual.</span>
+          <span data-en>Distances traveled, replenishment frequency, forklift/pedestrian interaction. Spaghetti diagram of current flow.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">C&oacute;mo usarlo</div>
-          <div class="question-text">Par directo en shopfloor el martes. Ir con &eacute;l para medir el spaghetti diagram del flujo de materiales.</div>
+          <div class="question-label"><span data-es>Cómo usarlo</span><span data-en>How to use him</span></div>
+          <div class="question-text">
+            <span data-es>Par directo en shopfloor el martes. Ir con él para medir el spaghetti diagram del flujo de materiales.</span>
+            <span data-en>Direct partner on the shopfloor on Tuesday. Go with him to measure the material-flow spaghetti diagram.</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -234,16 +293,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-log">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Marcela Tovar</div><div class="role-badge">Espacio</div></div>
+        <div class="card-header-row"><div class="card-name">Marcela Tovar</div><div class="role-badge"><span data-es>Espacio</span><span data-en>Space</span></div></div>
         <div class="card-title">Manager Warehouse</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">m&sup2; de inventario en hold, congesti&oacute;n de almac&eacute;n, waste de movimiento. Ya tiene la soluci&oacute;n en mente: layout + tugger train.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>m² de inventario en hold, congestión de almacén, waste de movimiento. Ya tiene la solución en mente: layout + tugger train.</span>
+          <span data-en>m² of on-hold inventory, warehouse congestion, motion waste. Already has the solution in mind: layout + tugger train.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta de apertura</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos m&sup2; estimas que ocupa el inventario en hold esperando autorizaci&oacute;n de disposici&oacute;n?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuántos m² estimas que ocupa el inventario en hold esperando autorización de disposición?"</span>
+            <span data-en>"How many m² do you estimate the on-hold inventory occupies while awaiting disposition authorization?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: dise&ntilde;o futuro</div></div>
+          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: diseño futuro</span><span data-en>Thu: future design</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -251,16 +316,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-log">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Nereyda Ruiz</div><div class="role-badge">Recepci&oacute;n</div></div>
+        <div class="card-header-row"><div class="card-name">Nereyda Ruiz</div><div class="role-badge"><span data-es>Recepción</span><span data-en>Receiving</span></div></div>
         <div class="card-title">Assoc Manager Receiving Operations</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Tiempos de recepci&oacute;n, procesos de inspecci&oacute;n, recepciones de emergencia fuera de ciclo generadas por NPI.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Tiempos de recepción, procesos de inspección, recepciones de emergencia fuera de ciclo generadas por NPI.</span>
+          <span data-en>Receiving times, inspection processes, off-cycle emergency receipts generated by NPIs.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta clave</div>
-          <div class="question-text">&ldquo;&iquest;Con qu&eacute; frecuencia llegan recepciones no programadas por cambios de NPI o urgencias de producci&oacute;n?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Con qué frecuencia llegan recepciones no programadas por cambios de NPI o urgencias de producción?"</span>
+            <span data-en>"How often do unscheduled receipts arrive due to NPI changes or production urgencies?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key">Mar: shopfloor</div><div class="day-badge">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -268,16 +339,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-log">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Gerardo Matias</div><div class="role-badge">L&iacute;nea</div></div>
+        <div class="card-header-row"><div class="card-name">Gerardo Matias</div><div class="role-badge"><span data-es>Línea</span><span data-en>Line</span></div></div>
         <div class="card-title">Assembly Supervisor</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Tiempo de paro de l&iacute;nea por falta de material, distancias de caminata de operadores. Dato central para BC de supermercados.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Tiempo de paro de línea por falta de material, distancias de caminata de operadores. Dato central para BC de supermercados.</span>
+          <span data-en>Line downtime due to material shortage, operator walking distances. Central data point for the supermarket business case.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta clave</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntas veces al turno paran las l&iacute;neas esperando material y cu&aacute;nto tiempo dura esa espera en promedio?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuántas veces al turno paran las líneas esperando material y cuánto tiempo dura esa espera en promedio?"</span>
+            <span data-en>"How many times per shift do lines stop waiting for material and how long does that wait last on average?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge">Mi&eacute;: training</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge"><span data-es>Mié: training</span><span data-en>Wed: training</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -286,7 +363,7 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="zone-header">
     <div class="zone-pip pip-shp"></div>
-    <div class="zone-name">Shipping &amp; Calidad</div>
+    <div class="zone-name"><span data-es>Shipping & Calidad</span><span data-en>Shipping & Quality</span></div>
     <div class="zone-line"></div>
   </div>
   <div class="cards-grid">
@@ -295,14 +372,20 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
       <div class="card-body">
         <div class="card-header-row"><div class="card-name">Raul Morales</div><div class="role-badge">Shipping</div></div>
         <div class="card-title">Sr Shipping Supervisor</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Contenedores descargados y recargados, &oacute;rdenes en hold, discrepancias de cantidad. Absorbe inestabilidad upstream &mdash; cada evento tiene costo real.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Contenedores descargados y recargados, órdenes en hold, discrepancias de cantidad. Absorbe inestabilidad upstream — cada evento tiene costo real.</span>
+          <span data-en>Containers unloaded and reloaded, orders on hold, quantity discrepancies. Absorbs upstream instability — every event has a real cost.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta clave</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos eventos de descarga/recarga de contenedor tuviste en el &uacute;ltimo trimestre y cu&aacute;nto tiempo toma cada uno?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuántos eventos de descarga/recarga de contenedor tuviste en el último trimestre y cuánto tiempo toma cada uno?"</span>
+            <span data-en>"How many container unload/reload events did you have last quarter and how long does each one take?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -310,16 +393,22 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     <div class="player-card z-shp">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Cesar Ibarra</div><div class="role-badge">Calidad</div></div>
+        <div class="card-header-row"><div class="card-name">Cesar Ibarra</div><div class="role-badge"><span data-es>Calidad</span><span data-en>Quality</span></div></div>
         <div class="card-title">Assoc Manager Quality</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Quality holds en contenedores y su impacto en shipping. Con Raul tiene el costo completo del problema de liberaci&oacute;n de embarques.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Quality holds en contenedores y su impacto en shipping. Con Raul tiene el costo completo del problema de liberación de embarques.</span>
+          <span data-en>Quality holds on containers and their impact on shipping. Together with Raul holds the full cost of the shipment-release problem.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta clave</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;ntos holds de calidad en embarques registraron en los &uacute;ltimos 3 meses y cu&aacute;l fue el costo promedio por evento?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuántos holds de calidad en embarques registraron en los últimos 3 meses y cuál fue el costo promedio por evento?"</span>
+            <span data-en>"How many quality holds on shipments were recorded in the last 3 months and what was the average cost per event?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Mar: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -328,23 +417,29 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="zone-header">
     <div class="zone-pip pip-prc"></div>
-    <div class="zone-name">Procurement &amp; Gobernanza de Inventario</div>
+    <div class="zone-name"><span data-es>Procurement & Gobernanza de Inventario</span><span data-en>Procurement & Inventory Governance</span></div>
     <div class="zone-line"></div>
   </div>
   <div class="cards-grid" style="max-width:510px;">
     <div class="player-card z-prc">
       <div class="card-stripe"></div>
       <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Liliana Martinez</div><div class="role-badge">Gobernanza</div></div>
+        <div class="card-header-row"><div class="card-name">Liliana Martinez</div><div class="role-badge"><span data-es>Gobernanza</span><span data-en>Governance</span></div></div>
         <div class="card-title">Manager Procurement</div>
-        <div class="section-label">Dato clave a extraer</div>
-        <div class="owns-text">Valor en $ del inventario obsoleto en hold esperando autorizaci&oacute;n corporativa. &Oacute;rdenes de compra canceladas o urgentes por NPI.</div>
+        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
+        <div class="owns-text">
+          <span data-es>Valor en $ del inventario obsoleto en hold esperando autorización corporativa. Órdenes de compra canceladas o urgentes por NPI.</span>
+          <span data-en>$ value of obsolete inventory on hold awaiting corporate authorization. POs cancelled or expedited due to NPIs.</span>
+        </div>
         <div class="question-box">
-          <div class="question-label">Pregunta clave</div>
-          <div class="question-text">&ldquo;&iquest;Cu&aacute;nto inventory en valor dollar est&aacute; en hold esperando disposici&oacute;n y hace cu&aacute;nto tiempo est&aacute; retenido en promedio?&rdquo;</div>
+          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
+          <div class="question-text">
+            <span data-es>"¿Cuánto inventory en valor dollar está en hold esperando disposición y hace cuánto tiempo está retenido en promedio?"</span>
+            <span data-en>"How much inventory in dollar value is on hold awaiting disposition and how long has it been held on average?"</span>
+          </div>
         </div>
         <div class="card-footer">
-          <div class="day-badges"><div class="day-badge">Lun: observar</div><div class="day-badge key">Jue: cuantificar</div></div>
+          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
           <div class="dot"></div>
         </div>
       </div>
@@ -355,62 +450,80 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
 <div class="timeline-wrap">
   <div class="timeline-section">
-    <div class="timeline-header">Timeline &mdash; 5 d&iacute;as &middot; Qu&eacute; hace JC con el equipo Supply Chain</div>
+    <div class="timeline-header">
+      <span data-es>Timeline — 5 días · Qué hace JC con el equipo Supply Chain</span>
+      <span data-en>Timeline — 5 days · What JC does with the Supply Chain team</span>
+    </div>
     <div class="timeline-grid">
       <div class="tday">
-        <div class="tday-label">D&iacute;a 1</div>
-        <div class="tday-date">Lunes 11 Mayo</div>
-        <div class="tday-focus">Fery lidera.<br>JC observa din&aacute;mica.</div>
+        <div class="tday-label"><span data-es>Día 1</span><span data-en>Day 1</span></div>
+        <div class="tday-date"><span data-es>Lunes 11 Mayo</span><span data-en>Monday May 11</span></div>
+        <div class="tday-focus">
+          <span data-es>Fery lidera.<br>JC observa dinámica.</span>
+          <span data-en>Fery leads.<br>JC observes dynamics.</span>
+        </div>
         <div class="tday-pills">
-          <span class="tpill hot">Dionicio &larr; observar</span>
-          <span class="tpill hot">Elizabeth &larr; observar</span>
-          <span class="tpill">Lanzar las 3 preguntas</span>
-          <span class="tpill">Alinear con Carlos al cierre</span>
+          <span class="tpill hot">Dionicio ← <span data-es>observar</span><span data-en>observe</span></span>
+          <span class="tpill hot">Elizabeth ← <span data-es>observar</span><span data-en>observe</span></span>
+          <span class="tpill"><span data-es>Lanzar las 3 preguntas</span><span data-en>Launch the 3 questions</span></span>
+          <span class="tpill"><span data-es>Alinear con Carlos al cierre</span><span data-en>Align with Carlos at closing</span></span>
         </div>
       </div>
       <div class="tday">
-        <div class="tday-label">D&iacute;a 2</div>
-        <div class="tday-date">Martes 12 Mayo</div>
-        <div class="tday-focus">Muda Hunting<br>en shopfloor.</div>
+        <div class="tday-label"><span data-es>Día 2</span><span data-en>Day 2</span></div>
+        <div class="tday-date"><span data-es>Martes 12 Mayo</span><span data-en>Tuesday May 12</span></div>
+        <div class="tday-focus">
+          <span data-es>Muda Hunting<br>en shopfloor.</span>
+          <span data-en>Muda Hunting<br>on the shopfloor.</span>
+        </div>
         <div class="tday-pills">
-          <span class="tpill hot">Jorge + Marcela &larr; spaghetti</span>
-          <span class="tpill hot">Nereyda &larr; receiving</span>
-          <span class="tpill">Gerardo &larr; line-side</span>
-          <span class="tpill">Raul &larr; shipping obs.</span>
+          <span class="tpill hot">Jorge + Marcela ← spaghetti</span>
+          <span class="tpill hot">Nereyda ← receiving</span>
+          <span class="tpill">Gerardo ← line-side</span>
+          <span class="tpill">Raul ← <span data-es>shipping obs.</span><span data-en>shipping obs.</span></span>
         </div>
       </div>
       <div class="tday">
-        <div class="tday-label">D&iacute;a 3</div>
-        <div class="tday-date">Mi&eacute;rcoles 13 Mayo</div>
-        <div class="tday-focus">JC presenta<br>TFM Training.</div>
+        <div class="tday-label"><span data-es>Día 3</span><span data-en>Day 3</span></div>
+        <div class="tday-date"><span data-es>Miércoles 13 Mayo</span><span data-en>Wednesday May 13</span></div>
+        <div class="tday-focus">
+          <span data-es>JC presenta<br>TFM Training.</span>
+          <span data-en>JC delivers<br>TFM Training.</span>
+        </div>
         <div class="tday-pills">
-          <span class="tpill hot">Conectar con su planta</span>
-          <span class="tpill">Gerardo &larr; border of line</span>
-          <span class="tpill">Jorge + Marcela &larr; tugger</span>
-          <span class="tpill">Elizabeth &larr; pull planning</span>
+          <span class="tpill hot"><span data-es>Conectar con su planta</span><span data-en>Connect with their plant</span></span>
+          <span class="tpill">Gerardo ← border of line</span>
+          <span class="tpill">Jorge + Marcela ← tugger</span>
+          <span class="tpill">Elizabeth ← pull planning</span>
         </div>
       </div>
       <div class="tday">
-        <div class="tday-label">D&iacute;a 4</div>
-        <div class="tday-date">Jueves 14 Mayo</div>
-        <div class="tday-focus">&#9873; Cuantificaci&oacute;n.<br>El d&iacute;a m&aacute;s importante.</div>
+        <div class="tday-label"><span data-es>Día 4</span><span data-en>Day 4</span></div>
+        <div class="tday-date"><span data-es>Jueves 14 Mayo</span><span data-en>Thursday May 14</span></div>
+        <div class="tday-focus">
+          <span data-es>⚑ Cuantificación.<br>El día más importante.</span>
+          <span data-en>⚑ Quantification.<br>The most important day.</span>
+        </div>
         <div class="tday-pills">
-          <span class="tpill hot">Elizabeth + Dionicio &rarr; NPI $</span>
-          <span class="tpill hot">Marcela + Jorge &rarr; layout $</span>
-          <span class="tpill hot">Raul + Cesar &rarr; shipping $</span>
-          <span class="tpill hot">Liliana &rarr; inventario $</span>
-          <span class="tpill">Carlos valida cada n&uacute;mero</span>
+          <span class="tpill hot">Elizabeth + Dionicio → NPI $</span>
+          <span class="tpill hot">Marcela + Jorge → layout $</span>
+          <span class="tpill hot">Raul + Cesar → shipping $</span>
+          <span class="tpill hot">Liliana → <span data-es>inventario $</span><span data-en>inventory $</span></span>
+          <span class="tpill"><span data-es>Carlos valida cada número</span><span data-en>Carlos validates every number</span></span>
         </div>
       </div>
       <div class="tday">
-        <div class="tday-label">D&iacute;a 5</div>
-        <div class="tday-date">Viernes 15 Mayo</div>
-        <div class="tday-focus">Presentaci&oacute;n<br>de hallazgos.</div>
+        <div class="tday-label"><span data-es>Día 5</span><span data-en>Day 5</span></div>
+        <div class="tday-date"><span data-es>Viernes 15 Mayo</span><span data-en>Friday May 15</span></div>
+        <div class="tday-focus">
+          <span data-es>Presentación<br>de hallazgos.</span>
+          <span data-en>Findings<br>presentation.</span>
+        </div>
         <div class="tday-pills">
-          <span class="tpill">Current &rarr; Waste &rarr; Future</span>
-          <span class="tpill">Oportunidades de ahorro</span>
-          <span class="tpill">Sprint 10&ndash;22 semanas</span>
-          <span class="tpill hot">Cada persona co-presenta</span>
+          <span class="tpill">Current → Waste → Future</span>
+          <span class="tpill"><span data-es>Oportunidades de ahorro</span><span data-en>Savings opportunities</span></span>
+          <span class="tpill"><span data-es>Sprint 10–22 semanas</span><span data-en>Sprint 10–22 weeks</span></span>
+          <span class="tpill hot"><span data-es>Cada persona co-presenta</span><span data-en>Each person co-presents</span></span>
         </div>
       </div>
     </div>
@@ -418,7 +531,16 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 </div>
 
 <div class="footer">
-  Kaizen Institute M&eacute;xico &middot; All Rights Reserved &middot; Confidencial
+  Kaizen Institute México · All Rights Reserved · <span data-es>Confidencial</span><span data-en>Confidential</span>
 </div>
+
+<script>
+function setLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+}
+</script>
 </body>
 </html>

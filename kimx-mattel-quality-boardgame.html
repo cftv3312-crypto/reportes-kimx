@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +19,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.45}
 
-/* ── GAME HEADER ── */
-.game-header{background:var(--navy);color:var(--white);padding:0}
-.game-banner{display:flex;align-items:stretch;gap:0}
-.game-title-block{background:var(--red);padding:18px 28px;display:flex;flex-direction:column;justify-content:center;min-width:280px}
+.game-header{background:var(--navy);color:var(--white);padding:0;position:relative}
+.game-banner{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.game-title-block{background:var(--red);padding:18px 28px;display:flex;flex-direction:column;justify-content:center;min-width:280px;position:relative}
 .game-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
 .game-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:28px;letter-spacing:1px;text-transform:uppercase;line-height:1;color:var(--white)}
 .game-subtitle{font-family:'Barlow',sans-serif;font-size:11px;color:rgba(255,255,255,.8);margin-top:5px}
@@ -36,7 +35,14 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .gkpi-sub{font-size:10px;color:rgba(255,255,255,.5)}
 .sep{width:1px;background:rgba(255,255,255,.12);align-self:stretch}
 
-/* ── MISSION BRIEF ── */
+.lang-toggle{position:absolute;top:14px;right:20px;display:flex;background:rgba(0,0,0,.25);border-radius:4px;padding:3px;gap:2px;z-index:5}
+.lang-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.7);padding:6px 12px;cursor:pointer;border:none;background:transparent;border-radius:3px;transition:all .2s}
+.lang-btn.active{background:var(--navy);color:#fff}
+.lang-btn:hover:not(.active){color:#fff}
+[data-en],[data-es]{display:none}
+[data-lang="es"] [data-es]{display:initial}
+[data-lang="en"] [data-en]{display:initial}
+
 .mission-brief{background:var(--navy2);padding:14px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 .mission-text{flex:1;color:rgba(255,255,255,.85);font-size:12.5px;min-width:200px}
 .mission-text strong{color:var(--white)}
@@ -45,23 +51,19 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .budget-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700}
 .budget-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#86EFAC}
 
-/* ── TABS ── */
-.tabs{display:flex;background:var(--navy);border-bottom:2px solid var(--red);gap:0;padding:0 28px}
+.tabs{display:flex;background:var(--navy);border-bottom:2px solid var(--red);gap:0;padding:0 28px;flex-wrap:wrap}
 .tab{padding:11px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;color:rgba(255,255,255,.5);border-bottom:3px solid transparent;transition:all .2s;border:none;background:none;margin-bottom:-2px}
 .tab:hover{color:rgba(255,255,255,.85)}
 .tab.active{color:var(--white);border-bottom:3px solid var(--red)}
 .tab-badge{display:inline-block;background:var(--red);color:var(--white);font-size:8px;padding:1px 5px;border-radius:2px;margin-left:6px;vertical-align:middle}
 
-/* ── PANELS ── */
 .panel{display:none;padding:24px 28px;min-height:500px}
 .panel.active{display:block}
 
-/* ── SECTION LABELS ── */
 .section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 .section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;text-transform:uppercase;color:var(--navy);margin-bottom:4px}
 .section-sub{font-size:12px;color:var(--muted);margin-bottom:18px}
 
-/* ── GAME BOARD GRID ── */
 .board-grid{display:grid;grid-template-columns:repeat(13,1fr);gap:4px;margin-bottom:20px}
 .board-cell{aspect-ratio:1;border-radius:3px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;transition:transform .15s,box-shadow .15s;border:2px solid transparent;text-align:center}
 .board-cell:hover{transform:scale(1.12);box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:10}
@@ -74,7 +76,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .week-num{font-size:8px;opacity:.6;font-weight:400}
 .ppms-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;line-height:1}
 
-/* ── LEGEND ── */
 .legend-row{display:flex;gap:16px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
 .legend-dot{width:12px;height:12px;border-radius:2px}
@@ -82,7 +83,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .legend-dot.a{background:var(--amber-lt);border:1px solid var(--amber)}
 .legend-dot.r{background:var(--red-lt);border:1px solid var(--red)}
 
-/* ── EVENT CARD ── */
 .event-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:20px;margin-top:0;display:none}
 .event-card.show{display:block}
 .event-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px}
@@ -104,7 +104,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .event-action-label{font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-dk);font-weight:700;margin-bottom:3px}
 .event-action p{font-size:12px;color:var(--blue-dk)}
 
-/* ── CARD GRID (interventions) ── */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:24px}
 .int-card{background:var(--white);border:2px solid var(--border);border-radius:4px;padding:16px;cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative}
 .int-card:hover{border-color:var(--navy);box-shadow:0 3px 12px rgba(0,0,0,.1)}
@@ -119,7 +118,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .int-card .selected-badge{position:absolute;top:10px;right:10px;background:var(--red);color:var(--white);font-size:8.5px;font-weight:700;letter-spacing:1.5px;padding:2px 7px;border-radius:2px;text-transform:uppercase;display:none}
 .int-card.selected .selected-badge{display:block}
 
-/* ── SIMULATOR ── */
 .sim-panel{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:22px;margin-top:16px}
 .sim-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
 .sim-label{font-size:11px;font-weight:600;color:var(--navy);min-width:220px}
@@ -127,7 +125,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .sim-slider::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border-radius:50%;background:var(--red);cursor:pointer;border:2px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .sim-val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;color:var(--red);min-width:60px;text-align:right}
 .result-box{background:var(--navy);color:var(--white);border-radius:4px;padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;margin-top:16px}
-.res-item{}
 .res-label{font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:700;margin-bottom:4px}
 .res-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--white)}
 .res-val.good{color:#86EFAC}
@@ -135,14 +132,12 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .res-val.bad{color:#FF7B75}
 .res-delta{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:2px}
 
-/* ── CHART WRAPPER ── */
 .chart-wrap{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:18px;margin-bottom:18px;position:relative}
 .chart-wrap canvas{width:100%!important;max-height:280px}
 .chart-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
-/* ── SCORE TICKER ── */
-.score-bar{background:var(--navy2);display:flex;gap:0;align-items:stretch;margin-bottom:18px;border-radius:3px;overflow:hidden}
-.score-item{flex:1;padding:12px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+.score-bar{background:var(--navy2);display:flex;gap:0;align-items:stretch;margin-bottom:18px;border-radius:3px;overflow:hidden;flex-wrap:wrap}
+.score-item{flex:1;padding:12px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.1);min-width:130px}
 .score-item:last-child{border-right:none}
 .score-item-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700}
 .score-item-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white);line-height:1.2}
@@ -150,11 +145,9 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .score-item-val.warning{color:#FCD34D}
 .score-item-val.ok{color:#86EFAC}
 
-/* ── TWO-COL LAYOUT ── */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media(max-width:760px){.two-col{grid-template-columns:1fr}.board-grid{grid-template-columns:repeat(7,1fr)}}
 
-/* ── TABLE ── */
 .data-table{width:100%;border-collapse:collapse;font-size:12px}
 .data-table th{background:var(--navy);color:var(--white);padding:8px 10px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase}
 .data-table td{padding:7px 10px;border-bottom:1px solid var(--border)}
@@ -164,12 +157,6 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .pill-amber{background:var(--amber-lt);color:var(--amber-dk)}
 .pill-green{background:var(--green-lt);color:var(--green-dk)}
 
-/* ── YoY ── */
-.yoy-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:18px}
-.yoy-header{background:var(--navy);color:var(--white);padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;text-align:center}
-.yoy-cell{background:var(--white);padding:10px 14px;border:1px solid var(--border);text-align:center}
-.yoy-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800}
-.yoy-sub{font-size:9.5px;color:var(--muted);margin-top:2px}
 .alert-box{background:var(--red-lt);border-left:4px solid var(--red);padding:12px 16px;border-radius:0 3px 3px 0;margin-bottom:14px}
 .alert-box strong{color:var(--red-dk);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .alert-box p{font-size:12px;color:var(--red-dk);margin-top:4px}
@@ -177,128 +164,129 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 .insight-box strong{color:var(--green-dk);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
 .insight-box p{font-size:12px;color:var(--green-dk);margin-top:4px}
 
-/* footer */
 .footer-bar{padding:14px 22px;border-top:1px solid var(--border);background:var(--cream);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;text-align:center}
 </style>
 </head>
 <body>
 
-<!-- ══ GAME HEADER ══ -->
 <div class="game-header">
+  <div class="lang-toggle">
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  </div>
   <div class="game-banner">
     <div class="game-title-block">
-      <div class="game-label">Kaizen Business Case</div>
-      <div class="game-title">Quality Crisis</div>
+      <div class="game-label"><span data-es>Caso de Negocio Kaizen</span><span data-en>Kaizen Business Case</span></div>
+      <div class="game-title"><span data-es>Crisis de Calidad</span><span data-en>Quality Crisis</span></div>
       <div class="game-subtitle">Molding PPMS · Mattel Montoi · 2025–2026</div>
     </div>
     <div class="game-kpis">
       <div class="gkpi">
-        <div class="gkpi-label">2025 Avg PPMS</div>
+        <div class="gkpi-label"><span data-es>PPMS Promedio 2025</span><span data-en>2025 Avg PPMS</span></div>
         <div class="gkpi-val amber">90.6</div>
-        <div class="gkpi-sub">per million parts</div>
+        <div class="gkpi-sub"><span data-es>por millón de partes</span><span data-en>per million parts</span></div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
-        <div class="gkpi-label">2026 Trend PPMS</div>
+        <div class="gkpi-label"><span data-es>Tendencia PPMS 2026</span><span data-en>2026 Trend PPMS</span></div>
         <div class="gkpi-val red">113.5</div>
-        <div class="gkpi-sub">+30% vs 2025 baseline</div>
+        <div class="gkpi-sub"><span data-es>+30% vs baseline 2025</span><span data-en>+30% vs 2025 baseline</span></div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
-        <div class="gkpi-label">Annual Rework Cost</div>
+        <div class="gkpi-label"><span data-es>Costo Rework Anual</span><span data-en>Annual Rework Cost</span></div>
         <div class="gkpi-val red">$357K</div>
-        <div class="gkpi-sub">AM 6.0 budget · Q1 real: $39K</div>
+        <div class="gkpi-sub"><span data-es>Presupuesto AM 6.0 · Q1 real: $39K</span><span data-en>AM 6.0 budget · Q1 real: $39K</span></div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
-        <div class="gkpi-label">Parts Inspected '25</div>
+        <div class="gkpi-label"><span data-es>Partes inspeccionadas '25</span><span data-en>Parts Inspected '25</span></div>
         <div class="gkpi-val">5.49M</div>
-        <div class="gkpi-sub">50 production weeks</div>
+        <div class="gkpi-sub"><span data-es>50 semanas de producción</span><span data-en>50 production weeks</span></div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
-        <div class="gkpi-label">Peak Crisis</div>
+        <div class="gkpi-label"><span data-es>Pico de Crisis</span><span data-en>Peak Crisis</span></div>
         <div class="gkpi-val red">220</div>
-        <div class="gkpi-sub">PPMS · Wk47 Nov</div>
+        <div class="gkpi-sub">PPMS · <span data-es>Sem47 Nov</span><span data-en>Wk47 Nov</span></div>
       </div>
       <div class="sep"></div>
       <div class="gkpi">
-        <div class="gkpi-label">PPMS Target</div>
+        <div class="gkpi-label"><span data-es>Target PPMS</span><span data-en>PPMS Target</span></div>
         <div class="gkpi-val green">≤ 60</div>
-        <div class="gkpi-sub">VSA 2026 objective</div>
+        <div class="gkpi-sub"><span data-es>Objetivo VSA 2026</span><span data-en>VSA 2026 objective</span></div>
       </div>
     </div>
   </div>
   <div class="mission-brief">
-    <span class="mission-badge">🎯 Mission Active</span>
+    <span class="mission-badge">🎯 <span data-es>Misión Activa</span><span data-en>Mission Active</span></span>
     <div class="mission-text">
-      <strong>You are the CI Lead at Mattel Montoi.</strong> Molding quality is deteriorating: 2026 PPMS is 30% above 2025 levels despite 7% lower volume — evidence that spikes come from <em>process failure, not overload</em>. You have <strong>$150,000 intervention budget</strong> and 40 production weeks to reach ≤60 PPMS. Allocate wisely — the cost of inaction compounds weekly.
+      <span data-es><strong>Eres el Líder de CI en Mattel Montoi.</strong> La calidad de molding se está deteriorando: el PPMS 2026 está 30% por encima de los niveles de 2025 a pesar de un volumen 7% menor — evidencia de que los picos vienen de <em>fallas del proceso, no de sobrecarga</em>. Tienes un <strong>presupuesto de intervención de $150,000</strong> y 40 semanas de producción para alcanzar ≤60 PPMS. Asigna sabiamente — el costo de la inacción se acumula semana a semana.</span>
+      <span data-en><strong>You are the CI Lead at Mattel Montoi.</strong> Molding quality is deteriorating: 2026 PPMS is 30% above 2025 levels despite 7% lower volume — evidence that spikes come from <em>process failure, not overload</em>. You have <strong>$150,000 intervention budget</strong> and 40 production weeks to reach ≤60 PPMS. Allocate wisely — the cost of inaction compounds weekly.</span>
     </div>
     <div class="budget-display">
       <div>
-        <div class="budget-label">Intervention Budget</div>
+        <div class="budget-label"><span data-es>Presupuesto de Intervención</span><span data-en>Intervention Budget</span></div>
         <div class="budget-val" id="budgetDisplay">$150,000</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ TABS ══ -->
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('board',this)">🗺 Game Board <span class="tab-badge">50 wks</span></button>
-  <button class="tab" onclick="switchTab('simA',this)">⚙ Intervention Simulator</button>
-  <button class="tab" onclick="switchTab('simB',this)">💰 Cost of Quality</button>
-  <button class="tab" onclick="switchTab('simC',this)">📊 YoY Race 2025 vs 2026</button>
-  <button class="tab" onclick="switchTab('pareto',this)">📌 Pareto Attack</button>
+  <button class="tab active" onclick="switchTab('board',this)">🗺 <span data-es>Tablero</span><span data-en>Game Board</span> <span class="tab-badge">50 wks</span></button>
+  <button class="tab" onclick="switchTab('simA',this)">⚙ <span data-es>Simulador de Intervenciones</span><span data-en>Intervention Simulator</span></button>
+  <button class="tab" onclick="switchTab('simB',this)">💰 <span data-es>Costo de Calidad</span><span data-en>Cost of Quality</span></button>
+  <button class="tab" onclick="switchTab('simC',this)">📊 <span data-es>Carrera YoY 2025 vs 2026</span><span data-en>YoY Race 2025 vs 2026</span></button>
+  <button class="tab" onclick="switchTab('pareto',this)">📌 <span data-es>Ataque Pareto</span><span data-en>Pareto Attack</span></button>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  TAB 1 — GAME BOARD                        -->
-<!-- ══════════════════════════════════════════ -->
+<!-- TAB 1 — BOARD -->
 <div class="panel active" id="panel-board">
 
-  <div class="section-label">Game Board</div>
-  <div class="section-title">2025 Weekly PPMS Map</div>
-  <div class="section-sub">Click any week to reveal its Event Card. Green = stable process · Amber = monitor · Red = crisis intervention required</div>
+  <div class="section-label"><span data-es>Tablero</span><span data-en>Game Board</span></div>
+  <div class="section-title"><span data-es>Mapa Semanal PPMS 2025</span><span data-en>2025 Weekly PPMS Map</span></div>
+  <div class="section-sub">
+    <span data-es>Haz clic en cualquier semana para revelar su Event Card. Verde = proceso estable · Amarillo = monitorear · Rojo = intervención de crisis requerida</span>
+    <span data-en>Click any week to reveal its Event Card. Green = stable process · Amber = monitor · Red = crisis intervention required</span>
+  </div>
 
   <div class="score-bar">
     <div class="score-item">
-      <div class="score-item-label">Weeks Analyzed</div>
+      <div class="score-item-label"><span data-es>Semanas analizadas</span><span data-en>Weeks Analyzed</span></div>
       <div class="score-item-val" id="weeksAnalyzed">0 / 50</div>
     </div>
     <div class="score-item">
-      <div class="score-item-label">Crisis Events Found</div>
+      <div class="score-item-label"><span data-es>Eventos de Crisis</span><span data-en>Crisis Events Found</span></div>
       <div class="score-item-val danger" id="crisisCount">0</div>
     </div>
     <div class="score-item">
-      <div class="score-item-label">Stable Weeks</div>
+      <div class="score-item-label"><span data-es>Semanas Estables</span><span data-en>Stable Weeks</span></div>
       <div class="score-item-val ok" id="stableCount">0</div>
     </div>
     <div class="score-item">
-      <div class="score-item-label">Avg PPMS Seen</div>
+      <div class="score-item-label"><span data-es>PPMS Promedio Visto</span><span data-en>Avg PPMS Seen</span></div>
       <div class="score-item-val warning" id="avgPPMSSeen">—</div>
     </div>
     <div class="score-item">
-      <div class="score-item-label">Est. Rework Seen</div>
+      <div class="score-item-label"><span data-es>Rework Estimado</span><span data-en>Est. Rework Seen</span></div>
       <div class="score-item-val" id="reworkSeen">$0</div>
     </div>
   </div>
 
   <div class="legend-row">
-    <div class="legend-item"><div class="legend-dot g"></div> PPMS &lt; 70 — Stable Zone</div>
-    <div class="legend-item"><div class="legend-dot a"></div> PPMS 70–120 — Watch Zone</div>
-    <div class="legend-item"><div class="legend-dot r"></div> PPMS &gt; 120 — Crisis Zone</div>
-    <span style="font-size:10px;color:var(--muted);margin-left:8px">💡 Hover to preview · Click to open event card</span>
+    <div class="legend-item"><div class="legend-dot g"></div> <span data-es>PPMS &lt; 70 — Zona Estable</span><span data-en>PPMS &lt; 70 — Stable Zone</span></div>
+    <div class="legend-item"><div class="legend-dot a"></div> <span data-es>PPMS 70–120 — Zona de Vigilancia</span><span data-en>PPMS 70–120 — Watch Zone</span></div>
+    <div class="legend-item"><div class="legend-dot r"></div> <span data-es>PPMS &gt; 120 — Zona de Crisis</span><span data-en>PPMS &gt; 120 — Crisis Zone</span></div>
+    <span style="font-size:10px;color:var(--muted);margin-left:8px">💡 <span data-es>Pasa el cursor para vista previa · Click para abrir event card</span><span data-en>Hover to preview · Click to open event card</span></span>
   </div>
 
-  <!-- BOARD GRID -->
   <div class="board-grid" id="boardGrid"></div>
 
-  <!-- EVENT CARD -->
   <div class="event-card" id="eventCard">
     <div class="event-header">
       <div style="display:flex;align-items:center;gap:12px;flex:1;flex-wrap:wrap">
-        <div class="event-week-badge" id="ecWeek"><span>WEEK</span><span id="ecWeekNum">—</span></div>
+        <div class="event-week-badge" id="ecWeek"><span><span data-es>SEM</span><span data-en>WEEK</span></span><span id="ecWeekNum">—</span></div>
         <div>
           <div class="event-title" id="ecTitle">—</div>
           <div style="font-size:11px;color:var(--muted)" id="ecMonth">—</div>
@@ -308,207 +296,141 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
     </div>
     <div class="event-stats">
       <div class="estat"><div class="estat-label">PPMS</div><div class="estat-val" id="ecPPMS">—</div></div>
-      <div class="estat"><div class="estat-label">Defects</div><div class="estat-val" id="ecDefects">—</div></div>
-      <div class="estat"><div class="estat-label">Parts Inspected</div><div class="estat-val" id="ecInsp">—</div></div>
-      <div class="estat"><div class="estat-label">Rework Cost Est.</div><div class="estat-val" id="ecCost">—</div></div>
+      <div class="estat"><div class="estat-label"><span data-es>Defectos</span><span data-en>Defects</span></div><div class="estat-val" id="ecDefects">—</div></div>
+      <div class="estat"><div class="estat-label"><span data-es>Partes Inspeccionadas</span><span data-en>Parts Inspected</span></div><div class="estat-val" id="ecInsp">—</div></div>
+      <div class="estat"><div class="estat-label"><span data-es>Costo Rework Est.</span><span data-en>Rework Cost Est.</span></div><div class="estat-val" id="ecCost">—</div></div>
     </div>
     <div class="event-rootcause">
-      <div class="event-rootcause-label">⚠ Root Cause Hypothesis</div>
+      <div class="event-rootcause-label">⚠ <span data-es>Hipótesis de Causa Raíz</span><span data-en>Root Cause Hypothesis</span></div>
       <p id="ecRootCause">—</p>
     </div>
     <div class="event-action">
-      <div class="event-action-label">🔧 Recommended Kaizen Action</div>
+      <div class="event-action-label">🔧 <span data-es>Acción Kaizen Recomendada</span><span data-en>Recommended Kaizen Action</span></div>
       <p id="ecAction">—</p>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  TAB 2 — INTERVENTION SIMULATOR            -->
-<!-- ══════════════════════════════════════════ -->
+<!-- TAB 2 — SIMULATOR A -->
 <div class="panel" id="panel-simA">
-
-  <div class="section-label">Simulator A — Budget vs Impact</div>
-  <div class="section-title">Intervention Portfolio Planner</div>
-  <div class="section-sub">Select your interventions. Each action draws from the $150K budget and contributes a PPMS reduction. Build the optimal portfolio to reach ≤60 PPMS.</div>
+  <div class="section-label"><span data-es>Simulador A — Presupuesto vs Impacto</span><span data-en>Simulator A — Budget vs Impact</span></div>
+  <div class="section-title"><span data-es>Planeador de Portafolio de Intervenciones</span><span data-en>Intervention Portfolio Planner</span></div>
+  <div class="section-sub">
+    <span data-es>Selecciona tus intervenciones. Cada acción consume del presupuesto de $150K y contribuye a una reducción de PPMS. Construye el portafolio óptimo para alcanzar ≤60 PPMS.</span>
+    <span data-en>Select your interventions. Each action draws from the $150K budget and contributes a PPMS reduction. Build the optimal portfolio to reach ≤60 PPMS.</span>
+  </div>
 
   <div class="card-grid" id="interventionCards"></div>
 
   <div class="sim-panel">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
       <div>
-        <div class="section-label" style="margin-bottom:2px">Portfolio Result</div>
-        <div class="section-title" style="font-size:17px">Projected Impact on Annual PPMS</div>
+        <div class="section-label" style="margin-bottom:2px"><span data-es>Resultado del Portafolio</span><span data-en>Portfolio Result</span></div>
+        <div class="section-title" style="font-size:17px"><span data-es>Impacto Proyectado en PPMS Anual</span><span data-en>Projected Impact on Annual PPMS</span></div>
       </div>
       <button onclick="resetInterventions()" style="background:var(--warm);border:1px solid var(--border);padding:7px 16px;border-radius:3px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy)">↺ Reset</button>
     </div>
     <div class="result-box" id="simAResult">
-      <div class="res-item">
-        <div class="res-label">Budget Spent</div>
-        <div class="res-val" id="rBudgetSpent">$0</div>
-        <div class="res-delta" id="rBudgetRemaining">$150K remaining</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">Projected PPMS</div>
-        <div class="res-val warn" id="rProjPPMS">90.6</div>
-        <div class="res-delta">current baseline</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">PPMS Reduction</div>
-        <div class="res-val" id="rPPMSDelta">0</div>
-        <div class="res-delta" id="rTargetStatus">target ≤60 PPMS</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">Annual Savings</div>
-        <div class="res-val good" id="rSavings">$0</div>
-        <div class="res-delta">vs current rework cost</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">ROI</div>
-        <div class="res-val" id="rROI">—</div>
-        <div class="res-delta">net return / investment</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">Payback Period</div>
-        <div class="res-val" id="rPayback">—</div>
-        <div class="res-delta">weeks to recover cost</div>
-      </div>
+      <div><div class="res-label"><span data-es>Presupuesto Gastado</span><span data-en>Budget Spent</span></div><div class="res-val" id="rBudgetSpent">$0</div><div class="res-delta" id="rBudgetRemaining">$150K <span data-es>restante</span><span data-en>remaining</span></div></div>
+      <div><div class="res-label"><span data-es>PPMS Proyectado</span><span data-en>Projected PPMS</span></div><div class="res-val warn" id="rProjPPMS">90.6</div><div class="res-delta"><span data-es>baseline actual</span><span data-en>current baseline</span></div></div>
+      <div><div class="res-label"><span data-es>Reducción PPMS</span><span data-en>PPMS Reduction</span></div><div class="res-val" id="rPPMSDelta">0</div><div class="res-delta" id="rTargetStatus">target ≤60 PPMS</div></div>
+      <div><div class="res-label"><span data-es>Ahorros Anuales</span><span data-en>Annual Savings</span></div><div class="res-val good" id="rSavings">$0</div><div class="res-delta"><span data-es>vs costo rework actual</span><span data-en>vs current rework cost</span></div></div>
+      <div><div class="res-label">ROI</div><div class="res-val" id="rROI">—</div><div class="res-delta"><span data-es>retorno neto / inversión</span><span data-en>net return / investment</span></div></div>
+      <div><div class="res-label"><span data-es>Periodo de Recuperación</span><span data-en>Payback Period</span></div><div class="res-val" id="rPayback">—</div><div class="res-delta"><span data-es>semanas para recuperar costo</span><span data-en>weeks to recover cost</span></div></div>
     </div>
     <div class="chart-wrap" style="margin-top:16px">
-      <div class="chart-title">PPMS Trajectory — Before vs After Intervention Portfolio</div>
+      <div class="chart-title"><span data-es>Trayectoria PPMS — Antes vs Después del Portafolio</span><span data-en>PPMS Trajectory — Before vs After Intervention Portfolio</span></div>
       <canvas id="chartSimA" height="220"></canvas>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  TAB 3 — COST OF QUALITY                   -->
-<!-- ══════════════════════════════════════════ -->
+<!-- TAB 3 — COQ -->
 <div class="panel" id="panel-simB">
-
-  <!-- RWK Real Data Banner -->
   <div style="background:var(--navy2);border-radius:4px;padding:14px 20px;margin-bottom:18px;display:flex;gap:28px;align-items:center;flex-wrap:wrap">
-    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;white-space:nowrap">📋 DATOS REALES — AM 6.0 RWK BUDGET</div>
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;white-space:nowrap">📋 <span data-es>DATOS REALES — AM 6.0 RWK BUDGET</span><span data-en>REAL DATA — AM 6.0 RWK BUDGET</span></div>
     <div style="display:flex;gap:22px;flex-wrap:wrap">
-      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Presupuesto Anual</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$357,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">AM 6.0 total</div></div>
-      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Forecast Mensual</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:rgba(255,255,255,.8)">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">/mes</div></div>
-      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Ene</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">1,862</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
-      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Feb</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">,143</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
-      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Real Mar</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">0,995</div><div style="font-size:9px;color:rgba(255,255,255,.4)">real</div></div>
-      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Total Real Q1</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FF7B75">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">vs $87K forecast (−55%)</div></div>
-      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700">Balance al Mar</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$318,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">restante del AM 6.0</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Presupuesto Anual</span><span data-en>Annual Budget</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$357,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">AM 6.0 total</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Forecast Mensual</span><span data-en>Monthly Forecast</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:rgba(255,255,255,.8)">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">/mes / /month</div></div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Real Ene</span><span data-en>Actual Jan</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">1,862</div><div style="font-size:9px;color:rgba(255,255,255,.4)"><span data-es>real</span><span data-en>actual</span></div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Real Feb</span><span data-en>Actual Feb</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">,143</div><div style="font-size:9px;color:rgba(255,255,255,.4)"><span data-es>real</span><span data-en>actual</span></div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Real Mar</span><span data-en>Actual Mar</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FCD34D">0,995</div><div style="font-size:9px;color:rgba(255,255,255,.4)"><span data-es>real</span><span data-en>actual</span></div></div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:22px"><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Total Real Q1</span><span data-en>Actual Q1 Total</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#FF7B75">9,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)">vs $87K forecast (−55%)</div></div>
+      <div><div style="font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;font-weight:700"><span data-es>Balance al Mar</span><span data-en>Balance through Mar</span></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#86EFAC">$318,000</div><div style="font-size:9px;color:rgba(255,255,255,.4)"><span data-es>restante del AM 6.0</span><span data-en>remaining from AM 6.0</span></div></div>
     </div>
   </div>
-  <div class="section-label">Simulator B — Financial Impact</div>
-  <div class="section-title">Cost of Quality Calculator</div>
-  <div class="section-sub">Set your PPMS target and production parameters. See the full financial impact of quality improvement — defects prevented, rework eliminated, and annual savings unlocked.</div>
+  <div class="section-label"><span data-es>Simulador B — Impacto Financiero</span><span data-en>Simulator B — Financial Impact</span></div>
+  <div class="section-title"><span data-es>Calculadora de Costo de Calidad</span><span data-en>Cost of Quality Calculator</span></div>
+  <div class="section-sub">
+    <span data-es>Configura tu PPMS target y parámetros de producción. Ve el impacto financiero completo de la mejora de calidad — defectos prevenidos, rework eliminado, y ahorros anuales desbloqueados.</span>
+    <span data-en>Set your PPMS target and production parameters. See the full financial impact of quality improvement — defects prevented, rework eliminated, and annual savings unlocked.</span>
+  </div>
 
   <div class="two-col">
     <div>
       <div class="sim-panel">
-        <div class="section-label">Quality Parameters</div>
-        <div class="sim-row">
-          <div class="sim-label">🎯 Target PPMS (drag to set)</div>
-          <input type="range" class="sim-slider" id="sliderPPMS" min="20" max="180" value="60" oninput="updateCOQ()">
-          <div class="sim-val" id="valPPMS">60</div>
-        </div>
-        <div class="sim-row">
-          <div class="sim-label">📦 Annual Production Volume (M parts)</div>
-          <input type="range" class="sim-slider" id="sliderVol" min="3" max="10" value="5.49" step="0.1" oninput="updateCOQ()">
-          <div class="sim-val" id="valVol">5.49M</div>
-        </div>
-        <div class="sim-row">
-          <div class="sim-label">💵 Rework Cost per Defect ($)</div>
-          <input type="range" class="sim-slider" id="sliderCostPerDef" min="200" max="1500" value="640" step="10" oninput="updateCOQ()">
-          <div class="sim-val" id="valCostPerDef">$640</div>
-        </div>
-        <div class="sim-row">
-          <div class="sim-label">📉 Current Baseline PPMS</div>
-          <input type="range" class="sim-slider" id="sliderBasePPMS" min="60" max="200" value="90.6" step="0.1" oninput="updateCOQ()">
-          <div class="sim-val" id="valBasePPMS">90.6</div>
-        </div>
-        <div class="sim-row">
-          <div class="sim-label">🔄 Production weeks per year</div>
-          <input type="range" class="sim-slider" id="sliderWeeks" min="40" max="52" value="50" step="1" oninput="updateCOQ()">
-          <div class="sim-val" id="valWeeks">50 wk</div>
-        </div>
+        <div class="section-label"><span data-es>Parámetros de Calidad</span><span data-en>Quality Parameters</span></div>
+        <div class="sim-row"><div class="sim-label">🎯 <span data-es>Target PPMS (arrastra)</span><span data-en>Target PPMS (drag to set)</span></div><input type="range" class="sim-slider" id="sliderPPMS" min="20" max="180" value="60" oninput="updateCOQ()"><div class="sim-val" id="valPPMS">60</div></div>
+        <div class="sim-row"><div class="sim-label">📦 <span data-es>Volumen Anual (M partes)</span><span data-en>Annual Production Volume (M parts)</span></div><input type="range" class="sim-slider" id="sliderVol" min="3" max="10" value="5.49" step="0.1" oninput="updateCOQ()"><div class="sim-val" id="valVol">5.49M</div></div>
+        <div class="sim-row"><div class="sim-label">💵 <span data-es>Costo Rework por Defecto ($)</span><span data-en>Rework Cost per Defect ($)</span></div><input type="range" class="sim-slider" id="sliderCostPerDef" min="200" max="1500" value="640" step="10" oninput="updateCOQ()"><div class="sim-val" id="valCostPerDef">$640</div></div>
+        <div class="sim-row"><div class="sim-label">📉 <span data-es>Baseline PPMS Actual</span><span data-en>Current Baseline PPMS</span></div><input type="range" class="sim-slider" id="sliderBasePPMS" min="60" max="200" value="90.6" step="0.1" oninput="updateCOQ()"><div class="sim-val" id="valBasePPMS">90.6</div></div>
+        <div class="sim-row"><div class="sim-label">🔄 <span data-es>Semanas de producción/año</span><span data-en>Production weeks per year</span></div><input type="range" class="sim-slider" id="sliderWeeks" min="40" max="52" value="50" step="1" oninput="updateCOQ()"><div class="sim-val" id="valWeeks">50 wk</div></div>
       </div>
     </div>
     <div>
       <div class="result-box" id="coqResultBox" style="margin-bottom:14px;border-radius:4px;grid-template-columns:1fr 1fr">
-        <div class="res-item">
-          <div class="res-label">Current Annual Defects</div>
-          <div class="res-val bad" id="coqCurrentDef">498</div>
-          <div class="res-delta">at 90.6 PPMS baseline</div>
-        </div>
-        <div class="res-item">
-          <div class="res-label">Target Annual Defects</div>
-          <div class="res-val good" id="coqTargetDef">329</div>
-          <div class="res-delta" id="coqDefDelta">−169 defects/year</div>
-        </div>
-        <div class="res-item">
-          <div class="res-label">Current Rework Cost</div>
-          <div class="res-val bad" id="coqCurrentCost">$318K</div>
-          <div class="res-delta">annually</div>
-        </div>
-        <div class="res-item">
-          <div class="res-label">Target Rework Cost</div>
-          <div class="res-val good" id="coqTargetCost">$210K</div>
-          <div class="res-delta" id="coqCostDelta">−$108K savings</div>
-        </div>
-        <div class="res-item">
-          <div class="res-label">Weekly Savings</div>
-          <div class="res-val good" id="coqWeeklySavings">$2,160</div>
-          <div class="res-delta">per production week</div>
-        </div>
-        <div class="res-item">
-          <div class="res-label">PPMS Improvement</div>
-          <div class="res-val good" id="coqPPMSGap">30.6 pts</div>
-          <div class="res-delta" id="coqPctImprove">34% reduction</div>
-        </div>
+        <div><div class="res-label"><span data-es>Defectos Anuales Actuales</span><span data-en>Current Annual Defects</span></div><div class="res-val bad" id="coqCurrentDef">498</div><div class="res-delta"><span data-es>en baseline 90.6 PPMS</span><span data-en>at 90.6 PPMS baseline</span></div></div>
+        <div><div class="res-label"><span data-es>Defectos Anuales Target</span><span data-en>Target Annual Defects</span></div><div class="res-val good" id="coqTargetDef">329</div><div class="res-delta" id="coqDefDelta">−169 defects/year</div></div>
+        <div><div class="res-label"><span data-es>Costo Rework Actual</span><span data-en>Current Rework Cost</span></div><div class="res-val bad" id="coqCurrentCost">$318K</div><div class="res-delta"><span data-es>anualmente</span><span data-en>annually</span></div></div>
+        <div><div class="res-label"><span data-es>Costo Rework Target</span><span data-en>Target Rework Cost</span></div><div class="res-val good" id="coqTargetCost">$210K</div><div class="res-delta" id="coqCostDelta">−$108K savings</div></div>
+        <div><div class="res-label"><span data-es>Ahorros Semanales</span><span data-en>Weekly Savings</span></div><div class="res-val good" id="coqWeeklySavings">$2,160</div><div class="res-delta"><span data-es>por semana de producción</span><span data-en>per production week</span></div></div>
+        <div><div class="res-label"><span data-es>Mejora PPMS</span><span data-en>PPMS Improvement</span></div><div class="res-val good" id="coqPPMSGap">30.6 pts</div><div class="res-delta" id="coqPctImprove">34% reduction</div></div>
       </div>
       <div style="background:var(--navy2);border-radius:4px;padding:14px;color:var(--white)">
-        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;margin-bottom:8px">Cost of Quality — Interpretation Guide</div>
+        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;margin-bottom:8px"><span data-es>Costo de Calidad — Guía de Interpretación</span><span data-en>Cost of Quality — Interpretation Guide</span></div>
         <div id="coqInterpretation" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.6"></div>
       </div>
     </div>
   </div>
 
   <div class="chart-wrap">
-    <div class="chart-title">Annual Rework Cost vs PPMS — Sensitivity Curve</div>
+    <div class="chart-title"><span data-es>Costo Rework Anual vs PPMS — Curva de Sensibilidad</span><span data-en>Annual Rework Cost vs PPMS — Sensitivity Curve</span></div>
     <canvas id="chartCOQ" height="200"></canvas>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  TAB 4 — YoY RACE                          -->
-<!-- ══════════════════════════════════════════ -->
+<!-- TAB 4 — YoY -->
 <div class="panel" id="panel-simC">
-
-  <div class="section-label">Simulator C — YoY Race</div>
-  <div class="section-title">2025 vs 2026: Same-Week PPMS Battle</div>
-  <div class="section-sub">Weeks 2–12: the first 11 production weeks compared. 2026 is losing the race — volume is down 7% but defect rate is 30% worse.</div>
+  <div class="section-label"><span data-es>Simulador C — Carrera YoY</span><span data-en>Simulator C — YoY Race</span></div>
+  <div class="section-title"><span data-es>2025 vs 2026: Batalla PPMS Misma Semana</span><span data-en>2025 vs 2026: Same-Week PPMS Battle</span></div>
+  <div class="section-sub">
+    <span data-es>Semanas 2–12: las primeras 11 semanas de producción comparadas. 2026 está perdiendo la carrera — el volumen bajó 7% pero la tasa de defectos es 30% peor.</span>
+    <span data-en>Weeks 2–12: the first 11 production weeks compared. 2026 is losing the race — volume is down 7% but defect rate is 30% worse.</span>
+  </div>
 
   <div class="alert-box">
-    <strong>⚠ Red Flag: 2026 PPMS is 30% worse than 2025 for the same weeks</strong>
-    <p>2025 avg PPMS (wk2–12): <strong>87.2</strong> &nbsp;·&nbsp; 2026 avg PPMS (wk2–12): <strong>113.5</strong> &nbsp;·&nbsp; Delta: <strong>+26.3 PPMS</strong> · Total defects: 127 (2026) vs 101 (2025) = +26% more defects on 7% less volume</p>
+    <strong>⚠ <span data-es>Red Flag: PPMS 2026 es 30% peor que 2025 en las mismas semanas</span><span data-en>Red Flag: 2026 PPMS is 30% worse than 2025 for the same weeks</span></strong>
+    <p>
+      <span data-es>PPMS prom 2025 (sem2–12): <strong>87.2</strong> · PPMS prom 2026 (sem2–12): <strong>113.5</strong> · Delta: <strong>+26.3 PPMS</strong> · Total defectos: 127 (2026) vs 101 (2025) = +26% más defectos en 7% menos volumen</span>
+      <span data-en>2025 avg PPMS (wk2–12): <strong>87.2</strong> · 2026 avg PPMS (wk2–12): <strong>113.5</strong> · Delta: <strong>+26.3 PPMS</strong> · Total defects: 127 (2026) vs 101 (2025) = +26% more defects on 7% less volume</span>
+    </p>
   </div>
 
   <div class="chart-wrap">
-    <div class="chart-title">Week-by-Week PPMS — 2025 vs 2026 (Same Period)</div>
+    <div class="chart-title"><span data-es>PPMS Semana a Semana — 2025 vs 2026 (Mismo Periodo)</span><span data-en>Week-by-Week PPMS — 2025 vs 2026 (Same Period)</span></div>
     <canvas id="chartYoY" height="240"></canvas>
   </div>
 
   <div class="two-col">
     <div>
       <div class="chart-wrap">
-        <div class="chart-title">IPC% Comparison (In-Process Control Assembly)</div>
+        <div class="chart-title"><span data-es>Comparación IPC% (Control In-Process Assembly)</span><span data-en>IPC% Comparison (In-Process Control Assembly)</span></div>
         <canvas id="chartIPC" height="220"></canvas>
       </div>
     </div>
     <div>
       <div class="chart-wrap">
-        <div class="chart-title">SBO% Comparison (Molding Quality)</div>
+        <div class="chart-title"><span data-es>Comparación SBO% (Calidad Molding)</span><span data-en>SBO% Comparison (Molding Quality)</span></div>
         <canvas id="chartSBO" height="220"></canvas>
       </div>
     </div>
@@ -516,721 +438,332 @@ body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);f
 
   <div class="two-col">
     <div class="insight-box">
-      <strong>✓ Positive Signal: SBO% Improving</strong>
-      <p>SBO (molding quality) improved from 93.0% (2025) to 94.5% (2026) for the same weeks — suggesting the molding side is actually improving in-process control. The PPMS problem may originate upstream (material, tooling) rather than operator error.</p>
+      <strong>✓ <span data-es>Señal Positiva: SBO% Mejorando</span><span data-en>Positive Signal: SBO% Improving</span></strong>
+      <p>
+        <span data-es>SBO (calidad molding) mejoró de 93.0% (2025) a 94.5% (2026) en las mismas semanas — sugiere que el lado de molding está mejorando en control in-process. El problema PPMS puede originarse upstream (material, tooling) en lugar de error de operador.</span>
+        <span data-en>SBO (molding quality) improved from 93.0% (2025) to 94.5% (2026) for the same weeks — suggesting the molding side is actually improving in-process control. The PPMS problem may originate upstream (material, tooling) rather than operator error.</span>
+      </p>
     </div>
     <div class="alert-box">
-      <strong>⚠ Worst 2026 Week: Wk11 at 178.1 PPMS</strong>
-      <p>Week 11 (2026) is the single worst outlier — 178 PPMS vs 85.5 in 2025 for the same week. A 2× spike on stable volume is a process excursion flag. Investigate mold condition, resin batch, and shift composition for that specific week.</p>
+      <strong>⚠ <span data-es>Peor Semana 2026: Sem11 a 178.1 PPMS</span><span data-en>Worst 2026 Week: Wk11 at 178.1 PPMS</span></strong>
+      <p>
+        <span data-es>La semana 11 (2026) es el peor outlier — 178 PPMS vs 85.5 en 2025 para la misma semana. Un pico de 2× sobre volumen estable es un flag de excursión de proceso. Investigar condición de mold, batch de resina, y composición de turno para esa semana específica.</span>
+        <span data-en>Week 11 (2026) is the single worst outlier — 178 PPMS vs 85.5 in 2025 for the same week. A 2× spike on stable volume is a process excursion flag. Investigate mold condition, resin batch, and shift composition for that specific week.</span>
+      </p>
     </div>
   </div>
 
-  <!-- Interactive YoY Simulator -->
   <div class="sim-panel" style="margin-top:4px">
-    <div class="section-label">2026 Projection Simulator</div>
-    <div class="section-title" style="font-size:16px;margin-bottom:4px">If 2026 Continues at Current Pace...</div>
-    <div class="section-sub" style="margin-bottom:14px">Adjust the weekly improvement rate and see where 2026 ends up by week 50.</div>
+    <div class="section-label"><span data-es>Simulador de Proyección 2026</span><span data-en>2026 Projection Simulator</span></div>
+    <div class="section-title" style="font-size:16px;margin-bottom:4px"><span data-es>Si 2026 Continúa al Ritmo Actual...</span><span data-en>If 2026 Continues at Current Pace...</span></div>
+    <div class="section-sub" style="margin-bottom:14px"><span data-es>Ajusta la tasa de mejora semanal y ve dónde termina 2026 en la semana 50.</span><span data-en>Adjust the weekly improvement rate and see where 2026 ends up by week 50.</span></div>
     <div class="sim-row">
-      <div class="sim-label">📉 Weekly PPMS reduction target (PPMS/week improvement)</div>
+      <div class="sim-label">📉 <span data-es>Target reducción PPMS semanal</span><span data-en>Weekly PPMS reduction target</span> (PPMS/<span data-es>sem</span><span data-en>week</span>)</div>
       <input type="range" class="sim-slider" id="sliderWeeklyImp" min="0" max="3" value="0.8" step="0.1" oninput="updateYoYSim()">
       <div class="sim-val" id="valWeeklyImp">0.8</div>
     </div>
     <div class="result-box" style="grid-template-columns:repeat(4,1fr)">
-      <div class="res-item">
-        <div class="res-label">Projected EOY PPMS</div>
-        <div class="res-val" id="yoyProjEOY">79</div>
-        <div class="res-delta">at 0.8 PPMS/wk improvement</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">Weeks to Hit ≤60</div>
-        <div class="res-val" id="yoyWksToTarget">—</div>
-        <div class="res-delta">from week 12</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">EOY Rework Cost</div>
-        <div class="res-val" id="yoyEOYCost">—</div>
-        <div class="res-delta">projected annual</div>
-      </div>
-      <div class="res-item">
-        <div class="res-label">Status vs Target</div>
-        <div class="res-val" id="yoyStatus">—</div>
-        <div class="res-delta">≤60 PPMS goal</div>
-      </div>
+      <div><div class="res-label"><span data-es>PPMS Proyectado EOY</span><span data-en>Projected EOY PPMS</span></div><div class="res-val" id="yoyProjEOY">79</div><div class="res-delta"><span data-es>a 0.8 PPMS/sem mejora</span><span data-en>at 0.8 PPMS/wk improvement</span></div></div>
+      <div><div class="res-label"><span data-es>Semanas para ≤60</span><span data-en>Weeks to Hit ≤60</span></div><div class="res-val" id="yoyWksToTarget">—</div><div class="res-delta"><span data-es>desde semana 12</span><span data-en>from week 12</span></div></div>
+      <div><div class="res-label"><span data-es>Costo Rework EOY</span><span data-en>EOY Rework Cost</span></div><div class="res-val" id="yoyEOYCost">—</div><div class="res-delta"><span data-es>anual proyectado</span><span data-en>projected annual</span></div></div>
+      <div><div class="res-label"><span data-es>Status vs Target</span><span data-en>Status vs Target</span></div><div class="res-val" id="yoyStatus">—</div><div class="res-delta"><span data-es>meta ≤60 PPMS</span><span data-en>≤60 PPMS goal</span></div></div>
     </div>
     <div class="chart-wrap" style="margin-top:16px">
-      <div class="chart-title">2026 Full-Year Projection (Wk 2–50)</div>
+      <div class="chart-title"><span data-es>Proyección 2026 Año Completo (Sem 2–50)</span><span data-en>2026 Full-Year Projection (Wk 2–50)</span></div>
       <canvas id="chartYoYProj" height="200"></canvas>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  TAB 5 — PARETO ATTACK                     -->
-<!-- ══════════════════════════════════════════ -->
+<!-- TAB 5 — PARETO -->
 <div class="panel" id="panel-pareto">
-
-  <div class="section-label">Pareto Attack — 2025 Data</div>
-  <div class="section-title">Which Weeks Drive 80% of Your Defects?</div>
-  <div class="section-sub">Ranked worst-to-best. The red threshold marks the 80% cumulative defect line — focus intervention on weeks above it for maximum leverage.</div>
+  <div class="section-label"><span data-es>Ataque Pareto — Datos 2025</span><span data-en>Pareto Attack — 2025 Data</span></div>
+  <div class="section-title"><span data-es>¿Qué Semanas Generan el 80% de tus Defectos?</span><span data-en>Which Weeks Drive 80% of Your Defects?</span></div>
+  <div class="section-sub"><span data-es>Rankeado peor a mejor. El umbral rojo marca la línea acumulada del 80% — enfocar la intervención en las semanas arriba de ella para máximo apalancamiento.</span><span data-en>Ranked worst-to-best. The red threshold marks the 80% cumulative defect line — focus intervention on weeks above it for maximum leverage.</span></div>
 
   <div class="chart-wrap">
-    <div class="chart-title">Pareto Chart — PPMS by Week (2025) · Worst 30 Weeks Shown</div>
+    <div class="chart-title"><span data-es>Pareto — PPMS por Semana (2025) · Top 30 Peores</span><span data-en>Pareto Chart — PPMS by Week (2025) · Worst 30 Weeks Shown</span></div>
     <canvas id="chartPareto" height="260"></canvas>
   </div>
 
   <div class="score-bar" style="margin-top:4px">
-    <div class="score-item">
-      <div class="score-item-label">Top 10 Worst Weeks</div>
-      <div class="score-item-val danger">223 defects</div>
-    </div>
-    <div class="score-item">
-      <div class="score-item-label">% of Annual Defects</div>
-      <div class="score-item-val warning">44.9%</div>
-    </div>
-    <div class="score-item">
-      <div class="score-item-label">80% Threshold at Rank</div>
-      <div class="score-item-val">≈ 34 weeks</div>
-    </div>
-    <div class="score-item">
-      <div class="score-item-label">PPMS > 120 weeks</div>
-      <div class="score-item-val danger">14 weeks</div>
-    </div>
+    <div class="score-item"><div class="score-item-label"><span data-es>Top 10 Peores Semanas</span><span data-en>Top 10 Worst Weeks</span></div><div class="score-item-val danger">223 <span data-es>defectos</span><span data-en>defects</span></div></div>
+    <div class="score-item"><div class="score-item-label"><span data-es>% de Defectos Anuales</span><span data-en>% of Annual Defects</span></div><div class="score-item-val warning">44.9%</div></div>
+    <div class="score-item"><div class="score-item-label"><span data-es>Umbral 80% en Rank</span><span data-en>80% Threshold at Rank</span></div><div class="score-item-val">≈ 34 <span data-es>semanas</span><span data-en>weeks</span></div></div>
+    <div class="score-item"><div class="score-item-label"><span data-es>Semanas con PPMS &gt; 120</span><span data-en>PPMS &gt; 120 weeks</span></div><div class="score-item-val danger">14 <span data-es>semanas</span><span data-en>weeks</span></div></div>
   </div>
 
-  <div style="margin-top:18px">
+  <div style="margin-top:18px;overflow-x:auto">
     <table class="data-table">
       <thead>
-        <tr><th>Rank</th><th>Week</th><th>Month</th><th>PPMS</th><th>Defects</th><th>Cum. Defects</th><th>Cum. %</th><th>Status</th></tr>
+        <tr><th>Rank</th><th><span data-es>Semana</span><span data-en>Week</span></th><th><span data-es>Mes</span><span data-en>Month</span></th><th>PPMS</th><th><span data-es>Defectos</span><span data-en>Defects</span></th><th><span data-es>Def. Cum.</span><span data-en>Cum. Defects</span></th><th>Cum. %</th><th>Status</th></tr>
       </thead>
       <tbody id="paretoTable"></tbody>
     </table>
   </div>
 </div>
 
-<!-- FOOTER -->
-<div class="footer-bar">Kaizen Institute México &middot; All Rights Reserved &middot; Confidencial</div>
+<div class="footer-bar">Kaizen Institute México · All Rights Reserved · <span data-es>Confidencial</span><span data-en>Confidential</span></div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  SCRIPTS                                   -->
-<!-- ══════════════════════════════════════════ -->
 <script>
-// ── DATA ──────────────────────────────────────────────────────
-const weekData = [
-  {w:1,ppms:0,def:0,insp:1584,month:'Jan'},
-  {w:2,ppms:65.0,def:3,insp:46164,month:'Jan'},
-  {w:3,ppms:90.9,def:7,insp:76992,month:'Jan'},
-  {w:4,ppms:149,def:12,insp:79596,month:'Jan'},
-  {w:5,ppms:125.3,def:12,insp:95755,month:'Jan'},
-  {w:6,ppms:37.4,def:5,insp:133550,month:'Feb'},
-  {w:7,ppms:95.1,def:13,insp:136673,month:'Feb'},
-  {w:8,ppms:63.9,def:9,insp:140765,month:'Feb'},
-  {w:9,ppms:80.7,def:11,insp:136332,month:'Feb'},
-  {w:10,ppms:81.9,def:10,insp:122145,month:'Mar'},
-  {w:11,ppms:85.5,def:11,insp:128682,month:'Mar'},
-  {w:12,ppms:84.8,def:8,insp:94282,month:'Mar'},
-  {w:13,ppms:172.9,def:20,insp:115672,month:'Mar'},
-  {w:14,ppms:115.3,def:13,insp:112728,month:'Apr'},
-  {w:15,ppms:44.2,def:6,insp:135782,month:'Apr'},
-  {w:16,ppms:126.0,def:4,insp:31751,month:'Apr'},
-  {w:17,ppms:92.0,def:14,insp:152230,month:'Apr'},
-  {w:18,ppms:52.3,def:7,insp:133907,month:'May'},
-  {w:19,ppms:65.5,def:9,insp:137460,month:'May'},
-  {w:20,ppms:41.5,def:6,insp:144676,month:'May'},
-  {w:21,ppms:82.9,def:13,insp:156904,month:'May'},
-  {w:22,ppms:47.4,def:8,insp:168677,month:'May'},
-  {w:23,ppms:84.7,def:12,insp:141704,month:'Jun'},
-  {w:24,ppms:51.8,def:7,insp:135146,month:'Jun'},
-  {w:25,ppms:55.5,def:8,insp:144237,month:'Jun'},
-  {w:26,ppms:74.7,def:8,insp:107114,month:'Jun'},
-  {w:27,ppms:125.4,def:14,insp:111667,month:'Jul'},
-  {w:28,ppms:54.0,def:7,insp:129536,month:'Jul'},
-  {w:29,ppms:113.9,def:14,insp:122951,month:'Jul'},
-  {w:30,ppms:146.1,def:16,insp:109508,month:'Jul'},
-  {w:31,ppms:37.3,def:5,insp:134133,month:'Aug'},
-  {w:32,ppms:108.8,def:8,insp:73510,month:'Aug'},
-  {w:33,ppms:141.4,def:16,insp:113141,month:'Aug'},
-  {w:34,ppms:69.5,def:6,insp:86308,month:'Aug'},
-  {w:35,ppms:160.7,def:13,insp:80908,month:'Sep'},
-  {w:36,ppms:87.7,def:9,insp:102681,month:'Sep'},
-  {w:37,ppms:173.3,def:15,insp:86550,month:'Sep'},
-  {w:38,ppms:46.5,def:3,insp:64451,month:'Sep'},
-  {w:39,ppms:96.8,def:8,insp:82645,month:'Oct'},
-  {w:40,ppms:68.5,def:7,insp:102190,month:'Oct'},
-  {w:41,ppms:100.0,def:11,insp:110000,month:'Oct'},
-  {w:42,ppms:124.0,def:12,insp:96774,month:'Oct'},
-  {w:43,ppms:58.2,def:7,insp:120275,month:'Oct'},
-  {w:44,ppms:179.4,def:21,insp:117057,month:'Nov'},
-  {w:45,ppms:59.2,def:7,insp:118243,month:'Nov'},
-  {w:46,ppms:101.7,def:17,insp:167218,month:'Nov'},
-  {w:47,ppms:220.0,def:23,insp:104545,month:'Nov'},
-  {w:48,ppms:106.5,def:9,insp:84507,month:'Nov'},
-  {w:49,ppms:81.7,def:7,insp:85678,month:'Dec'},
-  {w:50,ppms:127.2,def:11,insp:86516,month:'Dec'},
-];
-
-const yoyData = [
-  {w:2, p25:65.0, p26:73.7, ipc25:98, ipc26:98.69, sbo25:92, sbo26:96.69},
-  {w:3, p25:90.9, p26:112.9, ipc25:98, ipc26:98.27, sbo25:93, sbo26:95.1},
-  {w:4, p25:149, p26:101.9, ipc25:98, ipc26:98.33, sbo25:93, sbo26:94.7},
-  {w:5, p25:125.3, p26:83.6, ipc25:98, ipc26:97.5, sbo25:89, sbo26:93.9},
-  {w:6, p25:37.4, p26:146.9, ipc25:98, ipc26:97.98, sbo25:94, sbo26:96},
-  {w:7, p25:95.1, p26:106.9, ipc25:98, ipc26:97.78, sbo25:95, sbo26:94.18},
-  {w:8, p25:63.9, p26:143.6, ipc25:98, ipc26:97.1, sbo25:95, sbo26:95.6},
-  {w:9, p25:80.7, p26:106.8, ipc25:98, ipc26:97, sbo25:91, sbo26:93.7},
-  {w:10, p25:81.9, p26:85.8, ipc25:98, ipc26:97.04, sbo25:93, sbo26:93.8},
-  {w:11, p25:85.5, p26:178.1, ipc25:98, ipc26:97, sbo25:94, sbo26:93.5},
-  {w:12, p25:84.8, p26:108.3, ipc25:98, ipc26:96.9, sbo25:94, sbo26:92.5},
-];
-
-const paretoData = [
-  {rank:1,w:47,m:'Nov',ppms:220,def:23,cum:23,cumPct:4.6},
-  {rank:2,w:44,m:'Nov',ppms:179.4,def:21,cum:44,cumPct:8.9},
-  {rank:3,w:37,m:'Sep',ppms:173.3,def:15,cum:59,cumPct:11.9},
-  {rank:4,w:13,m:'Mar',ppms:172.9,def:20,cum:79,cumPct:15.9},
-  {rank:5,w:35,m:'Sep',ppms:160.7,def:13,cum:92,cumPct:18.5},
-  {rank:6,w:4,m:'Jan',ppms:149,def:12,cum:104,cumPct:20.9},
-  {rank:7,w:30,m:'Jul',ppms:146.1,def:16,cum:120,cumPct:24.1},
-  {rank:8,w:33,m:'Aug',ppms:141.4,def:16,cum:136,cumPct:27.4},
-  {rank:9,w:50,m:'Dec',ppms:127.2,def:11,cum:147,cumPct:29.6}, // adjusted
-  {rank:10,w:16,m:'Apr',ppms:126,def:4,cum:151,cumPct:30.4},
-  {rank:11,w:27,m:'Jul',ppms:125.4,def:14,cum:165,cumPct:33.2},
-  {rank:12,w:5,m:'Jan',ppms:125.3,def:12,cum:177,cumPct:35.6},
-  {rank:13,w:42,m:'Oct',ppms:124,def:12,cum:189,cumPct:38.0},
-  {rank:14,w:14,m:'Apr',ppms:115.3,def:13,cum:202,cumPct:40.6},
-  {rank:15,w:29,m:'Jul',ppms:113.9,def:14,cum:216,cumPct:43.5},
-  {rank:16,w:32,m:'Aug',ppms:108.8,def:8,cum:224,cumPct:45.1},
-  {rank:17,w:48,m:'Nov',ppms:106.5,def:9,cum:233,cumPct:46.9},
-  {rank:18,w:46,m:'Nov',ppms:101.7,def:17,cum:250,cumPct:50.3},
-  {rank:19,w:41,m:'Oct',ppms:100,def:11,cum:261,cumPct:52.5},
-  {rank:20,w:39,m:'Oct',ppms:96.8,def:8,cum:269,cumPct:54.1},
-  {rank:21,w:7,m:'Feb',ppms:95.1,def:13,cum:282,cumPct:56.7},
-  {rank:22,w:17,m:'Apr',ppms:92,def:14,cum:296,cumPct:59.6},
-  {rank:23,w:3,m:'Jan',ppms:90.9,def:7,cum:303,cumPct:61.0},
-  {rank:24,w:36,m:'Sep',ppms:87.7,def:9,cum:312,cumPct:62.8},
-  {rank:25,w:11,m:'Mar',ppms:85.5,def:11,cum:323,cumPct:65.0},
-  {rank:26,w:12,m:'Mar',ppms:84.8,def:8,cum:331,cumPct:66.6},
-  {rank:27,w:23,m:'Jun',ppms:84.7,def:12,cum:343,cumPct:69.0},
-  {rank:28,w:21,m:'May',ppms:82.9,def:13,cum:356,cumPct:71.6},
-  {rank:29,w:10,m:'Mar',ppms:81.9,def:10,cum:366,cumPct:73.6},
-  {rank:30,w:9,m:'Feb',ppms:80.7,def:11,cum:377,cumPct:75.9},
-];
-
-// Root causes & actions per PPMS range
-function getEventDetails(w, ppms) {
-  const causes_red = [
-    "Mold #2 cavity showing flash burr — wear past 200K cycles threshold. Part ejection incomplete, creating micro-tears in surface geometry.",
-    "Resin batch OOC detected post-run. Pigment ratio drift of +2.3σ on colorant mix. Batch 4817-C flagged after CMM inspection.",
-    "C-shift operator variance: cycle time extended +8 seconds during temperature ramp, causing sink marks on back housing.",
-    "Machine #7 temperature controller excursion — ±4°C variance over 6-hour window. No alarm triggered. Detected via surface defect uptick.",
-    "Mold #5 water circuit partially blocked — cooling imbalance causing premature ejection warpage on thin-wall sections.",
-    "New resin supplier batch introduced mid-week without MFI validation. Viscosity delta caused 3× normal flash rate.",
-  ];
-  const causes_amber = [
-    "Minor tool wear accumulation — cavity surface texture beginning to fade. Within spec but approaching 80% tooling life.",
-    "Slight cycle time variance on B-shift (±1.2 sec). Within control limits but trending toward SPC trigger point.",
-    "Colorant lot change implemented — standard 24-part qualification run completed. Minor PPMS uptick expected and tracked.",
-    "Injection pressure setpoint drift detected by SPC. Corrected mid-week. Defects concentrated in first 4 hours of shift.",
-  ];
-  const causes_green = [
-    "Process fully stable. All SPC charts in control. Preventive maintenance completed previous Friday — molds cleaned and inspected.",
-    "Optimal week: new operator training completed, standard work compliance at 100% on cavity inspection checklist.",
-    "Post-kaizen stable period. Color dosing re-validated, resin hopper level sensor recalibrated. No anomalies.",
-  ];
-  const actions_red = [
-    "IMMEDIATE: Pull mold from production. Schedule emergency tooling assessment within 24hrs. Activate backup cavity. Log in CAPA system.",
-    "QUARANTINE resin batch. Conduct 100% inspection on parts produced. Notify procurement for supplier corrective action. Update batch traceability log.",
-    "Operator coaching session mandatory. Review standard work adherence on C-shift. Pair with experienced buddy for 2 weeks. Log in skills matrix.",
-    "Maintenance emergency work order. Replace temperature controller. Calibrate all thermocouples on machine #7. Hold production until verified.",
-    "Drain and flush cooling circuit #3. Inspect all channels. Run thermographic scan before restart. PM checklist to be updated.",
-    "Block all parts from new batch. Full MFI testing before release. Raise supplier change notification process — no batch swap without 48hr validation.",
-  ];
-  const actions_amber = [
-    "Schedule tooling maintenance within 5 days. Add to next preventive maintenance cycle. Flag for end-of-interval inspection.",
-    "Update standard work card with tighter cycle time window. Add SPC trigger alert at ±0.8 sec variance.",
-    "Extend qualification run to 50 parts. Retain colorant reference standards. Assign quality hold until trending confirms stability.",
-    "Root cause: pressure transducer calibration drift. Schedule sensor replacement in next PM window. No production hold needed.",
-  ];
-  const actions_green = [
-    "No intervention required. Document current process conditions as reference standard for upcoming mold change.",
-    "Capture as 'model week' — photograph setup, record all parameters. Use as visual standard for operator training.",
-    "Maintain current conditions. Update control plan with current settings as validated baseline.",
-  ];
-  const seed = (w * 7 + Math.round(ppms)) % 100;
-  if (ppms > 120) {
-    return {
-      cause: causes_red[seed % causes_red.length],
-      action: actions_red[seed % actions_red.length],
-    };
-  } else if (ppms > 70) {
-    return {
-      cause: causes_amber[seed % causes_amber.length],
-      action: actions_amber[seed % actions_amber.length],
-    };
-  } else {
-    return {
-      cause: causes_green[seed % causes_green.length],
-      action: actions_green[seed % actions_green.length],
-    };
-  }
+function setLang(lang){
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+  // Re-run COQ interpretation to refresh language
+  if(typeof updateCOQ==='function') try{updateCOQ();}catch(e){}
 }
 
-// ── BOARD ─────────────────────────────────────────────────────
+const weekData = [
+  {w:1,ppms:0,def:0,insp:1584,month:'Jan'},{w:2,ppms:65.0,def:3,insp:46164,month:'Jan'},{w:3,ppms:90.9,def:7,insp:76992,month:'Jan'},{w:4,ppms:149,def:12,insp:79596,month:'Jan'},{w:5,ppms:125.3,def:12,insp:95755,month:'Jan'},{w:6,ppms:37.4,def:5,insp:133550,month:'Feb'},{w:7,ppms:95.1,def:13,insp:136673,month:'Feb'},{w:8,ppms:63.9,def:9,insp:140765,month:'Feb'},{w:9,ppms:80.7,def:11,insp:136332,month:'Feb'},{w:10,ppms:81.9,def:10,insp:122145,month:'Mar'},{w:11,ppms:85.5,def:11,insp:128682,month:'Mar'},{w:12,ppms:84.8,def:8,insp:94282,month:'Mar'},{w:13,ppms:172.9,def:20,insp:115672,month:'Mar'},{w:14,ppms:115.3,def:13,insp:112728,month:'Apr'},{w:15,ppms:44.2,def:6,insp:135782,month:'Apr'},{w:16,ppms:126.0,def:4,insp:31751,month:'Apr'},{w:17,ppms:92.0,def:14,insp:152230,month:'Apr'},{w:18,ppms:52.3,def:7,insp:133907,month:'May'},{w:19,ppms:65.5,def:9,insp:137460,month:'May'},{w:20,ppms:41.5,def:6,insp:144676,month:'May'},{w:21,ppms:82.9,def:13,insp:156904,month:'May'},{w:22,ppms:47.4,def:8,insp:168677,month:'May'},{w:23,ppms:84.7,def:12,insp:141704,month:'Jun'},{w:24,ppms:51.8,def:7,insp:135146,month:'Jun'},{w:25,ppms:55.5,def:8,insp:144237,month:'Jun'},{w:26,ppms:74.7,def:8,insp:107114,month:'Jun'},{w:27,ppms:125.4,def:14,insp:111667,month:'Jul'},{w:28,ppms:54.0,def:7,insp:129536,month:'Jul'},{w:29,ppms:113.9,def:14,insp:122951,month:'Jul'},{w:30,ppms:146.1,def:16,insp:109508,month:'Jul'},{w:31,ppms:37.3,def:5,insp:134133,month:'Aug'},{w:32,ppms:108.8,def:8,insp:73510,month:'Aug'},{w:33,ppms:141.4,def:16,insp:113141,month:'Aug'},{w:34,ppms:69.5,def:6,insp:86308,month:'Aug'},{w:35,ppms:160.7,def:13,insp:80908,month:'Sep'},{w:36,ppms:87.7,def:9,insp:102681,month:'Sep'},{w:37,ppms:173.3,def:15,insp:86550,month:'Sep'},{w:38,ppms:46.5,def:3,insp:64451,month:'Sep'},{w:39,ppms:96.8,def:8,insp:82645,month:'Oct'},{w:40,ppms:68.5,def:7,insp:102190,month:'Oct'},{w:41,ppms:100.0,def:11,insp:110000,month:'Oct'},{w:42,ppms:124.0,def:12,insp:96774,month:'Oct'},{w:43,ppms:58.2,def:7,insp:120275,month:'Oct'},{w:44,ppms:179.4,def:21,insp:117057,month:'Nov'},{w:45,ppms:59.2,def:7,insp:118243,month:'Nov'},{w:46,ppms:101.7,def:17,insp:167218,month:'Nov'},{w:47,ppms:220.0,def:23,insp:104545,month:'Nov'},{w:48,ppms:106.5,def:9,insp:84507,month:'Nov'},{w:49,ppms:81.7,def:7,insp:85678,month:'Dec'},{w:50,ppms:127.2,def:11,insp:86516,month:'Dec'},
+];
+const yoyData = [
+  {w:2,p25:65.0,p26:73.7,ipc25:98,ipc26:98.69,sbo25:92,sbo26:96.69},{w:3,p25:90.9,p26:112.9,ipc25:98,ipc26:98.27,sbo25:93,sbo26:95.1},{w:4,p25:149,p26:101.9,ipc25:98,ipc26:98.33,sbo25:93,sbo26:94.7},{w:5,p25:125.3,p26:83.6,ipc25:98,ipc26:97.5,sbo25:89,sbo26:93.9},{w:6,p25:37.4,p26:146.9,ipc25:98,ipc26:97.98,sbo25:94,sbo26:96},{w:7,p25:95.1,p26:106.9,ipc25:98,ipc26:97.78,sbo25:95,sbo26:94.18},{w:8,p25:63.9,p26:143.6,ipc25:98,ipc26:97.1,sbo25:95,sbo26:95.6},{w:9,p25:80.7,p26:106.8,ipc25:98,ipc26:97,sbo25:91,sbo26:93.7},{w:10,p25:81.9,p26:85.8,ipc25:98,ipc26:97.04,sbo25:93,sbo26:93.8},{w:11,p25:85.5,p26:178.1,ipc25:98,ipc26:97,sbo25:94,sbo26:93.5},{w:12,p25:84.8,p26:108.3,ipc25:98,ipc26:96.9,sbo25:94,sbo26:92.5},
+];
+const paretoData = [
+  {rank:1,w:47,m:'Nov',ppms:220,def:23,cum:23,cumPct:4.6},{rank:2,w:44,m:'Nov',ppms:179.4,def:21,cum:44,cumPct:8.9},{rank:3,w:37,m:'Sep',ppms:173.3,def:15,cum:59,cumPct:11.9},{rank:4,w:13,m:'Mar',ppms:172.9,def:20,cum:79,cumPct:15.9},{rank:5,w:35,m:'Sep',ppms:160.7,def:13,cum:92,cumPct:18.5},{rank:6,w:4,m:'Jan',ppms:149,def:12,cum:104,cumPct:20.9},{rank:7,w:30,m:'Jul',ppms:146.1,def:16,cum:120,cumPct:24.1},{rank:8,w:33,m:'Aug',ppms:141.4,def:16,cum:136,cumPct:27.4},{rank:9,w:50,m:'Dec',ppms:127.2,def:11,cum:147,cumPct:29.6},{rank:10,w:16,m:'Apr',ppms:126,def:4,cum:151,cumPct:30.4},{rank:11,w:27,m:'Jul',ppms:125.4,def:14,cum:165,cumPct:33.2},{rank:12,w:5,m:'Jan',ppms:125.3,def:12,cum:177,cumPct:35.6},{rank:13,w:42,m:'Oct',ppms:124,def:12,cum:189,cumPct:38.0},{rank:14,w:14,m:'Apr',ppms:115.3,def:13,cum:202,cumPct:40.6},{rank:15,w:29,m:'Jul',ppms:113.9,def:14,cum:216,cumPct:43.5},{rank:16,w:32,m:'Aug',ppms:108.8,def:8,cum:224,cumPct:45.1},{rank:17,w:48,m:'Nov',ppms:106.5,def:9,cum:233,cumPct:46.9},{rank:18,w:46,m:'Nov',ppms:101.7,def:17,cum:250,cumPct:50.3},{rank:19,w:41,m:'Oct',ppms:100,def:11,cum:261,cumPct:52.5},{rank:20,w:39,m:'Oct',ppms:96.8,def:8,cum:269,cumPct:54.1},{rank:21,w:7,m:'Feb',ppms:95.1,def:13,cum:282,cumPct:56.7},{rank:22,w:17,m:'Apr',ppms:92,def:14,cum:296,cumPct:59.6},{rank:23,w:3,m:'Jan',ppms:90.9,def:7,cum:303,cumPct:61.0},{rank:24,w:36,m:'Sep',ppms:87.7,def:9,cum:312,cumPct:62.8},{rank:25,w:11,m:'Mar',ppms:85.5,def:11,cum:323,cumPct:65.0},{rank:26,w:12,m:'Mar',ppms:84.8,def:8,cum:331,cumPct:66.6},{rank:27,w:23,m:'Jun',ppms:84.7,def:12,cum:343,cumPct:69.0},{rank:28,w:21,m:'May',ppms:82.9,def:13,cum:356,cumPct:71.6},{rank:29,w:10,m:'Mar',ppms:81.9,def:10,cum:366,cumPct:73.6},{rank:30,w:9,m:'Feb',ppms:80.7,def:11,cum:377,cumPct:75.9},
+];
+
+function getEventDetails(w, ppms) {
+  const causes_red = ["Mold #2 cavity showing flash burr — wear past 200K cycles threshold. Part ejection incomplete, creating micro-tears in surface geometry.","Resin batch OOC detected post-run. Pigment ratio drift of +2.3σ on colorant mix. Batch 4817-C flagged after CMM inspection.","C-shift operator variance: cycle time extended +8 seconds during temperature ramp, causing sink marks on back housing.","Machine #7 temperature controller excursion — ±4°C variance over 6-hour window. No alarm triggered. Detected via surface defect uptick.","Mold #5 water circuit partially blocked — cooling imbalance causing premature ejection warpage on thin-wall sections.","New resin supplier batch introduced mid-week without MFI validation. Viscosity delta caused 3× normal flash rate."];
+  const causes_amber = ["Minor tool wear accumulation — cavity surface texture beginning to fade. Within spec but approaching 80% tooling life.","Slight cycle time variance on B-shift (±1.2 sec). Within control limits but trending toward SPC trigger point.","Colorant lot change implemented — standard 24-part qualification run completed. Minor PPMS uptick expected and tracked.","Injection pressure setpoint drift detected by SPC. Corrected mid-week. Defects concentrated in first 4 hours of shift."];
+  const causes_green = ["Process fully stable. All SPC charts in control. Preventive maintenance completed previous Friday — molds cleaned and inspected.","Optimal week: new operator training completed, standard work compliance at 100% on cavity inspection checklist.","Post-kaizen stable period. Color dosing re-validated, resin hopper level sensor recalibrated. No anomalies."];
+  const actions_red = ["IMMEDIATE: Pull mold from production. Schedule emergency tooling assessment within 24hrs. Activate backup cavity. Log in CAPA system.","QUARANTINE resin batch. Conduct 100% inspection on parts produced. Notify procurement for supplier corrective action.","Operator coaching session mandatory. Review standard work adherence on C-shift. Pair with experienced buddy for 2 weeks.","Maintenance emergency work order. Replace temperature controller. Calibrate all thermocouples on machine #7.","Drain and flush cooling circuit #3. Inspect all channels. Run thermographic scan before restart.","Block all parts from new batch. Full MFI testing before release. Raise supplier change notification process."];
+  const actions_amber = ["Schedule tooling maintenance within 5 days. Add to next preventive maintenance cycle.","Update standard work card with tighter cycle time window. Add SPC trigger alert at ±0.8 sec variance.","Extend qualification run to 50 parts. Retain colorant reference standards.","Root cause: pressure transducer calibration drift. Schedule sensor replacement in next PM window."];
+  const actions_green = ["No intervention required. Document current process conditions as reference standard for upcoming mold change.","Capture as 'model week' — photograph setup, record all parameters. Use as visual standard for operator training.","Maintain current conditions. Update control plan with current settings as validated baseline."];
+  const seed = (w * 7 + Math.round(ppms)) % 100;
+  if (ppms > 120) return {cause:causes_red[seed%causes_red.length],action:actions_red[seed%actions_red.length]};
+  if (ppms > 70) return {cause:causes_amber[seed%causes_amber.length],action:actions_amber[seed%actions_amber.length]};
+  return {cause:causes_green[seed%causes_green.length],action:actions_green[seed%actions_green.length]};
+}
+
 const COST_PER_DEF = 640;
-let boardState = {weeksClicked:new Set(), crisisSeen:0, stableSeen:0};
+let boardState = {weeksClicked:new Set(),crisisSeen:0,stableSeen:0};
 
 function buildBoard() {
   const grid = document.getElementById('boardGrid');
-  // Month headers row
   const months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  months.forEach(m => {
-    const h = document.createElement('div');
-    h.className = 'board-cell header-cell';
-    h.textContent = m;
-    grid.appendChild(h);
-  });
-  // Build rows of 13 (label + 12 months data)
-  // We'll lay it out as 4 rows of weeks
-  // Row labels: Wk 1–13, Wk 14–26, Wk 27–39, Wk 40–50
-  const rows = [
-    {label:'Wk 1–13', weeks: weekData.slice(0,13)},
-    {label:'Wk 14–26', weeks: weekData.slice(13,26)},
-    {label:'Wk 27–39', weeks: weekData.slice(26,39)},
-    {label:'Wk 40–50', weeks: weekData.slice(39,50)},
-  ];
+  months.forEach(m => {const h=document.createElement('div');h.className='board-cell header-cell';h.textContent=m;grid.appendChild(h);});
+  const rows = [{label:'Wk 1–13',weeks:weekData.slice(0,13)},{label:'Wk 14–26',weeks:weekData.slice(13,26)},{label:'Wk 27–39',weeks:weekData.slice(26,39)},{label:'Wk 40–50',weeks:weekData.slice(39,50)}];
   rows.forEach(row => {
-    const lbl = document.createElement('div');
-    lbl.className = 'board-cell header-cell';
-    lbl.style.cssText = 'font-size:8px;writing-mode:vertical-rl;text-orientation:mixed;padding:4px;letter-spacing:0';
-    lbl.textContent = row.label;
-    grid.appendChild(lbl);
-
+    const lbl=document.createElement('div');lbl.className='board-cell header-cell';lbl.style.cssText='font-size:8px;writing-mode:vertical-rl;text-orientation:mixed;padding:4px;letter-spacing:0';lbl.textContent=row.label;grid.appendChild(lbl);
     row.weeks.forEach(wd => {
-      const cell = document.createElement('div');
-      const ppms = wd.ppms;
-      const cls = ppms > 120 ? 'red-cell' : ppms > 70 ? 'amber-cell' : ppms === 0 ? 'header-cell' : 'green-cell';
-      cell.className = `board-cell ${cls}`;
-      cell.innerHTML = `<div class="week-num">W${wd.w}</div><div class="ppms-val">${ppms === 0 ? '—' : ppms > 99 ? Math.round(ppms) : ppms.toFixed(1)}</div>`;
-      cell.title = `Week ${wd.w} · ${wd.month} · PPMS: ${ppms} · Defects: ${wd.def}`;
-      cell.onclick = () => openEventCard(wd);
+      const cell=document.createElement('div');const ppms=wd.ppms;
+      const cls=ppms>120?'red-cell':ppms>70?'amber-cell':ppms===0?'header-cell':'green-cell';
+      cell.className=`board-cell ${cls}`;
+      cell.innerHTML=`<div class="week-num">W${wd.w}</div><div class="ppms-val">${ppms===0?'—':ppms>99?Math.round(ppms):ppms.toFixed(1)}</div>`;
+      cell.title=`Week ${wd.w} · ${wd.month} · PPMS: ${ppms} · Defects: ${wd.def}`;
+      cell.onclick=(e)=>openEventCard(wd,e);
       grid.appendChild(cell);
     });
-    // Padding cells to fill row of 13
-    const remaining = 13 - 1 - row.weeks.length;
-    for(let i=0;i<remaining;i++){
-      const pad = document.createElement('div');
-      pad.className = 'board-cell';
-      pad.style.background = 'transparent';
-      grid.appendChild(pad);
-    }
+    const remaining=13-1-row.weeks.length;
+    for(let i=0;i<remaining;i++){const pad=document.createElement('div');pad.className='board-cell';pad.style.background='transparent';grid.appendChild(pad);}
   });
 }
 
-function openEventCard(wd) {
-  const card = document.getElementById('eventCard');
-  const {cause, action} = getEventDetails(wd.w, wd.ppms);
-  const severity = wd.ppms > 120 ? 'red' : wd.ppms > 70 ? 'amber' : 'green';
-  const sevLabel = wd.ppms > 120 ? '🔴 CRISIS' : wd.ppms > 70 ? '🟡 WATCH' : '🟢 STABLE';
-
-  document.getElementById('ecWeekNum').textContent = wd.w;
-  document.getElementById('ecTitle').textContent = wd.ppms > 120 ? `Quality Crisis — ${wd.month} Spike` : wd.ppms > 70 ? `Monitor Zone — ${wd.month}` : `Stable Process — ${wd.month}`;
-  document.getElementById('ecMonth').textContent = `${wd.month} 2025 · Production Week ${wd.w}`;
-  document.getElementById('ecPPMS').textContent = wd.ppms === 0 ? '—' : wd.ppms;
-  document.getElementById('ecDefects').textContent = wd.def;
-  document.getElementById('ecInsp').textContent = wd.insp.toLocaleString();
-  document.getElementById('ecCost').textContent = wd.def > 0 ? `$${(wd.def * COST_PER_DEF).toLocaleString()}` : '$0';
-  document.getElementById('ecSeverity').textContent = sevLabel;
-  document.getElementById('ecSeverity').className = `event-severity ${severity}`;
-  document.getElementById('ecRootCause').textContent = cause;
-  document.getElementById('ecAction').textContent = action;
-  card.className = 'event-card show';
-  card.scrollIntoView({behavior:'smooth',block:'nearest'});
-
-  // update score
+function openEventCard(wd, ev) {
+  const card=document.getElementById('eventCard');
+  const {cause,action}=getEventDetails(wd.w,wd.ppms);
+  const severity=wd.ppms>120?'red':wd.ppms>70?'amber':'green';
+  const lang=document.documentElement.getAttribute('data-lang');
+  const sevLabel=wd.ppms>120?(lang==='es'?'🔴 CRISIS':'🔴 CRISIS'):wd.ppms>70?(lang==='es'?'🟡 VIGILAR':'🟡 WATCH'):(lang==='es'?'🟢 ESTABLE':'🟢 STABLE');
+  document.getElementById('ecWeekNum').textContent=wd.w;
+  const titleES=wd.ppms>120?`Crisis de Calidad — Pico ${wd.month}`:wd.ppms>70?`Zona de Vigilancia — ${wd.month}`:`Proceso Estable — ${wd.month}`;
+  const titleEN=wd.ppms>120?`Quality Crisis — ${wd.month} Spike`:wd.ppms>70?`Monitor Zone — ${wd.month}`:`Stable Process — ${wd.month}`;
+  document.getElementById('ecTitle').innerHTML=`<span data-es>${titleES}</span><span data-en>${titleEN}</span>`;
+  document.getElementById('ecMonth').innerHTML=`<span data-es>${wd.month} 2025 · Semana de Producción ${wd.w}</span><span data-en>${wd.month} 2025 · Production Week ${wd.w}</span>`;
+  document.getElementById('ecPPMS').textContent=wd.ppms===0?'—':wd.ppms;
+  document.getElementById('ecDefects').textContent=wd.def;
+  document.getElementById('ecInsp').textContent=wd.insp.toLocaleString();
+  document.getElementById('ecCost').textContent=wd.def>0?`$${(wd.def*COST_PER_DEF).toLocaleString()}`:'$0';
+  document.getElementById('ecSeverity').textContent=sevLabel;
+  document.getElementById('ecSeverity').className=`event-severity ${severity}`;
+  document.getElementById('ecRootCause').textContent=cause;
+  document.getElementById('ecAction').textContent=action;
+  card.className='event-card show';card.scrollIntoView({behavior:'smooth',block:'nearest'});
   boardState.weeksClicked.add(wd.w);
-  if(wd.ppms > 120) boardState.crisisSeen++;
-  if(wd.ppms < 70 && wd.ppms > 0) boardState.stableSeen++;
+  if(wd.ppms>120) boardState.crisisSeen++;
+  if(wd.ppms<70 && wd.ppms>0) boardState.stableSeen++;
   updateBoardScore();
-
-  // Highlight selected cell
-  document.querySelectorAll('.board-cell.selected').forEach(c => c.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
+  document.querySelectorAll('.board-cell.selected').forEach(c=>c.classList.remove('selected'));
+  if(ev&&ev.currentTarget) ev.currentTarget.classList.add('selected');
 }
 
 function updateBoardScore() {
-  const ws = boardState.weeksClicked;
-  const clicked = [...ws];
-  const avgPPMS = clicked.length > 0 ? (clicked.reduce((s,w) => s + weekData.find(d=>d.w===w).ppms, 0) / clicked.length).toFixed(1) : '—';
-  const totalDef = clicked.reduce((s,w) => s + weekData.find(d=>d.w===w).def, 0);
-  document.getElementById('weeksAnalyzed').textContent = `${ws.size} / 50`;
-  document.getElementById('crisisCount').textContent = [...ws].filter(w=>weekData.find(d=>d.w===w).ppms>120).length;
-  document.getElementById('stableCount').textContent = [...ws].filter(w=>{const pp=weekData.find(d=>d.w===w).ppms;return pp>0&&pp<70;}).length;
-  document.getElementById('avgPPMSSeen').textContent = avgPPMS;
-  document.getElementById('reworkSeen').textContent = `$${(totalDef * COST_PER_DEF).toLocaleString()}`;
+  const ws=boardState.weeksClicked;const clicked=[...ws];
+  const avgPPMS=clicked.length>0?(clicked.reduce((s,w)=>s+weekData.find(d=>d.w===w).ppms,0)/clicked.length).toFixed(1):'—';
+  const totalDef=clicked.reduce((s,w)=>s+weekData.find(d=>d.w===w).def,0);
+  document.getElementById('weeksAnalyzed').textContent=`${ws.size} / 50`;
+  document.getElementById('crisisCount').textContent=[...ws].filter(w=>weekData.find(d=>d.w===w).ppms>120).length;
+  document.getElementById('stableCount').textContent=[...ws].filter(w=>{const pp=weekData.find(d=>d.w===w).ppms;return pp>0&&pp<70;}).length;
+  document.getElementById('avgPPMSSeen').textContent=avgPPMS;
+  document.getElementById('reworkSeen').textContent=`$${(totalDef*COST_PER_DEF).toLocaleString()}`;
 }
 
-// ── INTERVENTIONS ──────────────────────────────────────────────
 const interventions = [
-  {id:'spc',icon:'📈',name:'SPC Implementation',desc:'Statistical Process Control on all 4 critical molding parameters. Control charts, alarm triggers, shift-level response protocol.',cost:25000,ppmsRed:15,weeks:8},
-  {id:'mold',icon:'🔧',name:'Mold Audit & Repair',desc:'Full cavity inspection and repair program. Priority on the 6 highest-PPMS molds. Includes tooling life extension protocol.',cost:42000,ppmsRed:22,weeks:4},
-  {id:'train',icon:'🎓',name:'Operator Quality Training',desc:'Structured quality awareness + standard work reinforcement for all 3 shifts. Focus on visual defect recognition and escalation.',cost:15000,ppmsRed:9,weeks:6},
-  {id:'visual',icon:'👁',name:'Auto-Inspection Checkpoint',desc:'Install exit-gate visual inspection camera at molding press output. Real-time reject logging connected to SPC chart.',cost:38000,ppmsRed:18,weeks:10},
-  {id:'material',icon:'🧪',name:'Resin/Pigment FIFO Protocol',desc:'Strict material FIFO enforcement + batch MFI validation before line release. Eliminates resin variability as defect source.',cost:12000,ppmsRed:8,weeks:3},
-  {id:'smed',icon:'⏱',name:'Quality Setup SMED',desc:'Reduce changeover-related defect spikes. Standardize cavity cleaning, first-shot qualification, and mold temp pre-heat protocol.',cost:18000,ppmsRed:11,weeks:5},
+  {id:'spc',icon:'📈',nameES:'Implementación SPC',nameEN:'SPC Implementation',descES:'Control Estadístico de Procesos en los 4 parámetros críticos de molding. Cartas de control, alarmas, protocolo de respuesta por turno.',descEN:'Statistical Process Control on all 4 critical molding parameters. Control charts, alarm triggers, shift-level response protocol.',cost:25000,ppmsRed:15,weeks:8},
+  {id:'mold',icon:'🔧',nameES:'Auditoría y Reparación de Moldes',nameEN:'Mold Audit & Repair',descES:'Inspección y reparación completa de cavidades. Prioridad en los 6 moldes con mayor PPMS. Incluye protocolo de extensión de vida de tooling.',descEN:'Full cavity inspection and repair program. Priority on the 6 highest-PPMS molds. Includes tooling life extension protocol.',cost:42000,ppmsRed:22,weeks:4},
+  {id:'train',icon:'🎓',nameES:'Entrenamiento Calidad Operadores',nameEN:'Operator Quality Training',descES:'Conciencia de calidad estructurada + refuerzo de standard work para los 3 turnos. Foco en reconocimiento visual de defectos y escalación.',descEN:'Structured quality awareness + standard work reinforcement for all 3 shifts. Focus on visual defect recognition and escalation.',cost:15000,ppmsRed:9,weeks:6},
+  {id:'visual',icon:'👁',nameES:'Auto-Inspección en Checkpoint',nameEN:'Auto-Inspection Checkpoint',descES:'Instalar cámara de inspección visual de salida en el output de la prensa de molding. Logueo de rechazos en tiempo real conectado al SPC.',descEN:'Install exit-gate visual inspection camera at molding press output. Real-time reject logging connected to SPC chart.',cost:38000,ppmsRed:18,weeks:10},
+  {id:'material',icon:'🧪',nameES:'Protocolo FIFO Resina/Pigmento',nameEN:'Resin/Pigment FIFO Protocol',descES:'Enforcement estricto de FIFO de material + validación MFI por batch antes de release a línea. Elimina la variabilidad de resina como fuente de defectos.',descEN:'Strict material FIFO enforcement + batch MFI validation before line release. Eliminates resin variability as defect source.',cost:12000,ppmsRed:8,weeks:3},
+  {id:'smed',icon:'⏱',nameES:'SMED de Calidad en Setup',nameEN:'Quality Setup SMED',descES:'Reducir picos de defectos relacionados con changeover. Estandarizar limpieza de cavidades, qualificación de first-shot, y pre-calentamiento de molde.',descEN:'Reduce changeover-related defect spikes. Standardize cavity cleaning, first-shot qualification, and mold temp pre-heat protocol.',cost:18000,ppmsRed:11,weeks:5},
 ];
 
 let selectedInterventions = new Set();
 let simAChart = null;
 
 function buildInterventionCards() {
-  const grid = document.getElementById('interventionCards');
+  const grid=document.getElementById('interventionCards');
   interventions.forEach(iv => {
-    const card = document.createElement('div');
-    card.className = 'int-card';
-    card.id = `card-${iv.id}`;
-    card.innerHTML = `
-      <div class="int-card-icon">${iv.icon}</div>
-      <div class="int-card-name">${iv.name}</div>
-      <div class="int-card-desc">${iv.desc}</div>
-      <div class="int-card-stats">
-        <span class="int-pill cost-pill">💰 $${(iv.cost/1000).toFixed(0)}K</span>
-        <span class="int-pill impact-pill">↓ ${iv.ppmsRed} PPMS</span>
-        <span class="int-pill" style="background:var(--blue-lt);color:var(--blue-dk)">${iv.weeks}wk</span>
-      </div>
-      <div class="selected-badge">✓ Selected</div>
-    `;
-    card.onclick = () => toggleIntervention(iv.id, card);
+    const card=document.createElement('div');card.className='int-card';card.id=`card-${iv.id}`;
+    card.innerHTML=`<div class="int-card-icon">${iv.icon}</div><div class="int-card-name"><span data-es>${iv.nameES}</span><span data-en>${iv.nameEN}</span></div><div class="int-card-desc"><span data-es>${iv.descES}</span><span data-en>${iv.descEN}</span></div><div class="int-card-stats"><span class="int-pill cost-pill">💰 $${(iv.cost/1000).toFixed(0)}K</span><span class="int-pill impact-pill">↓ ${iv.ppmsRed} PPMS</span><span class="int-pill" style="background:var(--blue-lt);color:var(--blue-dk)">${iv.weeks}wk</span></div><div class="selected-badge">✓ <span data-es>Seleccionado</span><span data-en>Selected</span></div>`;
+    card.onclick=()=>toggleIntervention(iv.id,card);
     grid.appendChild(card);
   });
   updateSimA();
 }
 
 function toggleIntervention(id, card) {
-  const BUDGET = 150000;
-  const totalWithout = [...selectedInterventions].filter(x=>x!==id).reduce((s,x)=>s+interventions.find(i=>i.id===x).cost,0);
-  if(selectedInterventions.has(id)) {
-    selectedInterventions.delete(id);
-    card.classList.remove('selected');
-  } else {
-    const iv = interventions.find(i=>i.id===id);
-    if(totalWithout + iv.cost > BUDGET) {
-      card.style.borderColor = 'var(--red)';
-      setTimeout(() => card.style.borderColor = '', 800);
-      return;
-    }
-    selectedInterventions.add(id);
-    card.classList.add('selected');
-  }
+  const BUDGET=150000;
+  const totalWithout=[...selectedInterventions].filter(x=>x!==id).reduce((s,x)=>s+interventions.find(i=>i.id===x).cost,0);
+  if(selectedInterventions.has(id)){selectedInterventions.delete(id);card.classList.remove('selected');}
+  else{const iv=interventions.find(i=>i.id===id);if(totalWithout+iv.cost>BUDGET){card.style.borderColor='var(--red)';setTimeout(()=>card.style.borderColor='',800);return;}selectedInterventions.add(id);card.classList.add('selected');}
   updateSimA();
 }
 
-function resetInterventions() {
-  selectedInterventions.clear();
-  document.querySelectorAll('.int-card').forEach(c=>c.classList.remove('selected'));
-  updateSimA();
-}
+function resetInterventions(){selectedInterventions.clear();document.querySelectorAll('.int-card').forEach(c=>c.classList.remove('selected'));updateSimA();}
 
 function updateSimA() {
-  const BUDGET = 150000;
-  const BASE_PPMS = 90.6;
-  const REWORK_COST = 357000; // AM 6.0 annual budget · Q1 real=$39K · Balance=$318K
-  const VOL = 5490000;
-  const selected = [...selectedInterventions].map(id=>interventions.find(i=>i.id===id));
-  const totalCost = selected.reduce((s,iv)=>s+iv.cost,0);
-  // Diminishing returns model: each intervention is independent but overlap penalized
-  const rawReduction = selected.reduce((s,iv)=>s+iv.ppmsRed,0);
-  const efficiencyFactor = selected.length <= 2 ? 1.0 : selected.length <= 4 ? 0.88 : 0.78;
-  const totalReduction = Math.min(rawReduction * efficiencyFactor, BASE_PPMS - 20);
-  const projPPMS = Math.max(BASE_PPMS - totalReduction, 20);
-  const defSaved = (BASE_PPMS - projPPMS) * VOL / 1e6;
-  const savings = defSaved * 640;
-  const net = savings - totalCost;
-  const roi = totalCost > 0 ? ((net / totalCost) * 100).toFixed(0) + '%' : '—';
-  const paybackWeeks = savings > 0 ? Math.ceil(totalCost / (savings/50)) : '—';
-
-  document.getElementById('rBudgetSpent').textContent = `$${totalCost.toLocaleString()}`;
-  document.getElementById('rBudgetSpent').className = `res-val ${totalCost > BUDGET ? 'bad' : totalCost > 100000 ? 'warn' : 'good'}`;
-  document.getElementById('rBudgetRemaining').textContent = `$${(BUDGET-totalCost).toLocaleString()} remaining`;
-  document.getElementById('rProjPPMS').textContent = projPPMS.toFixed(1);
-  document.getElementById('rProjPPMS').className = `res-val ${projPPMS > 90 ? 'bad' : projPPMS > 70 ? 'warn' : 'good'}`;
-  document.getElementById('rPPMSDelta').textContent = `−${totalReduction.toFixed(1)}`;
-  document.getElementById('rPPMSDelta').className = `res-val ${totalReduction >= 30.6 ? 'good' : 'warn'}`;
-  document.getElementById('rTargetStatus').textContent = projPPMS <= 60 ? '✓ TARGET ACHIEVED' : `${(projPPMS - 60).toFixed(1)} pts above target`;
-  document.getElementById('rSavings').textContent = `$${Math.round(savings).toLocaleString()}`;
-  document.getElementById('rROI').textContent = roi;
-  document.getElementById('rROI').className = `res-val ${net > 0 ? 'good' : 'bad'}`;
-  document.getElementById('rPayback').textContent = typeof paybackWeeks === 'number' ? `${paybackWeeks} wks` : '—';
-  document.getElementById('budgetDisplay').textContent = `$${(BUDGET-totalCost).toLocaleString()}`;
-
-  // Chart
-  const weeks = Array.from({length:50},(_,i)=>i+1);
-  const baselineArr = weeks.map(() => BASE_PPMS);
-  const projArr = weeks.map(w => {
-    if(w < 4) return BASE_PPMS;
-    const progress = Math.min(1, (w-4) / 20);
-    return BASE_PPMS - (totalReduction * Math.pow(progress, 0.6));
-  });
-
+  const BUDGET=150000;const BASE_PPMS=90.6;const VOL=5490000;
+  const selected=[...selectedInterventions].map(id=>interventions.find(i=>i.id===id));
+  const totalCost=selected.reduce((s,iv)=>s+iv.cost,0);
+  const rawReduction=selected.reduce((s,iv)=>s+iv.ppmsRed,0);
+  const efficiencyFactor=selected.length<=2?1.0:selected.length<=4?0.88:0.78;
+  const totalReduction=Math.min(rawReduction*efficiencyFactor,BASE_PPMS-20);
+  const projPPMS=Math.max(BASE_PPMS-totalReduction,20);
+  const defSaved=(BASE_PPMS-projPPMS)*VOL/1e6;const savings=defSaved*640;const net=savings-totalCost;
+  const roi=totalCost>0?((net/totalCost)*100).toFixed(0)+'%':'—';
+  const paybackWeeks=savings>0?Math.ceil(totalCost/(savings/50)):'—';
+  const lang=document.documentElement.getAttribute('data-lang');
+  document.getElementById('rBudgetSpent').textContent=`$${totalCost.toLocaleString()}`;
+  document.getElementById('rBudgetSpent').className=`res-val ${totalCost>BUDGET?'bad':totalCost>100000?'warn':'good'}`;
+  document.getElementById('rBudgetRemaining').textContent=`$${(BUDGET-totalCost).toLocaleString()} ${lang==='es'?'restante':'remaining'}`;
+  document.getElementById('rProjPPMS').textContent=projPPMS.toFixed(1);
+  document.getElementById('rProjPPMS').className=`res-val ${projPPMS>90?'bad':projPPMS>70?'warn':'good'}`;
+  document.getElementById('rPPMSDelta').textContent=`−${totalReduction.toFixed(1)}`;
+  document.getElementById('rPPMSDelta').className=`res-val ${totalReduction>=30.6?'good':'warn'}`;
+  document.getElementById('rTargetStatus').textContent=projPPMS<=60?(lang==='es'?'✓ TARGET ALCANZADO':'✓ TARGET ACHIEVED'):`${(projPPMS-60).toFixed(1)} ${lang==='es'?'pts arriba del target':'pts above target'}`;
+  document.getElementById('rSavings').textContent=`$${Math.round(savings).toLocaleString()}`;
+  document.getElementById('rROI').textContent=roi;document.getElementById('rROI').className=`res-val ${net>0?'good':'bad'}`;
+  document.getElementById('rPayback').textContent=typeof paybackWeeks==='number'?`${paybackWeeks} wks`:'—';
+  document.getElementById('budgetDisplay').textContent=`$${(BUDGET-totalCost).toLocaleString()}`;
+  const weeks=Array.from({length:50},(_,i)=>i+1);
+  const baselineArr=weeks.map(()=>BASE_PPMS);
+  const projArr=weeks.map(w=>{if(w<4)return BASE_PPMS;const progress=Math.min(1,(w-4)/20);return BASE_PPMS-(totalReduction*Math.pow(progress,0.6));});
   if(simAChart) simAChart.destroy();
-  const ctx = document.getElementById('chartSimA').getContext('2d');
-  simAChart = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels: weeks.map(w=>`W${w}`),
-      datasets:[
-        {label:'Baseline (no action)',data:baselineArr,borderColor:'#D63429',borderWidth:2,borderDash:[5,4],pointRadius:0,fill:false},
-        {label:'Projected w/ interventions',data:projArr,borderColor:'#2E7D32',borderWidth:2.5,pointRadius:0,fill:{target:'origin',above:'rgba(46,125,50,0.08)'}},
-        {label:'Target (≤60 PPMS)',data:weeks.map(()=>60),borderColor:'#1E40AF',borderWidth:1.5,borderDash:[3,3],pointRadius:0,fill:false},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},
-      scales:{
-        x:{ticks:{color:'#8A8070',font:{size:9},maxTicksLimit:13},grid:{color:'rgba(0,0,0,.04)'}},
-        y:{min:0,max:220,ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11,weight:'600'}}},
-      }
-    }
-  });
+  const ctx=document.getElementById('chartSimA').getContext('2d');
+  simAChart=new Chart(ctx,{type:'line',data:{labels:weeks.map(w=>`W${w}`),datasets:[{label:lang==='es'?'Baseline (sin acción)':'Baseline (no action)',data:baselineArr,borderColor:'#D63429',borderWidth:2,borderDash:[5,4],pointRadius:0,fill:false},{label:lang==='es'?'Proyectado con intervenciones':'Projected w/ interventions',data:projArr,borderColor:'#2E7D32',borderWidth:2.5,pointRadius:0,fill:{target:'origin',above:'rgba(46,125,50,0.08)'}},{label:'Target (≤60 PPMS)',data:weeks.map(()=>60),borderColor:'#1E40AF',borderWidth:1.5,borderDash:[3,3],pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:9},maxTicksLimit:13},grid:{color:'rgba(0,0,0,.04)'}},y:{min:0,max:220,ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11,weight:'600'}}}}}});
 }
 
-// ── COST OF QUALITY ───────────────────────────────────────────
-let coqChart = null;
+let coqChart=null;
 function updateCOQ() {
-  const targetPPMS = +document.getElementById('sliderPPMS').value;
-  const vol = +document.getElementById('sliderVol').value * 1e6;
-  const costPerDef = +document.getElementById('sliderCostPerDef').value;
-  const basePPMS = +document.getElementById('sliderBasePPMS').value;
-  const weeks = +document.getElementById('sliderWeeks').value;
-
-  document.getElementById('valPPMS').textContent = targetPPMS;
-  document.getElementById('valVol').textContent = (+document.getElementById('sliderVol').value).toFixed(2)+'M';
-  document.getElementById('valCostPerDef').textContent = '$'+costPerDef;
-  document.getElementById('valBasePPMS').textContent = basePPMS.toFixed(1);
-  document.getElementById('valWeeks').textContent = weeks+' wk';
-
-  const currentDef = Math.round(basePPMS * vol / 1e6);
-  const targetDef = Math.round(targetPPMS * vol / 1e6);
-  const currentCost = currentDef * costPerDef;
-  const targetCost = targetDef * costPerDef;
-  const savings = currentCost - targetCost;
-  const weeklySavings = savings / weeks;
-  const pctImp = ((basePPMS - targetPPMS) / basePPMS * 100).toFixed(1);
-
-  document.getElementById('coqCurrentDef').textContent = currentDef;
-  document.getElementById('coqTargetDef').textContent = targetDef;
-  document.getElementById('coqDefDelta').textContent = `−${currentDef - targetDef} defects/year`;
-  document.getElementById('coqCurrentCost').textContent = `$${Math.round(currentCost/1000)}K`;
-  document.getElementById('coqTargetCost').textContent = `$${Math.round(targetCost/1000)}K`;
-  document.getElementById('coqCostDelta').textContent = `−$${Math.round(savings/1000)}K savings`;
-  document.getElementById('coqWeeklySavings').textContent = `$${Math.round(weeklySavings).toLocaleString()}`;
-  document.getElementById('coqPPMSGap').textContent = `${(basePPMS - targetPPMS).toFixed(1)} pts`;
-  document.getElementById('coqPctImprove').textContent = `${pctImp}% reduction`;
-
-  // Color the target values
-  document.getElementById('coqTargetCost').className = `res-val ${savings > 150000 ? 'good' : savings > 50000 ? 'warn' : 'bad'}`;
-  document.getElementById('coqTargetDef').className = `res-val ${targetPPMS <= 60 ? 'good' : targetPPMS <= 90 ? 'warn' : 'bad'}`;
-
-  // Interpretation
-  let interp = '';
-  if(targetPPMS <= 60) interp = `At ${targetPPMS} PPMS you eliminate ${pctImp}% of current defects, saving $${Math.round(savings/1000)}K annually. This corresponds to ${currentDef-targetDef} fewer defects per year — at $${costPerDef}/defect, each PPMS point you eliminate is worth $${Math.round(costPerDef * vol / 1e6 / 1).toLocaleString()} per year.`;
-  else if(targetPPMS < basePPMS) interp = `A ${pctImp}% PPMS reduction saves $${Math.round(savings/1000)}K/year. Consider that the $150K intervention budget pays back in ${Math.ceil(150000/weeklySavings)} weeks at this target level. Pushing to ≤60 PPMS unlocks further savings.`;
-  else interp = `Current target is above baseline — no savings generated. Set a target PPMS below ${basePPMS.toFixed(0)} to unlock savings potential.`;
-  document.getElementById('coqInterpretation').textContent = interp;
-
-  // Chart: sensitivity curve
-  const ppmsRange = Array.from({length:17},(_,i)=>20+i*10);
-  const costsRange = ppmsRange.map(p => Math.round(p * vol / 1e6 * costPerDef / 1000));
+  const targetPPMS=+document.getElementById('sliderPPMS').value;
+  const vol=+document.getElementById('sliderVol').value*1e6;
+  const costPerDef=+document.getElementById('sliderCostPerDef').value;
+  const basePPMS=+document.getElementById('sliderBasePPMS').value;
+  const weeks=+document.getElementById('sliderWeeks').value;
+  const lang=document.documentElement.getAttribute('data-lang');
+  document.getElementById('valPPMS').textContent=targetPPMS;
+  document.getElementById('valVol').textContent=(+document.getElementById('sliderVol').value).toFixed(2)+'M';
+  document.getElementById('valCostPerDef').textContent='$'+costPerDef;
+  document.getElementById('valBasePPMS').textContent=basePPMS.toFixed(1);
+  document.getElementById('valWeeks').textContent=weeks+' wk';
+  const currentDef=Math.round(basePPMS*vol/1e6);const targetDef=Math.round(targetPPMS*vol/1e6);
+  const currentCost=currentDef*costPerDef;const targetCost=targetDef*costPerDef;
+  const savings=currentCost-targetCost;const weeklySavings=savings/weeks;
+  const pctImp=((basePPMS-targetPPMS)/basePPMS*100).toFixed(1);
+  document.getElementById('coqCurrentDef').textContent=currentDef;
+  document.getElementById('coqTargetDef').textContent=targetDef;
+  document.getElementById('coqDefDelta').textContent=`−${currentDef-targetDef} ${lang==='es'?'defectos/año':'defects/year'}`;
+  document.getElementById('coqCurrentCost').textContent=`$${Math.round(currentCost/1000)}K`;
+  document.getElementById('coqTargetCost').textContent=`$${Math.round(targetCost/1000)}K`;
+  document.getElementById('coqCostDelta').textContent=`−$${Math.round(savings/1000)}K ${lang==='es'?'ahorro':'savings'}`;
+  document.getElementById('coqWeeklySavings').textContent=`$${Math.round(weeklySavings).toLocaleString()}`;
+  document.getElementById('coqPPMSGap').textContent=`${(basePPMS-targetPPMS).toFixed(1)} pts`;
+  document.getElementById('coqPctImprove').textContent=`${pctImp}% ${lang==='es'?'reducción':'reduction'}`;
+  document.getElementById('coqTargetCost').className=`res-val ${savings>150000?'good':savings>50000?'warn':'bad'}`;
+  document.getElementById('coqTargetDef').className=`res-val ${targetPPMS<=60?'good':targetPPMS<=90?'warn':'bad'}`;
+  let interp='';
+  if(targetPPMS<=60) interp=lang==='es'?`A ${targetPPMS} PPMS eliminas el ${pctImp}% de los defectos actuales, ahorrando $${Math.round(savings/1000)}K anuales. Esto corresponde a ${currentDef-targetDef} defectos menos por año — a $${costPerDef}/defecto, cada punto PPMS que eliminas vale $${Math.round(costPerDef*vol/1e6/1).toLocaleString()} por año.`:`At ${targetPPMS} PPMS you eliminate ${pctImp}% of current defects, saving $${Math.round(savings/1000)}K annually. This corresponds to ${currentDef-targetDef} fewer defects per year — at $${costPerDef}/defect, each PPMS point you eliminate is worth $${Math.round(costPerDef*vol/1e6/1).toLocaleString()} per year.`;
+  else if(targetPPMS<basePPMS) interp=lang==='es'?`Una reducción de ${pctImp}% en PPMS ahorra $${Math.round(savings/1000)}K/año. Considera que el presupuesto de intervención de $150K se recupera en ${Math.ceil(150000/weeklySavings)} semanas a este target. Empujar a ≤60 PPMS desbloquea más ahorros.`:`A ${pctImp}% PPMS reduction saves $${Math.round(savings/1000)}K/year. Consider that the $150K intervention budget pays back in ${Math.ceil(150000/weeklySavings)} weeks at this target level. Pushing to ≤60 PPMS unlocks further savings.`;
+  else interp=lang==='es'?`El target actual está arriba del baseline — no genera ahorros. Configura un PPMS target debajo de ${basePPMS.toFixed(0)} para desbloquear potencial de ahorro.`:`Current target is above baseline — no savings generated. Set a target PPMS below ${basePPMS.toFixed(0)} to unlock savings potential.`;
+  document.getElementById('coqInterpretation').textContent=interp;
+  const ppmsRange=Array.from({length:17},(_,i)=>20+i*10);
+  const costsRange=ppmsRange.map(p=>Math.round(p*vol/1e6*costPerDef/1000));
   if(coqChart) coqChart.destroy();
-  const ctx = document.getElementById('chartCOQ').getContext('2d');
-  coqChart = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels:ppmsRange.map(p=>p+' PPMS'),
-      datasets:[
-        {label:'Annual Rework Cost ($K)',data:costsRange,borderColor:'#D63429',backgroundColor:'rgba(214,52,41,0.08)',borderWidth:2.5,fill:true,pointRadius:4,pointBackgroundColor:ppmsRange.map(p=>p===targetPPMS?'#D63429':p<=60?'#2E7D32':'#B45309')},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{label:ctx=>`$${ctx.raw}K rework`}},
-        annotation:{annotations:{}}
-      },
-      scales:{
-        x:{ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.04)'}},
-        y:{ticks:{color:'#8A8070',font:{size:10},callback:v=>`$${v}K`},grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:'Annual Rework Cost ($K)',color:'#162240',font:{family:'Barlow',size:11,weight:'600'}}},
-      }
-    }
-  });
+  const ctx=document.getElementById('chartCOQ').getContext('2d');
+  coqChart=new Chart(ctx,{type:'line',data:{labels:ppmsRange.map(p=>p+' PPMS'),datasets:[{label:lang==='es'?'Costo Rework Anual ($K)':'Annual Rework Cost ($K)',data:costsRange,borderColor:'#D63429',backgroundColor:'rgba(214,52,41,0.08)',borderWidth:2.5,fill:true,pointRadius:4,pointBackgroundColor:ppmsRange.map(p=>p===targetPPMS?'#D63429':p<=60?'#2E7D32':'#B45309')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`$${c.raw}K rework`}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.04)'}},y:{ticks:{color:'#8A8070',font:{size:10},callback:v=>`$${v}K`},grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:lang==='es'?'Costo Rework Anual ($K)':'Annual Rework Cost ($K)',color:'#162240',font:{family:'Barlow',size:11,weight:'600'}}}}}});
 }
 
-// ── YoY RACE ──────────────────────────────────────────────────
-let yoyChart = null, ipcChart = null, sboChart = null, yoyProjChart = null;
-
+let yoyChart=null,ipcChart=null,sboChart=null,yoyProjChart=null;
 function buildYoYCharts() {
-  const labels = yoyData.map(d=>`Wk ${d.w}`);
-  // Main PPMS chart
-  const ctx1 = document.getElementById('chartYoY').getContext('2d');
-  yoyChart = new Chart(ctx1, {
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        {label:'2025 PPMS',data:yoyData.map(d=>d.p25),backgroundColor:'rgba(30,64,175,0.65)',borderColor:'#1E40AF',borderWidth:1.5},
-        {label:'2026 PPMS',data:yoyData.map(d=>d.p26),backgroundColor:'rgba(214,52,41,0.65)',borderColor:'#D63429',borderWidth:1.5},
-        {label:'Target ≤60',data:yoyData.map(()=>60),type:'line',borderColor:'#2E7D32',borderWidth:2,borderDash:[4,3],pointRadius:0,backgroundColor:'transparent'},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},
-      scales:{
-        x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},
-        y:{min:0,max:220,ticks:{color:'#8A8070'},grid:{color:'rgba(0,0,0,.05)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}},
-      }
-    }
-  });
-  // IPC chart
-  const ctx2 = document.getElementById('chartIPC').getContext('2d');
-  ipcChart = new Chart(ctx2, {
-    type:'line',
-    data:{
-      labels,
-      datasets:[
-        {label:'2025 IPC%',data:yoyData.map(d=>d.ipc25),borderColor:'#1E40AF',borderWidth:2,pointRadius:3,fill:false},
-        {label:'2026 IPC%',data:yoyData.map(d=>d.ipc26),borderColor:'#D63429',borderWidth:2,pointRadius:3,fill:false},
-      ]
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},y:{min:95,max:100,ticks:{color:'#8A8070',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}}}}
-  });
-  // SBO chart
-  const ctx3 = document.getElementById('chartSBO').getContext('2d');
-  sboChart = new Chart(ctx3, {
-    type:'line',
-    data:{
-      labels,
-      datasets:[
-        {label:'2025 SBO%',data:yoyData.map(d=>d.sbo25),borderColor:'#1E40AF',borderWidth:2,pointRadius:3,fill:false},
-        {label:'2026 SBO%',data:yoyData.map(d=>d.sbo26),borderColor:'#D63429',borderWidth:2,pointRadius:3,fill:false},
-      ]
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},y:{min:88,max:100,ticks:{color:'#8A8070',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}}}}
-  });
+  const labels=yoyData.map(d=>`Wk ${d.w}`);
+  const ctx1=document.getElementById('chartYoY').getContext('2d');
+  yoyChart=new Chart(ctx1,{type:'bar',data:{labels,datasets:[{label:'2025 PPMS',data:yoyData.map(d=>d.p25),backgroundColor:'rgba(30,64,175,0.65)',borderColor:'#1E40AF',borderWidth:1.5},{label:'2026 PPMS',data:yoyData.map(d=>d.p26),backgroundColor:'rgba(214,52,41,0.65)',borderColor:'#D63429',borderWidth:1.5},{label:'Target ≤60',data:yoyData.map(()=>60),type:'line',borderColor:'#2E7D32',borderWidth:2,borderDash:[4,3],pointRadius:0,backgroundColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},y:{min:0,max:220,ticks:{color:'#8A8070'},grid:{color:'rgba(0,0,0,.05)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}}}}});
+  const ctx2=document.getElementById('chartIPC').getContext('2d');
+  ipcChart=new Chart(ctx2,{type:'line',data:{labels,datasets:[{label:'2025 IPC%',data:yoyData.map(d=>d.ipc25),borderColor:'#1E40AF',borderWidth:2,pointRadius:3,fill:false},{label:'2026 IPC%',data:yoyData.map(d=>d.ipc26),borderColor:'#D63429',borderWidth:2,pointRadius:3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},y:{min:95,max:100,ticks:{color:'#8A8070',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  const ctx3=document.getElementById('chartSBO').getContext('2d');
+  sboChart=new Chart(ctx3,{type:'line',data:{labels,datasets:[{label:'2025 SBO%',data:yoyData.map(d=>d.sbo25),borderColor:'#1E40AF',borderWidth:2,pointRadius:3,fill:false},{label:'2026 SBO%',data:yoyData.map(d=>d.sbo26),borderColor:'#D63429',borderWidth:2,pointRadius:3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:10}},grid:{display:false}},y:{min:88,max:100,ticks:{color:'#8A8070',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}}}}});
   updateYoYSim();
 }
 
 function updateYoYSim() {
-  const weeklyImp = +document.getElementById('sliderWeeklyImp').value;
-  document.getElementById('valWeeklyImp').textContent = weeklyImp.toFixed(1);
-
-  const startPPMS = 113.5; // avg 2026 so far
-  const weeksLeft = 40;
-  let projEOY = startPPMS - weeklyImp * weeksLeft;
-  projEOY = Math.max(projEOY, 25);
-  const wksToTarget = weeklyImp > 0 ? Math.ceil((startPPMS - 60) / weeklyImp) : Infinity;
-  const eoyCost = Math.round(projEOY * 5.49e6 / 1e6 * 640 / 1000);
-  const statusOK = projEOY <= 60;
-  document.getElementById('yoyProjEOY').textContent = projEOY.toFixed(0);
-  document.getElementById('yoyProjEOY').className = `res-val ${projEOY <= 60 ? 'good' : projEOY <= 90 ? 'warn' : 'bad'}`;
-  document.getElementById('yoyWksToTarget').textContent = wksToTarget <= weeksLeft ? `${wksToTarget} wks` : 'Out of range';
-  document.getElementById('yoyEOYCost').textContent = `$${eoyCost}K`;
-  document.getElementById('yoyStatus').textContent = statusOK ? '✓ HIT' : '✗ MISS';
-  document.getElementById('yoyStatus').className = `res-val ${statusOK ? 'good' : 'bad'}`;
-
-  // Projection chart
-  const allWeeks = Array.from({length:50},(_,i)=>i+2);
-  const knownWeeks = yoyData.map(d=>d.w);
-  const knownPPMS = yoyData.map(d=>d.p26);
-  const projData = allWeeks.map(w => {
-    if(knownWeeks.includes(w)) return knownPPMS[knownWeeks.indexOf(w)];
-    const weeksFromLast = w - 12;
-    return Math.max(startPPMS - weeklyImp * weeksFromLast, 20);
-  });
-
+  const weeklyImp=+document.getElementById('sliderWeeklyImp').value;
+  document.getElementById('valWeeklyImp').textContent=weeklyImp.toFixed(1);
+  const startPPMS=113.5;const weeksLeft=40;
+  let projEOY=startPPMS-weeklyImp*weeksLeft;projEOY=Math.max(projEOY,25);
+  const wksToTarget=weeklyImp>0?Math.ceil((startPPMS-60)/weeklyImp):Infinity;
+  const eoyCost=Math.round(projEOY*5.49e6/1e6*640/1000);
+  const statusOK=projEOY<=60;const lang=document.documentElement.getAttribute('data-lang');
+  document.getElementById('yoyProjEOY').textContent=projEOY.toFixed(0);
+  document.getElementById('yoyProjEOY').className=`res-val ${projEOY<=60?'good':projEOY<=90?'warn':'bad'}`;
+  document.getElementById('yoyWksToTarget').textContent=wksToTarget<=weeksLeft?`${wksToTarget} wks`:(lang==='es'?'Fuera de rango':'Out of range');
+  document.getElementById('yoyEOYCost').textContent=`$${eoyCost}K`;
+  document.getElementById('yoyStatus').textContent=statusOK?'✓ HIT':'✗ MISS';
+  document.getElementById('yoyStatus').className=`res-val ${statusOK?'good':'bad'}`;
+  const allWeeks=Array.from({length:50},(_,i)=>i+2);
+  const knownWeeks=yoyData.map(d=>d.w);const knownPPMS=yoyData.map(d=>d.p26);
+  const projData=allWeeks.map(w=>{if(knownWeeks.includes(w))return knownPPMS[knownWeeks.indexOf(w)];const weeksFromLast=w-12;return Math.max(startPPMS-weeklyImp*weeksFromLast,20);});
   if(yoyProjChart) yoyProjChart.destroy();
-  const ctx = document.getElementById('chartYoYProj').getContext('2d');
-  const splitIdx = knownWeeks.length;
-  yoyProjChart = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels:allWeeks.map(w=>`W${w}`),
-      datasets:[
-        {label:'2025 Actual',data:[...yoyData.map(d=>d.p25), ...Array(38).fill(null)],borderColor:'#1E40AF',borderWidth:1.5,pointRadius:0,borderDash:[3,3],fill:false},
-        {label:'2026 Known (Wk2–12)',data:[...knownPPMS,...Array(38).fill(null)],borderColor:'#D63429',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#D63429',fill:false},
-        {label:'2026 Projected',data:[...Array(10).fill(null),knownPPMS[10],...projData.slice(11)],borderColor:'#D63429',borderWidth:2,borderDash:[5,4],pointRadius:0,fill:false},
-        {label:'Target ≤60',data:allWeeks.map(()=>60),borderColor:'#2E7D32',borderWidth:1.5,borderDash:[3,3],pointRadius:0,fill:false},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:10}}}},
-      scales:{
-        x:{ticks:{color:'#8A8070',font:{size:9},maxTicksLimit:16},grid:{color:'rgba(0,0,0,.04)'}},
-        y:{min:0,max:230,ticks:{color:'#8A8070'},grid:{color:'rgba(0,0,0,.05)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}},
-      }
-    }
-  });
+  const ctx=document.getElementById('chartYoYProj').getContext('2d');
+  yoyProjChart=new Chart(ctx,{type:'line',data:{labels:allWeeks.map(w=>`W${w}`),datasets:[{label:lang==='es'?'2025 Real':'2025 Actual',data:[...yoyData.map(d=>d.p25),...Array(38).fill(null)],borderColor:'#1E40AF',borderWidth:1.5,pointRadius:0,borderDash:[3,3],fill:false},{label:lang==='es'?'2026 Conocido (Sem2–12)':'2026 Known (Wk2–12)',data:[...knownPPMS,...Array(38).fill(null)],borderColor:'#D63429',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#D63429',fill:false},{label:lang==='es'?'2026 Proyectado':'2026 Projected',data:[...Array(10).fill(null),knownPPMS[10],...projData.slice(11)],borderColor:'#D63429',borderWidth:2,borderDash:[5,4],pointRadius:0,fill:false},{label:'Target ≤60',data:allWeeks.map(()=>60),borderColor:'#2E7D32',borderWidth:1.5,borderDash:[3,3],pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:10}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:9},maxTicksLimit:16},grid:{color:'rgba(0,0,0,.04)'}},y:{min:0,max:230,ticks:{color:'#8A8070'},grid:{color:'rgba(0,0,0,.05)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}}}}});
 }
 
-// ── PARETO TABLE ──────────────────────────────────────────────
-let paretoChart = null;
+let paretoChart=null;
 function buildPareto() {
-  // Table
-  const tbody = document.getElementById('paretoTable');
+  const tbody=document.getElementById('paretoTable');
+  const lang=document.documentElement.getAttribute('data-lang');
   paretoData.forEach(row => {
-    const tr = document.createElement('tr');
-    const sevCls = row.ppms > 120 ? 'pill-red' : row.ppms > 70 ? 'pill-amber' : 'pill-green';
-    tr.innerHTML = `
-      <td><strong>${row.rank}</strong></td>
-      <td>Week ${row.w}</td>
-      <td>${row.m}</td>
-      <td><span class="pill ${sevCls}">${row.ppms}</span></td>
-      <td>${row.def}</td>
-      <td>${row.cum}</td>
-      <td><strong>${row.cumPct}%</strong></td>
-      <td>${row.cumPct <= 80 ? `<span class="pill pill-red">Attack Zone</span>` : `<span class="pill pill-green">Long tail</span>`}</td>
-    `;
+    const tr=document.createElement('tr');
+    const sevCls=row.ppms>120?'pill-red':row.ppms>70?'pill-amber':'pill-green';
+    const status=row.cumPct<=80?(lang==='es'?'<span class="pill pill-red">Zona de Ataque</span>':'<span class="pill pill-red">Attack Zone</span>'):(lang==='es'?'<span class="pill pill-green">Cola larga</span>':'<span class="pill pill-green">Long tail</span>');
+    tr.innerHTML=`<td><strong>${row.rank}</strong></td><td>${lang==='es'?'Sem':'Wk'} ${row.w}</td><td>${row.m}</td><td><span class="pill ${sevCls}">${row.ppms}</span></td><td>${row.def}</td><td>${row.cum}</td><td><strong>${row.cumPct}%</strong></td><td>${status}</td>`;
     tbody.appendChild(tr);
   });
-
-  // Chart
-  const ctx = document.getElementById('chartPareto').getContext('2d');
-  const top30 = paretoData.slice(0,30);
-  paretoChart = new Chart(ctx, {
-    type:'bar',
-    data:{
-      labels:top30.map(d=>`W${d.w}`),
-      datasets:[
-        {type:'bar',label:'PPMS',data:top30.map(d=>d.ppms),backgroundColor:top30.map(d=>d.ppms>120?'rgba(214,52,41,0.7)':d.ppms>70?'rgba(180,83,9,0.6)':'rgba(46,125,50,0.5)'),borderWidth:0,yAxisID:'y'},
-        {type:'line',label:'Cumulative %',data:top30.map(d=>d.cumPct),borderColor:'#162240',borderWidth:2,pointRadius:3,fill:false,yAxisID:'y2'},
-        {type:'line',label:'80% Threshold',data:top30.map(()=>80),borderColor:'#D63429',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false,yAxisID:'y2'},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},
-      scales:{
-        x:{ticks:{color:'#8A8070',font:{size:9}},grid:{display:false}},
-        y:{min:0,max:250,ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.04)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}},
-        y2:{position:'right',min:0,max:110,ticks:{color:'#8A8070',font:{size:10},callback:v=>v+'%'},grid:{display:false},title:{display:true,text:'Cumulative %',color:'#162240',font:{family:'Barlow',size:11}}},
-      }
-    }
-  });
+  const ctx=document.getElementById('chartPareto').getContext('2d');
+  const top30=paretoData.slice(0,30);
+  paretoChart=new Chart(ctx,{type:'bar',data:{labels:top30.map(d=>`W${d.w}`),datasets:[{type:'bar',label:'PPMS',data:top30.map(d=>d.ppms),backgroundColor:top30.map(d=>d.ppms>120?'rgba(214,52,41,0.7)':d.ppms>70?'rgba(180,83,9,0.6)':'rgba(46,125,50,0.5)'),borderWidth:0,yAxisID:'y'},{type:'line',label:lang==='es'?'% Acumulado':'Cumulative %',data:top30.map(d=>d.cumPct),borderColor:'#162240',borderWidth:2,pointRadius:3,fill:false,yAxisID:'y2'},{type:'line',label:lang==='es'?'Umbral 80%':'80% Threshold',data:top30.map(()=>80),borderColor:'#D63429',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false,yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#162240',font:{family:'Barlow',size:11}}}},scales:{x:{ticks:{color:'#8A8070',font:{size:9}},grid:{display:false}},y:{min:0,max:250,ticks:{color:'#8A8070',font:{size:10}},grid:{color:'rgba(0,0,0,.04)'},title:{display:true,text:'PPMS',color:'#162240',font:{family:'Barlow',size:11}}},y2:{position:'right',min:0,max:110,ticks:{color:'#8A8070',font:{size:10},callback:v=>v+'%'},grid:{display:false},title:{display:true,text:lang==='es'?'% Acumulado':'Cumulative %',color:'#162240',font:{family:'Barlow',size:11}}}}}});
 }
 
-// ── TAB SWITCHING ─────────────────────────────────────────────
 function switchTab(id, btn) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(`panel-${id}`).classList.add('active');
-  btn.classList.add('active');
-
-  if(id === 'simC' && !yoyChart) buildYoYCharts();
-  if(id === 'pareto' && !paretoChart) buildPareto();
+  document.getElementById(`panel-${id}`).classList.add('active');btn.classList.add('active');
+  if(id==='simC' && !yoyChart) buildYoYCharts();
+  if(id==='pareto' && !paretoChart) buildPareto();
 }
 
-// ── INIT ──────────────────────────────────────────────────────
 buildBoard();
 buildInterventionCards();
 updateCOQ();
