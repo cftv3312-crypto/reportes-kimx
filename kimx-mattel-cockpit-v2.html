@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIMX · Mattel Montoi · VSA Data Cockpit v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#162240; --navy2:#1E2F54;
+  --red:#D63429; --red-lt:#FCEAE9; --red-dk:#8C1A14;
+  --cream:#F0EBE1; --warm:#E5DDCF;
+  --white:#FFFFFF; --muted:#8A8070; --border:#D0C8BC;
+  --green:#2E7D32; --green-lt:#E8F5E9; --green-dk:#1B4D1E;
+  --amber:#B45309; --amber-lt:#FEF3C7; --amber-dk:#78350F;
+  --blue:#1E40AF; --blue-lt:#DBEAFE; --blue-dk:#1E3A8A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.4}
+.wrap{max-width:1480px;margin:0 auto;background:var(--cream)}
+
+.hdr{background:var(--navy);padding:20px 28px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.hdr-left{display:flex;flex-direction:column;gap:4px}
+.hdr-sup{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-weight:700}
+.hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--white);line-height:1}
+.hdr-sub{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600;margin-top:4px}
+.hdr-right{display:flex;align-items:center;gap:12px}
+.hdr-badge{background:rgba(214,52,41,.15);border:1px solid rgba(214,52,41,.4);padding:6px 13px;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:#F4B6B0;font-weight:700;white-space:nowrap}
+.lang-toggle{display:flex;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.04)}
+.lang-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border:none;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;transition:.15s}
+.lang-btn.active{background:var(--red);color:var(--white)}
+.bei-mark{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white);opacity:.55;letter-spacing:1px}
+
+.inner{padding:22px 28px}
+
+.sec-bar{display:flex;align-items:center;gap:14px;margin:18px 0 12px;padding-top:6px}
+.sec-bar:first-child{margin-top:0}
+.sec-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red);background:var(--red-lt);padding:4px 10px;border-left:3px solid var(--red)}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--navy)}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-meta{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:6px}
+.kpi{background:var(--white);border:1px solid var(--border);padding:14px 16px;position:relative}
+.kpi.accent-red{border-top:3px solid var(--red)}
+.kpi.accent-navy{border-top:3px solid var(--navy)}
+.kpi.accent-amber{border-top:3px solid var(--amber)}
+.kpi.accent-green{border-top:3px solid var(--green)}
+.kpi-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px;font-weight:700}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--navy);line-height:1}
+.kpi-val.red{color:var(--red)}
+.kpi-val.green{color:var(--green)}
+.kpi-val.amber{color:var(--amber)}
+.kpi-val small{font-size:14px;color:var(--muted);font-weight:600;margin-left:3px}
+.kpi-sub{font-size:9.5px;color:var(--muted);margin-top:5px;line-height:1.3}
+.kpi-tag{position:absolute;top:8px;right:10px;font-size:8px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+.row-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.row-grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:10px}
+.card{background:var(--white);border:1px solid var(--border);padding:14px 16px}
+.card-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--warm)}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--navy)}
+.card-badge{font-size:8.5px;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted);font-weight:700}
+
+.sales-headline{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.sales-num{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--navy);line-height:1}
+.sales-unit{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:90px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar-fill{width:100%;background:var(--navy);border-radius:1px 1px 0 0;min-height:4px;transition:height .9s cubic-bezier(.16,1,.3,1)}
+.bar-fill.peak{background:var(--red)}
+.bar-val{font-size:8.5px;color:var(--muted);font-weight:600}
+.bar-mon{font-size:9px;color:var(--navy);font-weight:700;letter-spacing:.5px}
+
+.demand-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.demand-name{width:140px;flex-shrink:0;font-size:11.5px;color:var(--navy);font-weight:600}
+.demand-track{flex:1;height:9px;background:var(--warm);border-radius:1px;overflow:hidden}
+.demand-fill{height:100%;border-radius:1px;transition:width 1s}
+.demand-pct{width:40px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--navy);font-weight:700}
+
+.org-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.org-name{width:150px;flex-shrink:0;font-size:11px;color:var(--navy);font-weight:500}
+.org-track{flex:1;height:11px;background:var(--warm);border-radius:1px;position:relative;overflow:hidden}
+.org-fill{height:100%;position:absolute;top:0;transition:width 1s}
+.org-fill.dl{background:var(--navy)}
+.org-fill.il{background:var(--blue);left:0}
+.org-fill.adm{background:var(--amber);left:0}
+.org-num{width:36px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--navy)}
+.org-legend{display:flex;gap:14px;margin-top:10px;padding-top:8px;border-top:1px solid var(--warm)}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
+.leg-box{width:10px;height:10px}
+
+.inv-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.inv-cell{background:var(--cream);border:1px solid var(--border);padding:11px 10px;text-align:center}
+.inv-cell.alert{background:var(--red-lt);border-color:var(--red)}
+.inv-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy);line-height:1}
+.inv-val.red{color:var(--red)}
+.inv-pct{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
+.inv-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:4px;font-weight:700}
+
+.sup-row{display:grid;grid-template-columns:18px 1fr 70px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #F0EAE0;font-size:12px}
+.sup-row:last-child{border-bottom:none}
+.sup-rank{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);font-weight:700;text-align:center}
+.sup-name{color:var(--navy);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sup-spend{font-family:'Barlow Condensed',sans-serif;text-align:right;font-size:13px;color:var(--red);font-weight:700}
+
+.hyp-table{width:100%;border-collapse:collapse}
+.hyp-table thead{background:var(--navy);color:var(--white)}
+.hyp-table th{padding:9px 10px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.hyp-table th.c{text-align:center}
+.hyp-table td{padding:10px;font-size:12px;border-bottom:1px solid var(--warm);vertical-align:top}
+.hyp-table td.c{text-align:center}
+.hyp-id{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--red);width:38px}
+.hyp-title{font-weight:600;color:var(--navy);line-height:1.35}
+.hyp-note{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+.hyp-tag{display:inline-block;font-size:8.5px;font-weight:700;padding:2px 6px;letter-spacing:1px;text-transform:uppercase;border-radius:1px;margin-right:3px}
+.tag-saving{background:var(--red-lt);color:var(--red-dk)}
+.tag-flow{background:var(--blue-lt);color:var(--blue-dk)}
+.tag-oee{background:var(--amber-lt);color:var(--amber-dk)}
+.tag-time{background:#EDE7F6;color:#4A148C}
+.pill{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:1px;display:inline-block;white-space:nowrap;text-align:center;letter-spacing:.5px;text-transform:uppercase}
+.p-pending{background:var(--warm);color:var(--muted)}
+.p-active{background:var(--amber-lt);color:var(--amber-dk)}
+.p-validated{background:var(--green-lt);color:var(--green-dk)}
+.p-quickwin{background:var(--red-lt);color:var(--red-dk)}
+.p-structural{background:var(--blue-lt);color:var(--blue-dk)}
+
+.find-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.find-card{background:var(--white);border:1px solid var(--border);padding:13px 14px;position:relative;border-left:3px solid var(--red)}
+.find-card.amber{border-left-color:var(--amber)}
+.find-card.navy{border-left-color:var(--navy)}
+.find-card.green{border-left-color:var(--green)}
+.find-num{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--red);line-height:1}
+.find-num.amber{color:var(--amber)}
+.find-num.navy{color:var(--navy)}
+.find-num.green{color:var(--green)}
+.find-lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-top:5px}
+.find-desc{font-size:11px;color:#444;margin-top:8px;line-height:1.5}
+.find-src{font-size:8.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:8px;font-weight:600;padding-top:6px;border-top:1px dashed var(--warm)}
+
+.vt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vt-pillar{background:var(--white);border:1px solid var(--border)}
+.vt-head{padding:11px 14px;background:var(--navy);color:var(--white);display:flex;justify-content:space-between;align-items:center}
+.vt-head.red{background:var(--red)}
+.vt-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,.6)}
+.vt-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--white)}
+.vt-body{padding:10px 12px}
+.vt-lever{padding:8px 0;border-bottom:1px solid #F0EAE0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.vt-lever:last-child{border-bottom:none}
+.vt-lever-name{font-size:11px;color:var(--navy);line-height:1.35;flex:1}
+.vt-status{font-size:14px;flex-shrink:0}
+
+.disc{border-left:3px solid var(--red);background:rgba(214,52,41,.05);padding:10px 14px;font-size:11px;color:#444;line-height:1.55;margin:14px 0}
+.disc strong{color:var(--red);font-weight:700}
+
+.foot{padding:16px 28px;border-top:1px solid var(--border);background:var(--cream);font-size:9.5px;text-transform:uppercase;letter-spacing:2.2px;color:var(--muted);font-weight:700;text-align:center;margin-top:16px}
+
+[data-lang-en]{display:none}
+body.lang-en [data-lang-es]{display:none}
+body.lang-en [data-lang-en]{display:inline}
+
+@media (max-width: 1100px){
+  .kpi-grid{grid-template-columns:repeat(3,1fr)}
+  .row-grid{grid-template-columns:1fr}
+  .row-grid-2{grid-template-columns:1fr}
+  .vt-grid{grid-template-columns:repeat(2,1fr)}
+  .find-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body class="lang-es">
+
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-sup">Kaizen Institute México · Value Stream Analysis</div>
+    <div class="hdr-title">
+      <span data-lang-es>Mattel Montoi · Data Cockpit</span><span data-lang-en>Mattel Montoi · Data Cockpit</span>
+    </div>
+    <div class="hdr-sub">
+      <span data-lang-es>General Escobedo, N.L. · Workshop on-site 11–15 Mayo 2026</span><span data-lang-en>General Escobedo, N.L. · On-site Workshop May 11–15, 2026</span>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge">
+      <span data-lang-es>Día 1 / 5 · Pre-validación</span><span data-lang-en>Day 1 / 5 · Pre-validation</span>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es', this)">ES</button>
+      <button class="lang-btn" onclick="setLang('en', this)">EN</button>
+    </div>
+    <div class="bei-mark">KIMX</div>
+  </div>
+</div>
+
+<div class="inner">
+
+<div class="sec-bar">
+  <div class="sec-tag">01</div>
+  <div class="sec-title"><span data-lang-es>Indicadores clave · Estado al Día 1</span><span data-lang-en>Key Indicators · Status at Day 1</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">VSA · MAY 2026</div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi accent-navy">
+    <div class="kpi-lbl"><span data-lang-es>Sales Plan 2025</span><span data-lang-en>Sales Plan 2025</span></div>
+    <div class="kpi-val">140.7<small>M</small></div>
+    <div class="kpi-sub"><span data-lang-es>unidades · forecast anual</span><span data-lang-en>units · annual forecast</span></div>
+  </div>
+  <div class="kpi accent-amber">
+    <div class="kpi-lbl"><span data-lang-es>Raw Material OH</span><span data-lang-en>Raw Material OH</span></div>
+    <div class="kpi-val amber">$9.02<small>M</small></div>
+    <div class="kpi-sub"><span data-lang-es>7,597 partes · valor inventario</span><span data-lang-en>7,597 parts · inventory value</span></div>
+  </div>
+  <div class="kpi accent-navy">
+    <div class="kpi-lbl"><span data-lang-es>FG Inventory</span><span data-lang-en>FG Inventory</span></div>
+    <div class="kpi-val">$1.78<small>M</small></div>
+    <div class="kpi-sub"><span data-lang-es>195 SKUs en inventario</span><span data-lang-en>195 SKUs in stock</span></div>
+  </div>
+  <div class="kpi accent-red">
+    <div class="kpi-tag">TBV</div>
+    <div class="kpi-lbl"><span data-lang-es>Oportunidad VSA · target</span><span data-lang-en>VSA Opportunity · target</span></div>
+    <div class="kpi-val red">$500K<small>+</small></div>
+    <div class="kpi-sub"><span data-lang-es>dato a validar · meta no negociable</span><span data-lang-en>data to be validated · non-negotiable</span></div>
+  </div>
+  <div class="kpi accent-red">
+    <div class="kpi-lbl"><span data-lang-es>Hipótesis senior activas</span><span data-lang-en>Active senior hypotheses</span></div>
+    <div class="kpi-val red">7</div>
+    <div class="kpi-sub"><span data-lang-es>0 validadas · Día 1 en curso</span><span data-lang-en>0 validated · Day 1 in progress</span></div>
+  </div>
+  <div class="kpi accent-green">
+    <div class="kpi-lbl"><span data-lang-es>Business Cases publicados</span><span data-lang-en>Published business cases</span></div>
+    <div class="kpi-val green">4</div>
+    <div class="kpi-sub"><span data-lang-es>BOM · Quality · Supply · Value Tree</span><span data-lang-en>BOM · Quality · Supply · Value Tree</span></div>
+  </div>
+</div>
+
+<div class="disc">
+  <strong><span data-lang-es>Regla del workspace:</span><span data-lang-en>Workspace rule:</span></strong>
+  <span data-lang-es> todas las cifras de ahorro mostradas como "dato a validar" están sin proyectar hasta confirmar el origen cuantitativo en planta durante el VSA (11–15 mayo). Las cifras operativas (Sales Plan, RM, FG, headcount, top suppliers) están validadas contra <em>03 Data Analysis</em>.</span>
+  <span data-lang-en> all savings shown as "data to be validated" are unprojected until quantitative origin is confirmed on-site during VSA (May 11–15). Operational figures (Sales Plan, RM, FG, headcount, top suppliers) are validated against <em>03 Data Analysis</em>.</span>
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">02</div>
+  <div class="sec-title"><span data-lang-es>Producción, demanda y organización</span><span data-lang-en>Production, demand &amp; organization</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">FY 2025 · BASE</div>
+</div>
+
+<div class="row-grid">
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span data-lang-es>Annual Sales Forecast · Enero–Diciembre</span><span data-lang-en>Annual Sales Forecast · January–December</span></div>
+      <div class="card-badge">FINANCE PLAN</div>
+    </div>
+    <div class="sales-headline">
+      <div class="sales-num">140,729</div>
+      <div class="sales-unit"><span data-lang-es>K unidades · 2025</span><span data-lang-en>K units · 2025</span></div>
+    </div>
+    <div class="bar-chart" id="sales-bars"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span data-lang-es>Demanda por familia</span><span data-lang-en>Demand by family</span></div>
+      <div class="card-badge">WK 2026-02-24</div>
+    </div>
+    <div id="demand-bars"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span data-lang-es>Org Chart · Top departamentos</span><span data-lang-en>Org Chart · Top departments</span></div>
+      <div class="card-badge">3,145 FTE</div>
+    </div>
+    <div id="org-bars"></div>
+    <div class="org-legend">
+      <div class="leg-item"><div class="leg-box" style="background:var(--navy)"></div>DL</div>
+      <div class="leg-item"><div class="leg-box" style="background:var(--blue)"></div>IL</div>
+      <div class="leg-item"><div class="leg-box" style="background:var(--amber)"></div>Admin</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">03</div>
+  <div class="sec-title"><span data-lang-es>Cadena de suministro e inventario</span><span data-lang-en>Supply chain &amp; inventory</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">RM $9.02M · TOP 10</div>
+</div>
+
+<div class="row-grid-2">
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span data-lang-es>Distribución del valor de inventario</span><span data-lang-en>Inventory value distribution</span></div>
+      <div class="card-badge">TOTAL OH $9.02M</div>
+    </div>
+    <div class="inv-breakdown">
+      <div class="inv-cell">
+        <div class="inv-val">$945K</div>
+        <div class="inv-pct">10.5%</div>
+        <div class="inv-lbl">Receiving</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-val">$5.47<small style="font-size:11px;color:var(--muted)">M</small></div>
+        <div class="inv-pct">60.6%</div>
+        <div class="inv-lbl">Store</div>
+      </div>
+      <div class="inv-cell alert">
+        <div class="inv-val red">$2.60<small style="font-size:11px;color:var(--red)">M</small></div>
+        <div class="inv-pct" style="color:var(--red-dk)">28.8%</div>
+        <div class="inv-lbl" style="color:var(--red-dk)">WIP</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-val">$10.5K</div>
+        <div class="inv-pct">0.1%</div>
+        <div class="inv-lbl">Quarantine</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#444;line-height:1.55;margin-top:6px">
+      <span data-lang-es><strong style="color:var(--red)">WIP 28.8% es anormal:</strong> benchmark típico en toy manufacturing es &lt;15%. Combinado con 30 partes con WIP negativo (-80,253 u) y 33 partes con Cst STD = $0 (7.88M u sin valor), señala MRP corriendo sobre data corrupta. Referencia H5 + H6 en la sección 04.</span>
+      <span data-lang-en><strong style="color:var(--red)">WIP 28.8% is abnormal:</strong> typical toy-manufacturing benchmark is &lt;15%. Combined with 30 parts with negative WIP (-80,253 u) and 33 parts with Cst STD = $0 (7.88M u of unvalued stock), signals MRP running on corrupt master data. See H5 + H6 in section 04.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span data-lang-es>Top 10 proveedores · Ene–Dic 2025</span><span data-lang-en>Top 10 suppliers · Jan–Dec 2025</span></div>
+      <div class="card-badge">ANNUAL SPEND</div>
+    </div>
+    <div id="sup-list"></div>
+  </div>
+
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">04</div>
+  <div class="sec-title"><span data-lang-es>Hipótesis Senior Engineer · 7 ejes del VSA</span><span data-lang-en>Senior Engineer Hypotheses · 7 VSA axes</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">PRE-VSA · 09 MAY 2026</div>
+</div>
+
+<div class="card" style="padding:0">
+  <table class="hyp-table">
+    <thead>
+      <tr>
+        <th class="c">#</th>
+        <th><span data-lang-es>Hipótesis</span><span data-lang-en>Hypothesis</span></th>
+        <th class="c"><span data-lang-es>Eje</span><span data-lang-en>Axis</span></th>
+        <th class="c"><span data-lang-es>Tipo</span><span data-lang-en>Type</span></th>
+        <th class="c"><span data-lang-es>Owner</span><span data-lang-en>Owner</span></th>
+        <th class="c"><span data-lang-es>Estado</span><span data-lang-en>Status</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="c hyp-id">H1</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Concentración extrema: una sola pieza (0013-0107) = 39% del valor de inventario</span><span data-lang-en>Extreme concentration: one single part (0013-0107) = 39% of inventory value</span></div>
+          <div class="hyp-note"><span data-lang-es>$3.54M en 3.19M tornillos · Pol=56d aplicada a parts de bajo costo unitario. Top 7 parts = 82% del valor.</span><span data-lang-en>$3.54M in 3.19M screws · Pol=56d applied to low-unit-cost parts. Top 7 parts = 82% of value.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-saving">$ Sav</span><span class="hyp-tag tag-flow">SC Flow</span></td>
+        <td class="c"><span class="pill p-quickwin">Quick Win</span></td>
+        <td class="c" style="font-size:11px">Arka / <span data-lang-es>Compras</span><span data-lang-en>Procurement</span></td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H2</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Señal de forecast rota: ExF subestima 3.6×–11.17×; CSCH = Producción por construcción</span><span data-lang-en>Broken forecast signal: ExF undercasts 3.6×–11.17×; CSCH = Production by construction</span></div>
+          <div class="hyp-note"><span data-lang-es>FCH = 8.57× la producción real · Lead time delivery 14d uniforme. Driver upstream del WIP y de H1/H5/H7.</span><span data-lang-en>FCH = 8.57× actual production · Uniform 14d delivery LT. Upstream driver of WIP and of H1/H5/H7.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-flow">SC Flow</span><span class="hyp-tag tag-oee">OEE</span></td>
+        <td class="c"><span class="pill p-structural"><span data-lang-es>Estructural</span><span data-lang-en>Structural</span></span></td>
+        <td class="c" style="font-size:11px">Arka / Demand Plan</td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H3</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Ramp-up lento (8.8–17.5 sem a 80% peak) = NPI Compressed Readiness, no Molding</span><span data-lang-en>Slow ramp-up (8.8–17.5 wks to 80% peak) = NPI Compressed Readiness, not Molding</span></div>
+          <div class="hyp-note"><span data-lang-es>30–70% del ciclo de temporada en sub-régimen. Causa raíz upstream: engineering, tooling, validación, materiales no estabilizados.</span><span data-lang-en>30–70% of season cycle in sub-regime. Upstream root cause: engineering, tooling, validation, materials not stabilized.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-oee">OEE</span><span class="hyp-tag tag-time">LT</span></td>
+        <td class="c"><span class="pill p-structural"><span data-lang-es>Estructural</span><span data-lang-en>Structural</span></span></td>
+        <td class="c" style="font-size:11px">Lucy / Eng. / Fátima</td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H4</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Utilización 7.7% es artefacto de master data (5CA Mega Line Rate = 0), no realidad operativa</span><span data-lang-en>7.7% utilization is master-data artifact (5CA Mega Line Rate = 0), not operational reality</span></div>
+          <div class="hyp-note"><span data-lang-es>149 SKUs de 5CA Mega fuera del cálculo · FCH = capacidad teórica multi-shift. OEE real por línea/máquina oculto.</span><span data-lang-en>149 SKUs of 5CA Mega excluded · FCH = theoretical multi-shift capacity. Real OEE by line/machine hidden.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-oee">OEE</span></td>
+        <td class="c"><span class="pill p-quickwin">QW + <span data-lang-es>Estr.</span><span data-lang-en>Struct.</span></span></td>
+        <td class="c" style="font-size:11px">Victor / Lucy</td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H5</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Receiving (5/20 trailers) + $2.60M en WIP + 50% racks con obsoleto = misma falla sistémica</span><span data-lang-en>Receiving (5/20 trailers) + $2.60M WIP + 50% racks obsolete = same systemic failure</span></div>
+          <div class="hyp-note"><span data-lang-es>El sistema no fluye: no hay dónde poner lo nuevo porque lo viejo no se libera. Tarima plástica sin owner agrava el cuello.</span><span data-lang-en>The system does not flow: no space for the new because the old is not released. Plastic-pallet ownership gap aggravates the bottleneck.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-flow">SC Flow</span></td>
+        <td class="c"><span class="pill p-quickwin">QW + <span data-lang-es>Estr.</span><span data-lang-en>Struct.</span></span></td>
+        <td class="c" style="font-size:11px">Neri / Edgar</td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H6</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Phantom BOMs (2) + partes con Cst STD = $0 (33 / 7.88M u) distorsionan MRP — habilitador</span><span data-lang-en>Phantom BOMs (2) + parts with Cst STD = $0 (33 / 7.88M u) distort MRP — enabler</span></div>
+          <div class="hyp-note"><span data-lang-es>El valor reportado de $9M está intrínsecamente subestimado. 30 parts con WIP negativo = posteos SAP rotos.</span><span data-lang-en>The reported $9M value is intrinsically understated. 30 parts with negative WIP = broken SAP postings.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-saving">$ Sav</span><span class="hyp-tag tag-flow">SC Flow</span></td>
+        <td class="c"><span class="pill p-quickwin">Quick Win</span></td>
+        <td class="c" style="font-size:11px">IT / <span data-lang-es>Finanzas</span><span data-lang-en>Finance</span></td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+      <tr>
+        <td class="c hyp-id">H7</td>
+        <td>
+          <div class="hyp-title"><span data-lang-es>Top 3 proveedores de resina = ~46% del gasto top-10 → riesgo de paro Molding no cuantificado</span><span data-lang-en>Top 3 resin suppliers = ~46% of top-10 spend → unquantified Molding-stop risk</span></div>
+          <div class="hyp-note"><span data-lang-es>JKG84: 94 plásticos moldeados (61% del BOM). 142 parts Make vs 85 Purchase. Costo de hora-paro nunca calculado.</span><span data-lang-en>JKG84: 94 molded plastics (61% of BOM). 142 Make parts vs 85 Purchase. Stop-hour cost never calculated.</span></div>
+        </td>
+        <td class="c"><span class="hyp-tag tag-saving">$ Sav</span><span class="hyp-tag tag-oee">OEE</span></td>
+        <td class="c"><span class="pill p-structural"><span data-lang-es>Estructural</span><span data-lang-en>Structural</span></span></td>
+        <td class="c" style="font-size:11px"><span data-lang-es>Compras</span><span data-lang-en>Procurement</span> / Lucy</td>
+        <td class="c"><span class="pill p-pending"><span data-lang-es>Pendiente</span><span data-lang-en>Pending</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">05</div>
+  <div class="sec-title"><span data-lang-es>Top hallazgos cuantitativos validados</span><span data-lang-en>Top validated quantitative findings</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">FUENTE · 03 DATA ANALYSIS</div>
+</div>
+
+<div class="find-grid">
+  <div class="find-card">
+    <div class="find-num">39.2<small style="font-size:14px;color:var(--muted)">%</small></div>
+    <div class="find-lbl"><span data-lang-es>Concentración 1 SKU</span><span data-lang-en>1-SKU Concentration</span></div>
+    <div class="find-desc"><span data-lang-es>Tornillo 0013-0107 concentra $3.54M de los $9.02M de RM. 3.19M unidades en stock con Pol=56d.</span><span data-lang-en>Screw 0013-0107 holds $3.54M of the $9.02M RM. 3.19M units in stock under Pol=56d.</span></div>
+    <div class="find-src">Raw Material Analysis · H1</div>
+  </div>
+  <div class="find-card">
+    <div class="find-num">28.8<small style="font-size:14px;color:var(--muted)">%</small></div>
+    <div class="find-lbl"><span data-lang-es>Valor en WIP</span><span data-lang-en>Value in WIP</span></div>
+    <div class="find-desc"><span data-lang-es>$2.60M atrapados en Work-in-Process · benchmark típico &lt;15%. 30 parts con WIP negativo.</span><span data-lang-en>$2.60M stuck in Work-in-Process · typical benchmark &lt;15%. 30 parts with negative WIP.</span></div>
+    <div class="find-src">Raw Material Analysis · H5</div>
+  </div>
+  <div class="find-card amber">
+    <div class="find-num amber">3.6<small style="font-size:14px;color:var(--muted)">×</small></div>
+    <div class="find-lbl"><span data-lang-es>Undercast ExF global</span><span data-lang-en>Global ExF undercast</span></div>
+    <div class="find-desc"><span data-lang-es>Forecast Producción/ExF = 3.60× total · 11.17× en 5CA Mega · 4.02× en 1A5 Barbie. CSCH = Prod (100%).</span><span data-lang-en>Production/ExF ratio = 3.60× total · 11.17× in 5CA Mega · 4.02× in 1A5 Barbie. CSCH = Prod (100%).</span></div>
+    <div class="find-src">Production Analisis · H2</div>
+  </div>
+  <div class="find-card amber">
+    <div class="find-num amber">7.6<small style="font-size:14px;color:var(--muted)">sem</small></div>
+    <div class="find-lbl"><span data-lang-es>Ramp-up promedio a 80% peak</span><span data-lang-en>Avg ramp-up to 80% peak</span></div>
+    <div class="find-desc"><span data-lang-es>Rango 1.0–17.5 sem · 1BC Monster High 17.5 · 3J2 RideOns 16.6 · 3FA Thomas 1.0 (ref).</span><span data-lang-en>Range 1.0–17.5 wks · 1BC Monster High 17.5 · 3J2 RideOns 16.6 · 3FA Thomas 1.0 (ref).</span></div>
+    <div class="find-src">Production Analisis · H3</div>
+  </div>
+  <div class="find-card navy">
+    <div class="find-num navy">46<small style="font-size:14px;color:var(--muted)">%</small></div>
+    <div class="find-lbl"><span data-lang-es>Top 3 resinas · gasto top-10</span><span data-lang-en>Top 3 resins · top-10 spend</span></div>
+    <div class="find-desc"><span data-lang-es>INEOS Olefins $13.8M + POLYTRON $13.0M + BENGON $6.98M = $33.8M. JKG84 = 61% plásticos.</span><span data-lang-en>INEOS Olefins $13.8M + POLYTRON $13.0M + BENGON $6.98M = $33.8M. JKG84 = 61% plastics.</span></div>
+    <div class="find-src">BOM Analysis · H7</div>
+  </div>
+  <div class="find-card">
+    <div class="find-num">33</div>
+    <div class="find-lbl"><span data-lang-es>Partes con Cst STD = $0</span><span data-lang-en>Parts with Cst STD = $0</span></div>
+    <div class="find-desc"><span data-lang-es>7.88M unidades sin valor en SAP · top: 411-A1900 (5.58M u) · 0003-0011 (1.03M u). Distorsionan MRP.</span><span data-lang-en>7.88M units unvalued in SAP · top: 411-A1900 (5.58M u) · 0003-0011 (1.03M u). Distort MRP.</span></div>
+    <div class="find-src">Raw Material · H6</div>
+  </div>
+  <div class="find-card amber">
+    <div class="find-num amber">5<small style="font-size:14px;color:var(--muted)">/20</small></div>
+    <div class="find-lbl"><span data-lang-es>Trailers descargados / día</span><span data-lang-en>Trailers unloaded / day</span></div>
+    <div class="find-desc"><span data-lang-es>Capacidad colapsada en Receiving · 50% de racks ocupados por inventario obsoleto desde 2019.</span><span data-lang-en>Receiving capacity collapsed · 50% of racks occupied by obsolete inventory since 2019.</span></div>
+    <div class="find-src">Entrevistas Fery / Neri · H5</div>
+  </div>
+  <div class="find-card green">
+    <div class="find-num green">$318<small style="font-size:14px;color:var(--muted)">K</small></div>
+    <div class="find-lbl"><span data-lang-es>Baseline RWK confirmado</span><span data-lang-en>Confirmed RWK baseline</span></div>
+    <div class="find-desc"><span data-lang-es>Balance anual presupuesto AM6.0 al cierre Mar 2026. Real Q1 $39K vs forecast $87K (–55%).</span><span data-lang-en>AM6.0 annual budget balance at Mar 2026 close. Q1 actual $39K vs forecast $87K (–55%).</span></div>
+    <div class="find-src">RWK Cost Analysis</div>
+  </div>
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">06</div>
+  <div class="sec-title"><span data-lang-es>Value Tree · Ruta a los $500K</span><span data-lang-en>Value Tree · Path to $500K</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">4 PILARES · 19 PALANCAS</div>
+</div>
+
+<div class="vt-grid">
+
+  <div class="vt-pillar">
+    <div class="vt-head red">
+      <div>
+        <div class="vt-num">PILAR 01</div>
+        <div class="vt-name"><span data-lang-es>Calidad &amp; Retrabajo</span><span data-lang-en>Quality &amp; Rework</span></div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white)">4</div>
+    </div>
+    <div class="vt-body">
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L1 · Reducción costo retrabajo ($318K baseline)</span><span data-lang-en>L1 · Rework cost reduction ($318K baseline)</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L2 · Scrap por tipo de pieza</span><span data-lang-en>L2 · Scrap by part type</span></div><div class="vt-status">❌</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L3 · CoQ Total de Calidad</span><span data-lang-en>L3 · Total Cost of Quality</span></div><div class="vt-status">❌</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L4 · In-Process Control ensamble</span><span data-lang-en>L4 · Assembly In-Process Control</span></div><div class="vt-status">⚠️</div></div>
+    </div>
+  </div>
+
+  <div class="vt-pillar">
+    <div class="vt-head">
+      <div>
+        <div class="vt-num">PILAR 02</div>
+        <div class="vt-name"><span data-lang-es>Inventario &amp; Capital</span><span data-lang-en>Inventory &amp; Capital</span></div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white)">5</div>
+    </div>
+    <div class="vt-body">
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L5 · Costo 3PL CargoKey</span><span data-lang-en>L5 · 3PL CargoKey cost</span></div><div class="vt-status">❌</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L6 · Cobertura RM piezas pequeñas (21d)</span><span data-lang-en>L6 · RM coverage small parts (21d)</span></div><div class="vt-status">✅</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L7 · Cobertura China-sourced (14d)</span><span data-lang-en>L7 · China-sourced coverage (14d)</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L8 · Liquidación cuarentena</span><span data-lang-en>L8 · Quarantine liquidation</span></div><div class="vt-status">✅</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L9 · Reducción low-turnover SKUs</span><span data-lang-en>L9 · Low-turnover SKU reduction</span></div><div class="vt-status">✅</div></div>
+    </div>
+  </div>
+
+  <div class="vt-pillar">
+    <div class="vt-head">
+      <div>
+        <div class="vt-num">PILAR 03</div>
+        <div class="vt-name"><span data-lang-es>Flujo de Material</span><span data-lang-en>Material Flow</span></div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white)">5</div>
+    </div>
+    <div class="vt-body">
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L10 · Rutas logística interna (NVA)</span><span data-lang-en>L10 · Internal logistics routes (NVA)</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L11 · Eliminación pasos NVA del flujo</span><span data-lang-en>L11 · NVA-step elimination from flow</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L12 · Descongestión staging (62% sobrecarga)</span><span data-lang-en>L12 · Staging decongestion (62% overload)</span></div><div class="vt-status">✅</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L13 · Utilización de espacio (+30%)</span><span data-lang-en>L13 · Space utilization (+30%)</span></div><div class="vt-status">✅</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L14 · Reducción equipos logística (84 eq)</span><span data-lang-en>L14 · Logistics fleet reduction (84 eq)</span></div><div class="vt-status">✅</div></div>
+    </div>
+  </div>
+
+  <div class="vt-pillar">
+    <div class="vt-head">
+      <div>
+        <div class="vt-num">PILAR 04</div>
+        <div class="vt-name"><span data-lang-es>Planeación &amp; Setup</span><span data-lang-en>Planning &amp; Setup</span></div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--white)">5</div>
+    </div>
+    <div class="vt-body">
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L15 · Reducción changeover (3–4d objetivo)</span><span data-lang-en>L15 · Changeover reduction (3–4d target)</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L16 · EPEI · safety stock por variabilidad</span><span data-lang-en>L16 · EPEI · safety stock by variability</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L17 · Supply Match 94% → 95%</span><span data-lang-en>L17 · Supply Match 94% → 95%</span></div><div class="vt-status">✅</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L18 · OTIF comercial 92.9% → target</span><span data-lang-en>L18 · Commercial OTIF 92.9% → target</span></div><div class="vt-status">⚠️</div></div>
+      <div class="vt-lever"><div class="vt-lever-name"><span data-lang-es>L19 · Optimización subcontratistas (3 activos)</span><span data-lang-en>L19 · Subcontractor optimization (3 active)</span></div><div class="vt-status">❌</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div style="display:flex;gap:20px;margin-top:12px;padding:12px 16px;background:var(--white);border:1px solid var(--border);align-items:center;font-size:11px;color:var(--muted);font-weight:600;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">✅</span><span data-lang-es>Data validada</span><span data-lang-en>Validated data</span></div>
+  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">⚠️</span><span data-lang-es>Data parcial</span><span data-lang-en>Partial data</span></div>
+  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">❌</span><span data-lang-es>A validar en planta</span><span data-lang-en>To validate on-site</span></div>
+  <div style="margin-left:auto;color:var(--red);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:10px">
+    <span data-lang-es>Todas las cifras de ahorro son "dato a validar"</span><span data-lang-en>All savings figures are "data to be validated"</span>
+  </div>
+</div>
+
+<div class="sec-bar">
+  <div class="sec-tag">07</div>
+  <div class="sec-title"><span data-lang-es>Business cases publicados al Día 1</span><span data-lang-en>Business cases published at Day 1</span></div>
+  <div class="sec-line"></div>
+  <div class="sec-meta">04 DELIVERABLES</div>
+</div>
+
+<div class="find-grid">
+  <div class="find-card navy">
+    <div class="find-lbl" style="color:var(--navy);font-size:10.5px">BC · BOM</div>
+    <div class="find-desc" style="margin-top:6px">
+      <span data-lang-es><strong>kimx-mattel-bom-business-case</strong> · Hallazgos BOM JKG84/JHG61: complejidad, phantom BOMs, costos $0, comunalidad de componentes.</span>
+      <span data-lang-en><strong>kimx-mattel-bom-business-case</strong> · BOM findings JKG84/JHG61: complexity, phantom BOMs, $0 costs, component commonality.</span>
+    </div>
+    <div class="find-src">04 Deliverables · HTML + MD</div>
+  </div>
+  <div class="find-card navy">
+    <div class="find-lbl" style="color:var(--navy);font-size:10.5px">BC · Quality</div>
+    <div class="find-desc" style="margin-top:6px">
+      <span data-lang-es><strong>kimx-mattel-quality-boardgame</strong> · Análisis del baseline de calidad (PPMS, % aceptabilidad, retrabajo Q1).</span>
+      <span data-lang-en><strong>kimx-mattel-quality-boardgame</strong> · Quality baseline analysis (PPMS, acceptability %, Q1 rework).</span>
+    </div>
+    <div class="find-src">04 Deliverables · HTML + MD</div>
+  </div>
+  <div class="find-card navy">
+    <div class="find-lbl" style="color:var(--navy);font-size:10.5px">BC · Supply</div>
+    <div class="find-desc" style="margin-top:6px">
+      <span data-lang-es><strong>kimx-mattel-supply-team-boardgame</strong> · Concentración de gasto, top proveedores, riesgo single-source en resinas.</span>
+      <span data-lang-en><strong>kimx-mattel-supply-team-boardgame</strong> · Spend concentration, top suppliers, single-source resin risk.</span>
+    </div>
+    <div class="find-src">04 Deliverables · HTML + MD</div>
+  </div>
+  <div class="find-card">
+    <div class="find-lbl" style="color:var(--red);font-size:10.5px">VT · Value Tree</div>
+    <div class="find-desc" style="margin-top:6px">
+      <span data-lang-es><strong>value_tree_mattel_montoi</strong> · 4 pilares × 19 palancas hacia el target $500K · todas con monto "dato a validar".</span>
+      <span data-lang-en><strong>value_tree_mattel_montoi</strong> · 4 pillars × 19 levers toward $500K target · all amounts "data to be validated".</span>
+    </div>
+    <div class="find-src">04 Deliverables · HTML + MD</div>
+  </div>
+</div>
+
+<div class="disc" style="margin-top:18px">
+  <strong><span data-lang-es>Próximos hitos (Día 1 → Día 5):</span><span data-lang-en>Next milestones (Day 1 → Day 5):</span></strong>
+  <span data-lang-es> (1) Día 1 — sesión IT/Finanzas para H6 + spot-check físico H1 + auditoría Line Rate 5CA Mega H4a. (2) Día 2 — mapeo Receiving + racks + obsoletos (H5) y levantamiento sourcing (H7). (3) Día 3 — training Pull Planning + mapeo S&amp;OP (H2) + corrección master OEE (H4). (4) Día 4 — diseño futuro estado, H3 NPI Readiness Gate, matriz FMS×ABC. (5) Día 5 — síntesis y business case consolidado con magnitudes post-validación.</span>
+  <span data-lang-en> (1) Day 1 — IT/Finance session for H6 + physical spot-check H1 + audit Line Rate 5CA Mega H4a. (2) Day 2 — Receiving + racks + obsolete mapping (H5) and sourcing assessment (H7). (3) Day 3 — Pull Planning training + S&amp;OP mapping (H2) + master-data OEE correction (H4). (4) Day 4 — future-state design, H3 NPI Readiness Gate, FMS×ABC matrix. (5) Day 5 — synthesis and consolidated business case with post-validation magnitudes.</span>
+</div>
+
+</div><!-- /inner -->
+
+<div class="foot">
+  Kaizen Institute México &middot; All Rights Reserved &middot; Confidencial
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+function setLang(lang, btn){
+  document.body.classList.remove('lang-es','lang-en');
+  document.body.classList.add('lang-'+lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.documentElement.lang = lang;
+}
+
+const salesData = [
+  {m:'ENE', en:'JAN', v:7730},
+  {m:'FEB', en:'FEB', v:8714},
+  {m:'MAR', en:'MAR', v:10500},
+  {m:'ABR', en:'APR', v:12005},
+  {m:'MAY', en:'MAY', v:14466},
+  {m:'JUN', en:'JUN', v:14295},
+  {m:'JUL', en:'JUL', v:14974},
+  {m:'AGO', en:'AUG', v:15000},
+  {m:'SEP', en:'SEP', v:14459},
+  {m:'OCT', en:'OCT', v:13856},
+  {m:'NOV', en:'NOV', v:11326},
+  {m:'DIC', en:'DEC', v:3405}
+];
+const maxS = Math.max(...salesData.map(d=>d.v));
+const sb = document.getElementById('sales-bars');
+salesData.forEach(d=>{
+  const h = (d.v/maxS*100).toFixed(1);
+  const isPeak = d.v >= 14000;
+  sb.innerHTML += '<div class="bar-col">'
+    + '<div class="bar-val">'+(d.v/1000).toFixed(0)+'k</div>'
+    + '<div class="bar-fill '+(isPeak?'peak':'')+'" style="height:'+h+'%"></div>'
+    + '<div class="bar-mon"><span data-lang-es>'+d.m+'</span><span data-lang-en>'+d.en+'</span></div>'
+    + '</div>';
+});
+
+const demand = [
+  {n:'1A5 Barbie',          v:46.47, c:'#D63429'},
+  {n:'3C6 Little People',   v:31.74, c:'#162240'},
+  {n:'3C1 Infant',          v:22.85, c:'#1E40AF'},
+  {n:'5CA Mega',            v:14.48, c:'#2E7D32'},
+  {n:'1BC Monster High',    v:1.58,  c:'#8A8070'},
+  {n:'3J2 RideOns',         v:1.18,  c:'#8A8070'},
+  {n:'1CP Disney Princ.',   v:0.86,  c:'#8A8070'},
+  {n:'ICM Disney Garland',  v:0.39,  c:'#8A8070'},
+  {n:'3FA Thomas',          v:0.14,  c:'#8A8070'}
+];
+const maxD = Math.max(...demand.map(d=>d.v));
+const db = document.getElementById('demand-bars');
+demand.forEach(d=>{
+  const w = (d.v/maxD*100).toFixed(1);
+  db.innerHTML += '<div class="demand-row">'
+    + '<div class="demand-name">'+d.n+'</div>'
+    + '<div class="demand-track"><div class="demand-fill" style="width:'+w+'%;background:'+d.c+'"></div></div>'
+    + '<div class="demand-pct">'+d.v.toFixed(1)+'</div>'
+    + '</div>';
+});
+
+const depts = [
+  {n:'Assembly Production', dl:1698, il:12,  adm:9},
+  {n:'Molding Production',  dl:477,  il:4,   adm:10},
+  {n:'Materials',           dl:73,   il:103, adm:6},
+  {n:'Resin & Pigment',     dl:131,  il:2,   adm:3},
+  {n:'Process',             dl:16,   il:77,  adm:12},
+  {n:'Receiving',           dl:2,    il:63,  adm:4},
+  {n:'Tool Room',           dl:0,    il:36,  adm:5},
+  {n:'Line Tooling',        dl:0,    il:31,  adm:2}
+];
+const maxFTE = Math.max(...depts.map(d=>d.dl+d.il+d.adm));
+const ob = document.getElementById('org-bars');
+depts.forEach(d=>{
+  const tot = d.dl+d.il+d.adm;
+  const dlW = (d.dl/maxFTE*100).toFixed(1);
+  const ilW = (d.il/maxFTE*100).toFixed(1);
+  const adW = (d.adm/maxFTE*100).toFixed(1);
+  ob.innerHTML += '<div class="org-row">'
+    + '<div class="org-name">'+d.n+'</div>'
+    + '<div class="org-track">'
+    +   '<div class="org-fill dl" style="width:'+dlW+'%;left:0"></div>'
+    +   '<div class="org-fill il" style="width:'+ilW+'%;left:'+dlW+'%"></div>'
+    +   '<div class="org-fill adm" style="width:'+adW+'%;left:'+(parseFloat(dlW)+parseFloat(ilW)).toFixed(1)+'%"></div>'
+    + '</div>'
+    + '<div class="org-num">'+tot+'</div>'
+    + '</div>';
+});
+
+const sup25 = [
+  ['INEOS OLEFINS & POLYMERS',    13786246],
+  ['POLYTRON INDUSTRIAL CO.',     13003618],
+  ['EMPRESAS BENGON SA DE CV',     6977844],
+  ['AMERICAS STYRENICS LLC.',      6976120],
+  ['INEOS STYROLUTION MEXICA',     6949461],
+  ['EQUISTAR CHEMICALS LP',        6873614],
+  ['SMURFIT CARTON Y PAPEL',       6070141],
+  ['FOSHAN CITY NANHAI MATTE',     5374910],
+  ['INEOS STYROLUTION KOREA',      4514576],
+  ['RIVERDALE GLOBAL, LLC.',       2832256]
+];
+const sl = document.getElementById('sup-list');
+sup25.forEach((s,i)=>{
+  sl.innerHTML += '<div class="sup-row">'
+    + '<div class="sup-rank">'+(i+1)+'</div>'
+    + '<div class="sup-name">'+s[0]+'</div>'
+    + '<div class="sup-spend">$'+(s[1]/1e6).toFixed(2)+'M</div>'
+    + '</div>';
+});
+</script>
+</body>
+</html>
