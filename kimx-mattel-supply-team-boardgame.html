@@ -1,546 +1,1003 @@
 <!DOCTYPE html>
-<html lang="es" data-lang="es">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supply Chain Team — Board Game | VSA Mattel Montoi</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>KIMX × Mattel Montoi — VSA Supply Team Boardgame</title>
 <style>
-:root{
-  --navy:#162240;--navy2:#1E2F54;--red:#D63429;--red-lt:#FCEAE9;--red-dk:#8C1A14;
-  --cream:#F0EBE1;--warm:#E5DDCF;--white:#FFFFFF;--muted:#8A8070;--border:#D0C8BC;
-  --green:#2E7D32;--green-lt:#E8F5E9;--green-dk:#1B4D1E;
-  --amber:#B45309;--amber-lt:#FEF3C7;--amber-dk:#78350F;
-  --blue:#1E40AF;--blue-lt:#DBEAFE;--blue-dk:#1E3A8A;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);font-size:14px;line-height:1.4;}
-.header{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.header-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
-.header-title{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;text-transform:uppercase;color:var(--white);letter-spacing:1px;line-height:1;}
-.header-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:5px;}
-.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.header-badge{background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:3px;white-space:nowrap;}
-.lang-toggle{display:flex;background:rgba(255,255,255,.08);border-radius:4px;padding:3px;gap:2px}
-.lang-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.6);padding:7px 14px;cursor:pointer;border:none;background:transparent;border-radius:3px;transition:all .2s}
-.lang-btn.active{background:var(--red);color:#fff}
-.lang-btn:hover:not(.active){color:#fff}
-[data-en],[data-es]{display:none}
-[data-lang="es"] [data-es]{display:initial}
-[data-lang="en"] [data-en]{display:initial}
-.mission-section{background:var(--navy2);padding:18px 32px;display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;}
-.mission-intro{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding-right:8px;}
-.mission-intro-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
-.mission-intro-sub{font-size:9px;color:rgba(255,255,255,0.35);margin-top:5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-.mission-card{flex:1;min-width:220px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--red);border-radius:4px;padding:12px 16px;}
-.mission-card .ask-to{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:5px;}
-.mission-card .q-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-.mission-card .question{font-size:11.5px;color:rgba(255,255,255,0.78);font-style:italic;line-height:1.45;}
-.main{padding:24px 32px 8px;}
-.zone-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:22px;}
-.zone-pip{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.zone-name{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted);}
-.zone-line{flex:1;height:1px;background:var(--border);}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px;}
-.player-card{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow 0.18s,transform 0.18s;}
-.player-card:hover{box-shadow:0 5px 22px rgba(22,34,64,0.14);transform:translateY(-2px);}
-.player-card.leader{border-width:2px;}
-.card-stripe{height:5px;}
-.card-body{padding:12px 14px 10px;}
-.card-header-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
-.card-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;line-height:1.1;color:var(--navy);}
-.role-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0;margin-left:8px;margin-top:3px;}
-.card-title{font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:500;}
-.section-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:3px;}
-.owns-text{font-size:11.5px;color:var(--navy);line-height:1.4;margin-bottom:10px;}
-.question-box{background:var(--cream);border-radius:4px;padding:8px 10px;margin-bottom:10px;}
-.question-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:3px;}
-.question-text{font-size:11px;color:var(--navy);font-style:italic;line-height:1.4;}
-.card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--warm);padding-top:8px;}
-.day-badges{display:flex;gap:4px;flex-wrap:wrap;}
-.day-badge{font-size:8.5px;font-weight:700;letter-spacing:0.5px;padding:2px 7px;border-radius:2px;background:var(--warm);color:var(--navy);text-transform:uppercase;}
-.day-badge.key{background:var(--navy);color:white;}
-.day-badge.all{background:var(--red);color:white;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-/* Zone: Command */
-.z-cmd .card-stripe{background:var(--navy);} .z-cmd.leader{border-color:var(--navy);}
-.z-cmd .role-badge{background:var(--navy);color:white;} .z-cmd .dot{background:var(--navy);}
-.pip-cmd{background:var(--navy);}
-/* Zone: NPI */
-.z-npi .card-stripe{background:var(--amber);} .z-npi.leader{border-color:var(--amber);}
-.z-npi .role-badge{background:var(--amber-lt);color:var(--amber-dk);} .z-npi .dot{background:var(--amber);}
-.z-npi .question-box{background:var(--amber-lt);} .pip-npi{background:var(--amber);}
-/* Zone: Logistics */
-.z-log .card-stripe{background:var(--blue);}
-.z-log .role-badge{background:var(--blue-lt);color:var(--blue-dk);} .z-log .dot{background:var(--blue);}
-.pip-log{background:var(--blue);}
-/* Zone: Shipping */
-.z-shp .card-stripe{background:var(--green);}
-.z-shp .role-badge{background:var(--green-lt);color:var(--green-dk);} .z-shp .dot{background:var(--green);}
-.pip-shp{background:var(--green);}
-/* Zone: Procurement */
-.z-prc .card-stripe{background:#059669;}
-.z-prc .role-badge{background:#D1FAE5;color:#064E3B;} .z-prc .dot{background:#059669;}
-.pip-prc{background:#059669;}
-/* Timeline */
-.timeline-wrap{padding:0 32px;}
-.timeline-section{background:var(--navy);border-radius:8px;padding:18px 22px;margin-top:28px;}
-.timeline-header{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
-.timeline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.tday{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:5px;padding:11px 13px;}
-.tday-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:2px;}
-.tday-date{font-size:9.5px;color:rgba(255,255,255,0.4);margin-bottom:8px;}
-.tday-focus{font-size:11px;color:white;font-weight:600;margin-bottom:8px;line-height:1.3;}
-.tday-pills{display:flex;flex-direction:column;gap:3px;}
-.tpill{font-size:9px;color:rgba(255,255,255,0.65);padding:3px 8px;background:rgba(255,255,255,0.07);border-radius:3px;}
-.tpill.hot{color:white;background:var(--red);}
-.footer{padding:14px 22px;border-top:1px solid var(--border);background:var(--cream);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;text-align:center;margin-top:28px;}
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #07152A;
+    font-family: 'Barlow Condensed', sans-serif;
+    color: #E2E8F0;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hdr {
+    background: linear-gradient(135deg, #07152A 0%, #0D2348 100%);
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .hdr-title {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .hdr-title span { color: #F59E0B; }
+  .hdr-sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: #94A3B8;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .hdr-badge {
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    color: #F59E0B;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* FIELD WRAPPER */
+  .field-wrap {
+    padding: 24px 32px;
+    overflow-x: auto;
+  }
+
+  svg#field {
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.5));
+  }
+
+  /* TOKEN hover */
+  .tok { cursor: pointer; transition: all 0.2s; }
+  .tok:hover circle { filter: brightness(1.3); }
+  .tok:hover .tok-ring { r: 31; }
+  .tok-label { pointer-events: none; }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    padding: 12px 32px 8px;
+    flex-wrap: wrap;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #94A3B8;
+  }
+  .leg-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+
+  /* DICE PANEL */
+  .dice-panel {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dice-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #64748B;
+  }
+  .dice-btn {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #1E3A5F, #0D2348);
+    border: 2px solid rgba(245,158,11,0.5);
+    border-radius: 16px;
+    font-size: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    user-select: none;
+  }
+  .dice-btn:hover {
+    border-color: #F59E0B;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(245,158,11,0.3);
+  }
+  .dice-btn.spinning {
+    animation: spin-dice 0.6s ease-out;
+  }
+  @keyframes spin-dice {
+    0%   { transform: rotate(0deg) scale(1); }
+    25%  { transform: rotate(180deg) scale(1.2); }
+    75%  { transform: rotate(540deg) scale(0.9); }
+    100% { transform: rotate(720deg) scale(1); }
+  }
+  .roll-btn {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: #07152A;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(245,158,11,0.3);
+  }
+  .roll-btn:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(245,158,11,0.5); }
+
+  /* MODAL OVERLAY */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(7,21,42,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .card {
+    background: #0D2348;
+    border-radius: 16px;
+    width: 480px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: card-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes card-in {
+    from { transform: scale(0.85) translateY(20px); opacity: 0; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .card-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .card-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  .card-name {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .card-role {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-top: 4px;
+  }
+  .card-time {
+    font-size: 12px;
+    color: #64748B;
+    margin-top: 6px;
+    font-family: 'Barlow', sans-serif;
+  }
+  .card-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #94A3B8;
+    transition: all 0.2s;
+  }
+  .card-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .card-body { padding: 24px 28px; }
+
+  .play-box {
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-left: 3px solid;
+  }
+  .play-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #64748B;
+    margin-bottom: 8px;
+  }
+  .play-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #CBD5E1;
+  }
+
+  .io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .io-box {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .io-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .io-item {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: #94A3B8;
+    padding: 4px 0 4px 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .io-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #475569;
+    font-size: 10px;
+  }
+
+  /* CHALLENGE CARD */
+  .challenge-card {
+    display: none;
+    position: fixed;
+    bottom: 120px;
+    right: 28px;
+    width: 280px;
+    background: #0D2348;
+    border-radius: 12px;
+    border: 2px solid;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    z-index: 300;
+    animation: card-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .challenge-card.show { display: block; }
+  .ch-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ch-title {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .ch-body { padding: 14px 16px; }
+  .ch-scenario {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    color: #CBD5E1;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .ch-action {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+  }
+  .ch-close {
+    font-size: 10px;
+    text-align: center;
+    padding: 8px;
+    color: #475569;
+    cursor: pointer;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    transition: color 0.2s;
+  }
+  .ch-close:hover { color: #94A3B8; }
+
+  /* INSTRUCTIONS BAR */
+  .instructions {
+    text-align: center;
+    padding: 10px 32px 4px;
+    font-size: 12px;
+    color: #475569;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
 </style>
 </head>
 <body>
 
-<div class="header">
+<!-- HEADER -->
+<div class="hdr">
   <div>
-    <div class="header-label">VSA Mattel Montoi · <span data-es>11–15 Mayo 2026</span><span data-en>May 11–15, 2026</span></div>
-    <div class="header-title">Supply Chain Team — Board Game</div>
-    <div class="header-sub">
-      <span data-es>Plan de juego · 11 participantes · $500K USD en oportunidades de ahorro</span>
-      <span data-en>Game plan · 11 participants · $500K USD in savings opportunities</span>
-    </div>
+    <div class="hdr-title">VSA <span>SUPPLY TEAM</span> BOARDGAME</div>
+    <div class="hdr-sub">KIMX × Mattel Montoi &nbsp;·&nbsp; Martes 12 Mayo 2026 &nbsp;·&nbsp; Supply Chain Stream</div>
   </div>
-  <div class="header-right">
-    <div class="header-badge"><span data-es>JC Torres · Facilitador Principal</span><span data-en>JC Torres · Lead Facilitator</span></div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('es')">ES</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
+  <div class="hdr-badge">🏈 GAME DAY 2</div>
 </div>
 
-<div class="mission-section">
-  <div class="mission-intro">
-    <div class="mission-intro-label">
-      <span data-es>3 Preguntas<br>que abren todo</span>
-      <span data-en>3 Questions<br>that open everything</span>
-    </div>
-    <div class="mission-intro-sub"><span data-es>Hacer el Lunes</span><span data-en>Ask on Monday</span></div>
-  </div>
-  <div class="mission-card">
-    <div class="ask-to">→ Elizabeth Neri</div>
-    <div class="q-name"><span data-es>Desviaciones del Schedule</span><span data-en>Schedule Deviations</span></div>
-    <div class="question">
-      <span data-es>"¿Con qué frecuencia se generan desviaciones al schedule congelado y cuántos días de anticipación tiene el aviso típicamente?"</span>
-      <span data-en>"How frequently do deviations from the frozen schedule happen and how many days of advance notice do they typically come with?"</span>
-    </div>
-  </div>
-  <div class="mission-card">
-    <div class="ask-to">→ Dionicio Zuniga</div>
-    <div class="q-name"><span data-es>NPIs Activos</span><span data-en>Active NPIs</span></div>
-    <div class="question">
-      <span data-es>"¿Cuántos NPIs activos tienes corriendo simultáneamente hoy y cuál es el % que llega a producción fuera del readiness estándar?"</span>
-      <span data-en>"How many active NPIs are you running simultaneously today and what % reach production outside standard readiness?"</span>
-    </div>
-  </div>
-  <div class="mission-card">
-    <div class="ask-to">→ Marcela Tovar</div>
-    <div class="q-name"><span data-es>Inventario en Hold</span><span data-en>Inventory on Hold</span></div>
-    <div class="question">
-      <span data-es>"¿Cuántos m² estimas que está ocupando el inventario en hold esperando autorización de disposición corporativa?"</span>
-      <span data-en>"How many m² do you estimate the on-hold inventory is occupying while waiting for corporate disposition authorization?"</span>
-    </div>
-  </div>
+<!-- INSTRUCTIONS -->
+<div class="instructions">Toca cualquier jugador para ver su jugada · Tira el dado para un challenge</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#F59E0B;border-color:#F59E0B;"></div> WS1 · NPI &amp; SIPOC</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#60A5FA;border-color:#60A5FA;"></div> WS2 · Demand Planning</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#34D399;border-color:#34D399;"></div> WS3 · Logistics Flow</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#F87171;border-color:#F87171;"></div> WS4 · Inventory &amp; WIP</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#A78BFA;border-color:#A78BFA;"></div> FLOAT · Support</div>
 </div>
 
-<div class="main">
+<!-- SVG FIELD -->
+<div class="field-wrap">
+<svg id="field" viewBox="0 0 1200 660" width="1200" height="660" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Chalk texture filter -->
+    <filter id="chalk" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="glow-amber">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-blue">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Lane gradient overlays -->
+    <linearGradient id="grad-field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B2545"/>
+      <stop offset="100%" stop-color="#07152A"/>
+    </linearGradient>
+  </defs>
 
-  <div class="zone-header">
-    <div class="zone-pip pip-cmd"></div>
-    <div class="zone-name"><span data-es>Comando & Soporte</span><span data-en>Command & Support</span></div>
-    <div class="zone-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="player-card z-cmd leader">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Carlos Gutierrez</div><div class="role-badge">Leader</div></div>
-        <div class="card-title">Manager Industrial Engineering</div>
-        <div class="section-label"><span data-es>Qué aporta</span><span data-en>What he brings</span></div>
-        <div class="owns-text">
-          <span data-es>Validación de hipótesis y firma de números del future state. Ve el sistema completo. Desbloquea tensiones entre áreas.</span>
-          <span data-en>Hypothesis validation and sign-off of future-state numbers. Sees the full system. Unblocks tensions between areas.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Cómo usarlo</span><span data-en>How to use him</span></div>
-          <div class="question-text">
-            <span data-es>No atascarle en detalles. Usarlo para alinear decisiones y validar cada número antes de que entre al business case.</span>
-            <span data-en>Don't bog him down in details. Use him to align decisions and validate every number before it enters the business case.</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge all"><span data-es>Todos los días</span><span data-en>All days</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-cmd">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Zuleiby Juarez</div><div class="role-badge"><span data-es>Co-facilitadora</span><span data-en>Co-facilitator</span></div></div>
-        <div class="card-title">Lean Engineer</div>
-        <div class="section-label"><span data-es>Qué aporta</span><span data-en>What she brings</span></div>
-        <div class="owns-text">
-          <span data-es>Apoyo técnico Lean dentro del equipo Mattel. Conoce el lenguaje, puede co-facilitar el mapeo y mantener el pace del grupo.</span>
-          <span data-en>Lean technical support inside the Mattel team. Knows the language, can co-facilitate the mapping and keep the group's pace.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Cómo usarla</span><span data-en>How to use her</span></div>
-          <div class="question-text">
-            <span data-es>Tratarla como extensión del equipo KIMX. Delegar captura de datos y facilitación de sub-grupos.</span>
-            <span data-en>Treat her as an extension of the KIMX team. Delegate data capture and sub-group facilitation.</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge all"><span data-es>Todos los días</span><span data-en>All days</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- FIELD BACKGROUND -->
+  <rect x="0" y="0" width="1200" height="660" fill="url(#grad-field)" rx="8"/>
 
-  <div class="zone-header">
-    <div class="zone-pip pip-npi"></div>
-    <div class="zone-name"><span data-es>NPI — Causa Raíz</span><span data-en>NPI — Root Cause</span></div>
-    <div class="zone-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="player-card z-npi leader">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Dionicio Zuniga</div><div class="role-badge"><span data-es>⚑ Causa Raíz</span><span data-en>⚑ Root Cause</span></div></div>
-        <div class="card-title">Manager NPI</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Días promedio de retraso entre frozen schedule y ejecución real. NPIs activos simultáneos. % que llega fuera de readiness estándar.</span>
-          <span data-en>Average days of lag between frozen schedule and actual execution. Concurrent active NPIs. % arriving outside standard readiness.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuántos NPIs activos tienes corriendo simultáneamente y cuál es el % que llega a producción fuera de readiness?"</span>
-            <span data-en>"How many active NPIs are running simultaneously and what % reach production outside readiness?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: deep dive</span><span data-en>Thu: deep dive</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-npi">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Elizabeth Neri</div><div class="role-badge"><span data-es>Datos Duros</span><span data-en>Hard Data</span></div></div>
-        <div class="card-title">Master Planner</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Tasas de violación del periodo congelado. Frecuencia de cambios NPI. Variabilidad de demanda. Inventory excess y expediting costs.</span>
-          <span data-en>Frozen-period violation rates. NPI change frequency. Demand variability. Inventory excess and expediting costs.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Con qué frecuencia se generan desviaciones al schedule congelado y cuántos días de anticipación tiene el aviso?"</span>
-            <span data-en>"How frequently do deviations from the frozen schedule occur and how many days of advance notice do they get?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- CHALK YARD LINES (time columns) -->
+  <!-- Labels: 9:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00 -->
+  <!-- x positions: 90, 230, 370, 510, 650, 790, 930, 1070, 1150 -->
+  <line x1="90" y1="50" x2="90" y2="640" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="230" y1="50" x2="230" y2="640" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="370" y1="50" x2="370" y2="640" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="510" y1="50" x2="510" y2="640" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="650" y1="50" x2="650" y2="640" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="790" y1="50" x2="790" y2="640" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="930" y1="50" x2="930" y2="640" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="1070" y1="50" x2="1070" y2="640" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
+  <line x1="1150" y1="50" x2="1150" y2="640" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,6"/>
 
-  <div class="zone-header">
-    <div class="zone-pip pip-log"></div>
-    <div class="zone-name"><span data-es>Logística & Almacén</span><span data-en>Logistics & Warehouse</span></div>
-    <div class="zone-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="player-card z-log">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Jorge Pineda</div><div class="role-badge"><span data-es>Flujo Materiales</span><span data-en>Material Flow</span></div></div>
-        <div class="card-title">Manager Logistics</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Distancias recorridas, frecuencia de reabastecimiento, interacción montacargas/peatones. Spaghetti diagram del flujo actual.</span>
-          <span data-en>Distances traveled, replenishment frequency, forklift/pedestrian interaction. Spaghetti diagram of current flow.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Cómo usarlo</span><span data-en>How to use him</span></div>
-          <div class="question-text">
-            <span data-es>Par directo en shopfloor el martes. Ir con él para medir el spaghetti diagram del flujo de materiales.</span>
-            <span data-en>Direct partner on the shopfloor on Tuesday. Go with him to measure the material-flow spaghetti diagram.</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-log">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Marcela Tovar</div><div class="role-badge"><span data-es>Espacio</span><span data-en>Space</span></div></div>
-        <div class="card-title">Manager Warehouse</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>m² de inventario en hold, congestión de almacén, waste de movimiento. Ya tiene la solución en mente: layout + tugger train.</span>
-          <span data-en>m² of on-hold inventory, warehouse congestion, motion waste. Already has the solution in mind: layout + tugger train.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta de apertura</span><span data-en>Opening question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuántos m² estimas que ocupa el inventario en hold esperando autorización de disposición?"</span>
-            <span data-en>"How many m² do you estimate the on-hold inventory occupies while awaiting disposition authorization?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: diseño futuro</span><span data-en>Thu: future design</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-log">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Nereyda Ruiz</div><div class="role-badge"><span data-es>Recepción</span><span data-en>Receiving</span></div></div>
-        <div class="card-title">Assoc Manager Receiving Operations</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Tiempos de recepción, procesos de inspección, recepciones de emergencia fuera de ciclo generadas por NPI.</span>
-          <span data-en>Receiving times, inspection processes, off-cycle emergency receipts generated by NPIs.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Con qué frecuencia llegan recepciones no programadas por cambios de NPI o urgencias de producción?"</span>
-            <span data-en>"How often do unscheduled receipts arrive due to NPI changes or production urgencies?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge key"><span data-es>Mar: shopfloor</span><span data-en>Tue: shopfloor</span></div><div class="day-badge"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-log">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Gerardo Matias</div><div class="role-badge"><span data-es>Línea</span><span data-en>Line</span></div></div>
-        <div class="card-title">Assembly Supervisor</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Tiempo de paro de línea por falta de material, distancias de caminata de operadores. Dato central para BC de supermercados.</span>
-          <span data-en>Line downtime due to material shortage, operator walking distances. Central data point for the supermarket business case.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuántas veces al turno paran las líneas esperando material y cuánto tiempo dura esa espera en promedio?"</span>
-            <span data-en>"How many times per shift do lines stop waiting for material and how long does that wait last on average?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge"><span data-es>Mié: training</span><span data-en>Wed: training</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- HOUR LABELS (top axis) -->
+  <text x="90" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">9:00</text>
+  <text x="230" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">10:00</text>
+  <text x="370" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">11:00</text>
+  <text x="510" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">12:00</text>
+  <text x="650" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">13:00</text>
+  <text x="790" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">14:00</text>
+  <text x="930" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">15:00</text>
+  <text x="1070" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">16:00</text>
+  <text x="1150" y="36" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="rgba(255,255,255,0.35)" font-weight="700">17:00</text>
 
-  <div class="zone-header">
-    <div class="zone-pip pip-shp"></div>
-    <div class="zone-name"><span data-es>Shipping & Calidad</span><span data-en>Shipping & Quality</span></div>
-    <div class="zone-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="player-card z-shp">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Raul Morales</div><div class="role-badge">Shipping</div></div>
-        <div class="card-title">Sr Shipping Supervisor</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Contenedores descargados y recargados, órdenes en hold, discrepancias de cantidad. Absorbe inestabilidad upstream — cada evento tiene costo real.</span>
-          <span data-en>Containers unloaded and reloaded, orders on hold, quantity discrepancies. Absorbs upstream instability — every event has a real cost.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuántos eventos de descarga/recarga de contenedor tuviste en el último trimestre y cuánto tiempo toma cada uno?"</span>
-            <span data-en>"How many container unload/reload events did you have last quarter and how long does each one take?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-    <div class="player-card z-shp">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Cesar Ibarra</div><div class="role-badge"><span data-es>Calidad</span><span data-en>Quality</span></div></div>
-        <div class="card-title">Assoc Manager Quality</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Quality holds en contenedores y su impacto en shipping. Con Raul tiene el costo completo del problema de liberación de embarques.</span>
-          <span data-en>Quality holds on containers and their impact on shipping. Together with Raul holds the full cost of the shipment-release problem.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuántos holds de calidad en embarques registraron en los últimos 3 meses y cuál fue el costo promedio por evento?"</span>
-            <span data-en>"How many quality holds on shipments were recorded in the last 3 months and what was the average cost per event?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Mar: observar</span><span data-en>Tue: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- LANE BACKGROUNDS -->
+  <!-- WS1 Amber: y 60-180 -->
+  <rect x="60" y="60" width="1120" height="120" fill="rgba(245,158,11,0.04)" rx="4"/>
+  <!-- WS2 Blue: y 185-305 -->
+  <rect x="60" y="185" width="1120" height="120" fill="rgba(96,165,250,0.04)" rx="4"/>
+  <!-- WS3 Green: y 310-430 -->
+  <rect x="60" y="310" width="1120" height="120" fill="rgba(52,211,153,0.04)" rx="4"/>
+  <!-- WS4 Red: y 435-545 -->
+  <rect x="60" y="435" width="1120" height="110" fill="rgba(248,113,113,0.04)" rx="4"/>
+  <!-- Float Purple: y 550-630 -->
+  <rect x="60" y="550" width="1120" height="80" fill="rgba(167,139,250,0.04)" rx="4"/>
 
-  <div class="zone-header">
-    <div class="zone-pip pip-prc"></div>
-    <div class="zone-name"><span data-es>Procurement & Gobernanza de Inventario</span><span data-en>Procurement & Inventory Governance</span></div>
-    <div class="zone-line"></div>
-  </div>
-  <div class="cards-grid" style="max-width:510px;">
-    <div class="player-card z-prc">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-header-row"><div class="card-name">Liliana Martinez</div><div class="role-badge"><span data-es>Gobernanza</span><span data-en>Governance</span></div></div>
-        <div class="card-title">Manager Procurement</div>
-        <div class="section-label"><span data-es>Dato clave a extraer</span><span data-en>Key data to extract</span></div>
-        <div class="owns-text">
-          <span data-es>Valor en $ del inventario obsoleto en hold esperando autorización corporativa. Órdenes de compra canceladas o urgentes por NPI.</span>
-          <span data-en>$ value of obsolete inventory on hold awaiting corporate authorization. POs cancelled or expedited due to NPIs.</span>
-        </div>
-        <div class="question-box">
-          <div class="question-label"><span data-es>Pregunta clave</span><span data-en>Key question</span></div>
-          <div class="question-text">
-            <span data-es>"¿Cuánto inventory en valor dollar está en hold esperando disposición y hace cuánto tiempo está retenido en promedio?"</span>
-            <span data-en>"How much inventory in dollar value is on hold awaiting disposition and how long has it been held on average?"</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="day-badges"><div class="day-badge"><span data-es>Lun: observar</span><span data-en>Mon: observe</span></div><div class="day-badge key"><span data-es>Jue: cuantificar</span><span data-en>Thu: quantify</span></div></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- LANE LABELS (left side) -->
+  <text x="55" y="128" text-anchor="end" font-family="Barlow Condensed" font-size="13" fill="#F59E0B" font-weight="700" opacity="0.8">WS1</text>
+  <text x="55" y="143" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#F59E0B" opacity="0.5">NPI &amp; SIPOC</text>
 
+  <text x="55" y="248" text-anchor="end" font-family="Barlow Condensed" font-size="13" fill="#60A5FA" font-weight="700" opacity="0.8">WS2</text>
+  <text x="55" y="263" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#60A5FA" opacity="0.5">Demand Plan</text>
+
+  <text x="55" y="373" text-anchor="end" font-family="Barlow Condensed" font-size="13" fill="#34D399" font-weight="700" opacity="0.8">WS3</text>
+  <text x="55" y="388" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#34D399" opacity="0.5">Log. Flow</text>
+
+  <text x="55" y="493" text-anchor="end" font-family="Barlow Condensed" font-size="13" fill="#F87171" font-weight="700" opacity="0.8">WS4</text>
+  <text x="55" y="508" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#F87171" opacity="0.5">Inv. &amp; WIP</text>
+
+  <text x="55" y="592" text-anchor="end" font-family="Barlow Condensed" font-size="12" fill="#A78BFA" font-weight="700" opacity="0.8">FLOAT</text>
+
+  <!-- LANE DIVIDERS -->
+  <line x1="60" y1="182" x2="1180" y2="182" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="60" y1="307" x2="1180" y2="307" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="60" y1="432" x2="1180" y2="432" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="60" y1="548" x2="1180" y2="548" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- ======= PLAY ARROWS (chalk-style) ======= -->
+  <!-- WS1: Kick-off context block 9:00-10:30, then SIPOC drill 11:00-12:30, present 13:00-14:30 -->
+  <path d="M 90 120 C 140 120 180 115 230 115" stroke="#F59E0B" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.4"/>
+  <path d="M 230 115 C 300 115 340 118 370 118" stroke="#F59E0B" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <path d="M 370 118 C 440 112 490 108 510 108" stroke="#F59E0B" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="510,104 522,108 510,112" fill="#F59E0B" opacity="0.7"/>
+  <path d="M 510 108 C 580 108 630 118 650 118" stroke="#F59E0B" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <path d="M 650 118 C 720 118 770 115 790 115" stroke="#F59E0B" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="790,111 802,115 790,119" fill="#F59E0B" opacity="0.7"/>
+  <path d="M 790 115 C 870 115 920 118 930 118" stroke="#F59E0B" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.4"/>
+  <path d="M 930 118 C 1010 118 1060 115 1070 115" stroke="#F59E0B" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.35"/>
+
+  <!-- WS2: Demand map 9:00-10:00, ExF analysis 10:00-12:00, gap report 13:00-15:00 -->
+  <path d="M 90 245 C 150 245 190 240 230 240" stroke="#60A5FA" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.4"/>
+  <path d="M 230 240 C 300 240 340 245 370 245" stroke="#60A5FA" stroke-width="3" fill="none" opacity="0.6"/>
+  <polygon points="370,241 382,245 370,249" fill="#60A5FA" opacity="0.6"/>
+  <path d="M 370 245 C 440 245 490 238 510 238" stroke="#60A5FA" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M 510 238 C 580 238 630 245 650 245" stroke="#60A5FA" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <path d="M 650 238 C 720 235 770 238 790 238" stroke="#60A5FA" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="790,234 802,238 790,242" fill="#60A5FA" opacity="0.7"/>
+  <path d="M 790 238 C 870 238 920 242 930 242" stroke="#60A5FA" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <polygon points="930,238 942,242 930,246" fill="#60A5FA" opacity="0.5"/>
+
+  <!-- WS3: Receiving flow 9:00-11:00, trailer slots 11:00-13:00, layout 14:00-16:00 -->
+  <path d="M 90 370 C 160 370 200 365 230 365" stroke="#34D399" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.4"/>
+  <path d="M 230 365 C 300 365 340 370 370 370" stroke="#34D399" stroke-width="3" fill="none" opacity="0.6"/>
+  <polygon points="370,366 382,370 370,374" fill="#34D399" opacity="0.6"/>
+  <path d="M 370 370 C 440 370 490 362 510 362" stroke="#34D399" stroke-width="2.5" fill="none" opacity="0.6"/>
+  <polygon points="510,358 522,362 510,366" fill="#34D399" opacity="0.6"/>
+  <path d="M 510 362 C 580 362 630 368 650 368" stroke="#34D399" stroke-width="2" fill="none" opacity="0.45"/>
+  <path d="M 790 365 C 870 365 920 370 930 370" stroke="#34D399" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="930,366 942,370 930,374" fill="#34D399" opacity="0.7"/>
+  <path d="M 930 370 C 1000 370 1040 365 1070 365" stroke="#34D399" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="1070,361 1082,365 1070,369" fill="#34D399" opacity="0.7"/>
+
+  <!-- WS4: WIP mapping 9:00-11:00, 7-parts analysis 11:00-13:00, reduction plan 14:00-16:00 -->
+  <path d="M 90 492 C 160 492 200 488 230 488" stroke="#F87171" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.4"/>
+  <path d="M 230 488 C 310 488 350 492 370 492" stroke="#F87171" stroke-width="3" fill="none" opacity="0.6"/>
+  <polygon points="370,488 382,492 370,496" fill="#F87171" opacity="0.6"/>
+  <path d="M 370 492 C 440 492 490 485 510 485" stroke="#F87171" stroke-width="2.5" fill="none" opacity="0.6"/>
+  <polygon points="510,481 522,485 510,489" fill="#F87171" opacity="0.6"/>
+  <path d="M 510 485 C 580 485 630 492 650 492" stroke="#F87171" stroke-width="2" fill="none" opacity="0.45"/>
+  <path d="M 790 488 C 870 488 920 492 930 492" stroke="#F87171" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="930,488 942,492 930,496" fill="#F87171" opacity="0.7"/>
+  <path d="M 930 492 C 1000 492 1040 488 1070 488" stroke="#F87171" stroke-width="3" fill="none" opacity="0.7"/>
+  <polygon points="1070,484 1082,488 1070,492" fill="#F87171" opacity="0.7"/>
+
+  <!-- ======= KICK-OFF ZONE (9:00-10:00 shared) ======= -->
+  <rect x="66" y="63" width="158" height="612" fill="rgba(255,255,255,0.015)" rx="4"/>
+  <text x="145" y="648" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="rgba(255,255,255,0.2)" font-weight="700" letter-spacing="2">KICK-OFF</text>
+
+  <!-- LUNCH ZONE (12:00-13:00) -->
+  <rect x="508" y="63" width="144" height="612" fill="rgba(255,255,255,0.02)" rx="4"/>
+  <text x="580" y="648" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="rgba(255,255,255,0.2)" font-weight="700" letter-spacing="2">LUNCH</text>
+
+  <!-- WRAP ZONE (16:00-17:00) -->
+  <rect x="1068" y="63" width="112" height="612" fill="rgba(255,255,255,0.015)" rx="4"/>
+  <text x="1120" y="648" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="rgba(255,255,255,0.2)" font-weight="700" letter-spacing="2">WRAP-UP</text>
+
+  <!-- ======= PLAYER TOKENS ======= -->
+
+  <!-- ── WS1 LANE (NPI & SIPOC) ── -->
+
+  <!-- JC: QB · 11:00-14:30 WS1 -->
+  <g class="tok" onclick="openCard('jc')">
+    <circle cx="420" cy="120" r="32" fill="rgba(245,158,11,0.12)" stroke="#F59E0B" stroke-width="2.5"/>
+    <circle cx="420" cy="120" r="24" fill="#F59E0B"/>
+    <text x="420" y="116" text-anchor="middle" font-family="Barlow Condensed" font-size="13" fill="#07152A" font-weight="900">JC</text>
+    <text x="420" y="128" text-anchor="middle" font-family="Barlow Condensed" font-size="9" fill="#07152A" font-weight="700">QB</text>
+    <text x="420" y="160" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#F59E0B" font-weight="600">J.C. Torres</text>
+  </g>
+
+  <!-- MT: Supply · 9:00-12:00 WS1 context data -->
+  <g class="tok" onclick="openCard('mt')">
+    <circle cx="160" cy="105" r="26" fill="rgba(245,158,11,0.1)" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,3"/>
+    <circle cx="160" cy="105" r="18" fill="rgba(245,158,11,0.7)"/>
+    <text x="160" y="101" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">MT</text>
+    <text x="160" y="111" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">NPI</text>
+    <text x="160" y="138" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#F59E0B" font-weight="600">Fátima R.</text>
+  </g>
+
+  <!-- DZ: S&OP · 14:00-16:00 WS1 present -->
+  <g class="tok" onclick="openCard('dz')">
+    <circle cx="870" cy="120" r="26" fill="rgba(245,158,11,0.1)" stroke="#F59E0B" stroke-width="2"/>
+    <circle cx="870" cy="120" r="18" fill="rgba(245,158,11,0.8)"/>
+    <text x="870" y="116" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">DZ</text>
+    <text x="870" y="126" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">S&amp;OP</text>
+    <text x="870" y="152" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#F59E0B" font-weight="600">D. Zárate</text>
+  </g>
+
+  <!-- ── WS2 LANE (Demand Planning) ── -->
+
+  <!-- EN: Demand · all day -->
+  <g class="tok" onclick="openCard('en')">
+    <circle cx="300" cy="245" r="28" fill="rgba(96,165,250,0.12)" stroke="#60A5FA" stroke-width="2.5"/>
+    <circle cx="300" cy="245" r="20" fill="#60A5FA"/>
+    <text x="300" y="241" text-anchor="middle" font-family="Barlow Condensed" font-size="12" fill="#07152A" font-weight="900">EN</text>
+    <text x="300" y="251" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">ExF</text>
+    <text x="300" y="280" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#60A5FA" font-weight="600">E. Neri</text>
+  </g>
+
+  <!-- CG: Planning · 11:00-14:00 -->
+  <g class="tok" onclick="openCard('cg')">
+    <circle cx="580" cy="238" r="26" fill="rgba(96,165,250,0.1)" stroke="#60A5FA" stroke-width="2"/>
+    <circle cx="580" cy="238" r="18" fill="rgba(96,165,250,0.85)"/>
+    <text x="580" y="234" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">CG</text>
+    <text x="580" y="244" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">PLAN</text>
+    <text x="580" y="268" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#60A5FA" font-weight="600">C. González</text>
+  </g>
+
+  <!-- JP: PPIC · 14:00-16:00 -->
+  <g class="tok" onclick="openCard('jp')">
+    <circle cx="870" cy="245" r="26" fill="rgba(96,165,250,0.1)" stroke="#60A5FA" stroke-width="2"/>
+    <circle cx="870" cy="245" r="18" fill="rgba(96,165,250,0.85)"/>
+    <text x="870" y="241" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">JP</text>
+    <text x="870" y="251" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">PPIC</text>
+    <text x="870" y="275" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#60A5FA" font-weight="600">J. Pérez</text>
+  </g>
+
+  <!-- ── WS3 LANE (Logistics Flow) ── -->
+
+  <!-- EDGAR: Internal Logistics lead · all day -->
+  <g class="tok" onclick="openCard('edgar')">
+    <circle cx="160" cy="370" r="30" fill="rgba(52,211,153,0.12)" stroke="#34D399" stroke-width="2.5"/>
+    <circle cx="160" cy="370" r="22" fill="#34D399"/>
+    <text x="160" y="366" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">EL</text>
+    <text x="160" y="376" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">LOG</text>
+    <text x="160" y="406" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#34D399" font-weight="600">Edgar Luna</text>
+  </g>
+
+  <!-- LM: Receiving · 9:00-12:00 -->
+  <g class="tok" onclick="openCard('lm')">
+    <circle cx="300" cy="365" r="26" fill="rgba(52,211,153,0.1)" stroke="#34D399" stroke-width="2"/>
+    <circle cx="300" cy="365" r="18" fill="rgba(52,211,153,0.85)"/>
+    <text x="300" y="361" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">LM</text>
+    <text x="300" y="371" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">RCV</text>
+    <text x="300" y="395" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#34D399" font-weight="600">Lucy M.</text>
+  </g>
+
+  <!-- GM: Layout · 14:00-16:00 -->
+  <g class="tok" onclick="openCard('gm')">
+    <circle cx="1000" cy="370" r="26" fill="rgba(52,211,153,0.1)" stroke="#34D399" stroke-width="2"/>
+    <circle cx="1000" cy="370" r="18" fill="rgba(52,211,153,0.85)"/>
+    <text x="1000" y="366" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">GM</text>
+    <text x="1000" y="376" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">LAYOUT</text>
+    <text x="1000" y="400" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#34D399" font-weight="600">G. Morales</text>
+  </g>
+
+  <!-- ── WS4 LANE (Inventory & WIP) ── -->
+
+  <!-- NR: WIP Analysis · 9:00-13:00 -->
+  <g class="tok" onclick="openCard('nr')">
+    <circle cx="300" cy="492" r="28" fill="rgba(248,113,113,0.12)" stroke="#F87171" stroke-width="2.5"/>
+    <circle cx="300" cy="492" r="20" fill="#F87171"/>
+    <text x="300" y="488" text-anchor="middle" font-family="Barlow Condensed" font-size="12" fill="#07152A" font-weight="900">NR</text>
+    <text x="300" y="498" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">WIP</text>
+    <text x="300" y="527" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#F87171" font-weight="600">Neri R.</text>
+  </g>
+
+  <!-- RM: BOM/Parts · 11:00-14:00 -->
+  <g class="tok" onclick="openCard('rm')">
+    <circle cx="440" cy="488" r="26" fill="rgba(248,113,113,0.1)" stroke="#F87171" stroke-width="2"/>
+    <circle cx="440" cy="488" r="18" fill="rgba(248,113,113,0.85)"/>
+    <text x="440" y="484" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">RM</text>
+    <text x="440" y="494" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">BOM</text>
+    <text x="440" y="518" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#F87171" font-weight="600">R. Martínez</text>
+  </g>
+
+  <!-- CI: Inventory Reduction · 14:00-16:00 -->
+  <g class="tok" onclick="openCard('ci')">
+    <circle cx="1000" cy="492" r="26" fill="rgba(248,113,113,0.1)" stroke="#F87171" stroke-width="2"/>
+    <circle cx="1000" cy="492" r="18" fill="rgba(248,113,113,0.85)"/>
+    <text x="1000" y="488" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">CI</text>
+    <text x="1000" y="498" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">INV</text>
+    <text x="1000" y="522" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#F87171" font-weight="600">C. Ibarra</text>
+  </g>
+
+  <!-- ── FLOAT LANE (Support/Coach) ── -->
+
+  <!-- FERY: Head Coach · all day -->
+  <g class="tok" onclick="openCard('fery')">
+    <circle cx="420" cy="592" r="30" fill="rgba(167,139,250,0.12)" stroke="#A78BFA" stroke-width="2.5"/>
+    <circle cx="420" cy="592" r="22" fill="#A78BFA"/>
+    <text x="420" y="588" text-anchor="middle" font-family="Barlow Condensed" font-size="12" fill="#07152A" font-weight="900">FY</text>
+    <text x="420" y="598" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">COACH</text>
+    <text x="420" y="626" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#A78BFA" font-weight="600">Fery · KI SGP</text>
+  </g>
+
+  <!-- ZJ: Support · float -->
+  <g class="tok" onclick="openCard('zj')">
+    <circle cx="720" cy="592" r="24" fill="rgba(167,139,250,0.1)" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4,3"/>
+    <circle cx="720" cy="592" r="16" fill="rgba(167,139,250,0.8)"/>
+    <text x="720" y="588" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#07152A" font-weight="900">AR</text>
+    <text x="720" y="598" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#07152A" font-weight="700">DATA</text>
+    <text x="720" y="622" text-anchor="middle" font-family="Barlow Condensed" font-size="10" fill="#A78BFA" font-weight="600">Arka</text>
+  </g>
+
+  <!-- CROSS-TEAM SYNC arrows (noon sync) -->
+  <line x1="580" y1="182" x2="580" y2="307" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="580" y1="307" x2="580" y2="432" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="580" y1="432" x2="580" y2="548" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="580" y="178" text-anchor="middle" font-family="Barlow Condensed" font-size="9" fill="rgba(255,255,255,0.25)" font-weight="600" letter-spacing="1">SYNC</text>
+
+  <!-- SYNC at 15:00 -->
+  <line x1="930" y1="63" x2="930" y2="548" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="930" y="59" text-anchor="middle" font-family="Barlow Condensed" font-size="9" fill="rgba(255,255,255,0.2)" font-weight="600" letter-spacing="1">TEAM SYNC</text>
+
+</svg>
 </div>
 
-<div class="timeline-wrap">
-  <div class="timeline-section">
-    <div class="timeline-header">
-      <span data-es>Timeline — 5 días · Qué hace JC con el equipo Supply Chain</span>
-      <span data-en>Timeline — 5 days · What JC does with the Supply Chain team</span>
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="card" id="card">
+    <div class="card-header" id="card-header">
+      <div class="card-badge" id="card-badge">JUGADA</div>
+      <div class="card-name" id="card-name">Nombre</div>
+      <div class="card-role" id="card-role">Rol</div>
+      <div class="card-time" id="card-time">Horario</div>
+      <div class="card-close" onclick="closeCard()">✕</div>
     </div>
-    <div class="timeline-grid">
-      <div class="tday">
-        <div class="tday-label"><span data-es>Día 1</span><span data-en>Day 1</span></div>
-        <div class="tday-date"><span data-es>Lunes 11 Mayo</span><span data-en>Monday May 11</span></div>
-        <div class="tday-focus">
-          <span data-es>Fery lidera.<br>JC observa dinámica.</span>
-          <span data-en>Fery leads.<br>JC observes dynamics.</span>
-        </div>
-        <div class="tday-pills">
-          <span class="tpill hot">Dionicio ← <span data-es>observar</span><span data-en>observe</span></span>
-          <span class="tpill hot">Elizabeth ← <span data-es>observar</span><span data-en>observe</span></span>
-          <span class="tpill"><span data-es>Lanzar las 3 preguntas</span><span data-en>Launch the 3 questions</span></span>
-          <span class="tpill"><span data-es>Alinear con Carlos al cierre</span><span data-en>Align with Carlos at closing</span></span>
-        </div>
+    <div class="card-body">
+      <div class="play-box" id="play-box">
+        <div class="play-title">🏈 LA JUGADA</div>
+        <div class="play-text" id="card-play"></div>
       </div>
-      <div class="tday">
-        <div class="tday-label"><span data-es>Día 2</span><span data-en>Day 2</span></div>
-        <div class="tday-date"><span data-es>Martes 12 Mayo</span><span data-en>Tuesday May 12</span></div>
-        <div class="tday-focus">
-          <span data-es>Muda Hunting<br>en shopfloor.</span>
-          <span data-en>Muda Hunting<br>on the shopfloor.</span>
+      <div class="io-grid">
+        <div class="io-box">
+          <div class="io-title" style="color:#60A5FA;">📥 INPUTS</div>
+          <div id="card-ins"></div>
         </div>
-        <div class="tday-pills">
-          <span class="tpill hot">Jorge + Marcela ← spaghetti</span>
-          <span class="tpill hot">Nereyda ← receiving</span>
-          <span class="tpill">Gerardo ← line-side</span>
-          <span class="tpill">Raul ← <span data-es>shipping obs.</span><span data-en>shipping obs.</span></span>
-        </div>
-      </div>
-      <div class="tday">
-        <div class="tday-label"><span data-es>Día 3</span><span data-en>Day 3</span></div>
-        <div class="tday-date"><span data-es>Miércoles 13 Mayo</span><span data-en>Wednesday May 13</span></div>
-        <div class="tday-focus">
-          <span data-es>JC presenta<br>TFM Training.</span>
-          <span data-en>JC delivers<br>TFM Training.</span>
-        </div>
-        <div class="tday-pills">
-          <span class="tpill hot"><span data-es>Conectar con su planta</span><span data-en>Connect with their plant</span></span>
-          <span class="tpill">Gerardo ← border of line</span>
-          <span class="tpill">Jorge + Marcela ← tugger</span>
-          <span class="tpill">Elizabeth ← pull planning</span>
-        </div>
-      </div>
-      <div class="tday">
-        <div class="tday-label"><span data-es>Día 4</span><span data-en>Day 4</span></div>
-        <div class="tday-date"><span data-es>Jueves 14 Mayo</span><span data-en>Thursday May 14</span></div>
-        <div class="tday-focus">
-          <span data-es>⚑ Cuantificación.<br>El día más importante.</span>
-          <span data-en>⚑ Quantification.<br>The most important day.</span>
-        </div>
-        <div class="tday-pills">
-          <span class="tpill hot">Elizabeth + Dionicio → NPI $</span>
-          <span class="tpill hot">Marcela + Jorge → layout $</span>
-          <span class="tpill hot">Raul + Cesar → shipping $</span>
-          <span class="tpill hot">Liliana → <span data-es>inventario $</span><span data-en>inventory $</span></span>
-          <span class="tpill"><span data-es>Carlos valida cada número</span><span data-en>Carlos validates every number</span></span>
-        </div>
-      </div>
-      <div class="tday">
-        <div class="tday-label"><span data-es>Día 5</span><span data-en>Day 5</span></div>
-        <div class="tday-date"><span data-es>Viernes 15 Mayo</span><span data-en>Friday May 15</span></div>
-        <div class="tday-focus">
-          <span data-es>Presentación<br>de hallazgos.</span>
-          <span data-en>Findings<br>presentation.</span>
-        </div>
-        <div class="tday-pills">
-          <span class="tpill">Current → Waste → Future</span>
-          <span class="tpill"><span data-es>Oportunidades de ahorro</span><span data-en>Savings opportunities</span></span>
-          <span class="tpill"><span data-es>Sprint 10–22 semanas</span><span data-en>Sprint 10–22 weeks</span></span>
-          <span class="tpill hot"><span data-es>Cada persona co-presenta</span><span data-en>Each person co-presents</span></span>
+        <div class="io-box">
+          <div class="io-title" style="color:#34D399;">📤 OUTPUTS</div>
+          <div id="card-outs"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="footer">
-  Kaizen Institute México · All Rights Reserved · <span data-es>Confidencial</span><span data-en>Confidential</span>
+<!-- CHALLENGE CARD -->
+<div class="challenge-card" id="challenge-card">
+  <div class="ch-header" id="ch-header">
+    <div class="ch-title" id="ch-title">CHALLENGE</div>
+  </div>
+  <div class="ch-body">
+    <div class="ch-scenario" id="ch-scenario"></div>
+    <div class="ch-action" id="ch-action"></div>
+  </div>
+  <div class="ch-close" onclick="closeChallenge()">← CERRAR</div>
+</div>
+
+<!-- DICE PANEL -->
+<div class="dice-panel">
+  <div class="dice-label">DADO CHALLENGE</div>
+  <div class="dice-btn" id="dice-face">⚀</div>
+  <button class="roll-btn" onclick="rollDice()">🎲 TIRAR</button>
 </div>
 
 <script>
-function setLang(lang){
-  document.documentElement.setAttribute('data-lang', lang);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
-  document.documentElement.lang = lang;
+const PLAYERS = {
+  jc: {
+    name: 'José Carlos Torres',
+    role: 'QB · FACILITADOR KIMX',
+    time: '11:00 kick-off · 13:00–14:30 WS1 Presentation',
+    color: '#F59E0B',
+    badge: '🏈 JUGADA: QB SIPOC DRILL',
+    play: 'Facilita el SIPOC de NPI en WS1. Mapea el proceso desde diseño hasta primera corrida en planta. Identifica los gaps del handoff NPI→S&OP y documenta las preguntas abiertas para el jueves. Presenta resultados consolidados al cierre del día.',
+    ins: ['Metodología SIPOC Kaizen', 'Playbook Pull Planning KIMX', 'Diagnóstico Fery (cualitativos)', 'Data BOM JKG84/JHG61', 'Hipótesis validadas pre-VSA'],
+    outs: ['SIPOC NPI nivel 1 + nivel 2', 'Gaps proceso documentados', 'Handoff NPI→S&OP mapeado', 'Preguntas abiertas para día 3', 'Waste ID list WS1']
+  },
+  mt: {
+    name: 'Fátima Ruiz',
+    role: 'LEAN CHAMPION · MEJORA CONTINUA',
+    time: '9:00–12:00 Contexto & validación NPI',
+    color: '#F59E0B',
+    badge: '📋 JUGADA: NPI CONTEXT PASS',
+    play: 'Provee contexto del proceso NPI actual. Responde las hipótesis sobre ramp-up (8.8–17.5 semanas) y valida si el compressed readiness es sistémico o por producto. Alinea expectativas de entregables con el equipo de Mattel.',
+    ins: ['Historial NPI Mattel Montoi', 'Casos de ramp-up previos', 'Compromisos S&OP vigentes'],
+    outs: ['Validación hipótesis NPI Compressed Readiness', 'Lista de restricciones actuales', 'Sign-off de scope WS1']
+  },
+  dz: {
+    name: 'D. Zárate',
+    role: 'S&OP ANALYST · WS1 SUPPORT',
+    time: '14:00–16:00 Presentation & gap close',
+    color: '#F59E0B',
+    badge: '📊 JUGADA: S&OP GAP CLOSE',
+    play: 'Soporta la presentación de hallazgos WS1. Cruza los gaps del SIPOC contra el proceso S&OP actual. Propone quick fixes para el handoff y documenta los acuerdos del equipo.',
+    ins: ['Output SIPOC de JC', 'S&OP calendar actual', 'Compromisos de producción'],
+    outs: ['Gap list NPI→S&OP', 'Propuestas quick fix', 'Acuerdos equipo documentados']
+  },
+  en: {
+    name: 'E. Neri (Receiving)',
+    role: 'SUPPLY CHAIN · WS2 LEAD',
+    time: '9:00 AM – todo el día · Demand & ExF',
+    color: '#60A5FA',
+    badge: '📈 JUGADA: ExF REALITY CHECK',
+    play: 'Mapea el flujo de demanda actual. Valida la hipótesis de que ExF subestima 3.6×–11× la demanda real. Construye el estado actual del proceso de forecasting y levanta los datos de varianza por SKU crítico (DCH55/DCH63 Mega).',
+    ins: ['Histórico ExF últimas 53 semanas', 'Demanda real por SKU', 'Compromisos de entrega vigentes'],
+    outs: ['Current state: Demand Process Map', 'ExF accuracy dashboard', 'Top 5 SKUs con mayor varianza', 'Root cause list del forecast error']
+  },
+  cg: {
+    name: 'C. González',
+    role: 'DEMAND PLANNER · WS2',
+    time: '11:00–13:00 ExF analysis sprint',
+    color: '#60A5FA',
+    badge: '🔢 JUGADA: DATA SPRINT',
+    play: 'Descarga y cruza datos de demanda real vs ExF. Cuantifica el impacto de la subestimación en WIP ($9M inventario, 28.8% WIP anormal). Prepara el evidence pack para la presentación del jueves.',
+    ins: ['SAP reports demand actual', 'ExF files históricos', 'Benchmark industry accuracy'],
+    outs: ['ExF vs real: delta por mes', 'Impacto $ en WIP calculado', 'Evidence pack listo para D3']
+  },
+  jp: {
+    name: 'J. Pérez',
+    role: 'PPIC · WS2 SUPPORT',
+    time: '14:00–16:00 Recomendaciones PPIC',
+    color: '#60A5FA',
+    badge: '🔄 JUGADA: PULL SIGNAL DESIGN',
+    play: 'Diseña el mecanismo de pull signal para reemplazar el push actual. Propone criterios de reorder y buffer stock basados en los datos de varianza. Documenta el nuevo proceso PPIC para el future state.',
+    ins: ['Demand map de EN/CG', 'Inventario actual por parte', 'Capacidad de producción', 'Lead times proveedor'],
+    outs: ['Pull signal design draft', 'Buffer stock por SKU clave', 'Future state PPIC process', 'Criterios reorder point']
+  },
+  edgar: {
+    name: 'Edgar Luna',
+    role: 'INTERNAL LOGISTICS · WS3 LEAD',
+    time: '9:00 AM – todo el día · Logistics Flow',
+    color: '#34D399',
+    badge: '🚛 JUGADA: LOGISTICS FULL SWEEP',
+    play: 'Lidera el mapeo completo del flujo logístico interno. Cuantifica la capacidad de Receiving (5 vs 20 trailers/día — colapso confirmado). Diseña las rutas de materiales y el layout propuesto para reducir espacio y aumentar flujo. Presenta el future state logístico.',
+    ins: ['Mapa de planta actual', 'Datos de trailers por día', 'Layout de racks (12,521 / 6,735m²)', 'Tiempos de ciclo logístico', 'Absenteeism data (6.2%)'],
+    outs: ['Current state logistics map', 'Receiving capacity analysis', 'Propuesta layout optimizado', 'Rutas de materiales future state', 'Estimado de reducción de espacio']
+  },
+  lm: {
+    name: 'Lucy M. (Receiving)',
+    role: 'RECEIVING SUPERVISOR · WS3',
+    time: '9:00–12:00 Receiving current state',
+    color: '#34D399',
+    badge: '📦 JUGADA: RECEIVING AUDIT',
+    play: 'Documenta el estado actual de Receiving con datos reales. Registra los 20 trailers/día vs capacidad de 5 y el impacto en el patio. Mapea el flujo desde llegada hasta almacén e identifica los cuellos de botella críticos.',
+    ins: ['Log de llegadas de trailers', 'Tiempos de descarga actuales', 'Capacidad del patio', 'Head count Receiving'],
+    outs: ['Current state Receiving map', 'Bottleneck list con evidencia', 'Propuesta slots de trailers', 'Quick wins Receiving']
+  },
+  gm: {
+    name: 'G. Morales',
+    role: 'WAREHOUSE · LAYOUT & SPACE',
+    time: '14:00–16:00 Layout optimization',
+    color: '#34D399',
+    badge: '🗺️ JUGADA: SPACE PLAY',
+    play: 'Diseña la propuesta de layout optimizado. Identifica los racks con inventario obsoleto (50% confirmado) y propone la liberación de espacio. Calcula el m² de ahorro potencial y los ahorros asociados al rédito de espacio.',
+    ins: ['Layout actual 12,521 racks', 'Inventario por rack/zona', 'Current state logistics map', 'Criterios de obsolescencia'],
+    outs: ['Layout future state (CAD/sketch)', 'M² liberados estimados', 'Inventario obsoleto valorizado', 'Propuesta de flujo de rack']
+  },
+  nr: {
+    name: 'Neri R.',
+    role: 'WIP ANALYST · WS4 LEAD',
+    time: '9:00–13:00 WIP full mapping',
+    color: '#F87171',
+    badge: '🔴 JUGADA: WIP DISSECT',
+    play: 'Disecciona el inventario WIP de $9M. Mapea las 7 partes que representan 82% del valor. Valida la concentración 0013-0107 (39% del inventario). Construye el árbol de causas del WIP elevado y las oportunidades de reducción.',
+    ins: ['SAP inventory snapshot', 'BOM análisis JKG84/JHG61', 'Lista 7 partes críticas', 'Datos phantom BOM confirmados'],
+    outs: ['WIP dissection: $9M desglosado', 'Top 7 partes valoradas', 'Árbol de causas WIP elevado', 'Oportunidades H5+H6+H7 cuantificadas']
+  },
+  rm: {
+    name: 'R. Martínez',
+    role: 'BOM ANALYST · WS4',
+    time: '11:00–14:00 BOM & phantom cleanup',
+    color: '#F87171',
+    badge: '🔧 JUGADA: BOM SURGERY',
+    play: 'Resuelve los phantom BOMs que bloquean JKG84. Cruza los costos $0 en SAP con el valor real de inventario. Documenta las discrepancias y propone el proceso de limpieza de BOM para evitar bloqueos futuros en producción.',
+    ins: ['BOM completo JKG84/JHG61', 'Partes con costo $0 en SAP', 'Phantom BOM list (2 partes)', 'Proceso actual de BOM update'],
+    outs: ['Phantom BOM resueltos', 'Lista partes costo $0 corregidas', 'Proceso BOM update propuesto', 'JKG84 desbloqueado (si aplica)']
+  },
+  ci: {
+    name: 'C. Ibarra',
+    role: 'INVENTORY CONTROL · WS4',
+    time: '14:00–16:00 Reduction plan',
+    color: '#F87171',
+    badge: '💰 JUGADA: CASH RELEASE',
+    play: 'Diseña el plan de reducción de inventario. Identifica los SKUs con inventario obsoleto (50% de racks) y propone la estrategia de liquidación o reutilización. Cuantifica el cash release potencial dentro del objetivo $500K USD.',
+    ins: ['WIP dissection de NR', 'Inventario obsoleto de GM', 'Criterios de slow-moving', 'Política de inventario actual'],
+    outs: ['Plan reducción inventario 90 días', 'Cash release estimado $', 'Lista SKUs para liquidación', 'Política inventario propuesta']
+  },
+  fery: {
+    name: 'Fery (Kaizen Institute SGP)',
+    role: 'HEAD COACH · VSA SENIOR ADVISOR',
+    time: 'Todo el día · Float entre workstreams',
+    color: '#A78BFA',
+    badge: '⭐ JUGADA: COACH FLOAT',
+    play: 'Ronda entre los 4 workstreams como Head Coach. Valida el rigor metodológico del VSA. Interviene cuando un equipo se bloquea, reencuadra la discusión y asegura que los hallazgos conecten con el objetivo de $500K USD. Facilita el cross-team sync de las 12:00 y las 15:00.',
+    ins: ['Diagnóstico cross-funcional previo', 'Hipótesis senior validadas', 'Playbook VSA Kaizen Institute', 'Benchmark Indonesia (formato)'],
+    outs: ['Validación metodológica por WS', 'Cross-connections identificadas', 'Facilitación sync 12:00 y 15:00', 'Go/no-go para entregables día 3']
+  },
+  zj: {
+    name: 'Arka',
+    role: 'DATA SUPPORT · FLOAT',
+    time: 'Float · Soporte de datos on-demand',
+    color: '#A78BFA',
+    badge: '📊 JUGADA: DATA ON-DEMAND',
+    play: 'Provee soporte de datos en tiempo real a cualquier workstream que lo necesite. Corre queries de SAP, prepara visualizaciones exprés y valida cálculos. Se mueve donde más se necesite y no tiene asignación fija de WS.',
+    ins: ['Acceso SAP / sistema datos', 'Solicitudes ad-hoc de los WS', 'Templates de análisis pre-cargados'],
+    outs: ['Queries y datos on-demand', 'Visualizaciones rápidas', 'Validación de cálculos en tiempo real', 'Backup de evidencia digital']
+  }
+};
+
+const CHALLENGES = [
+  {
+    face: '⚀',
+    color: '#F87171',
+    borderColor: '#F87171',
+    title: '🔴 DATA BLOCK',
+    scenario: 'SAP está lento y no carga los reportes de inventario. El WS4 lleva 40 minutos bloqueado esperando datos.',
+    action: 'ACCIÓN → Arka entra al quite. ¿Tienen datos en Excel del día anterior? Trabajen con lo que hay y marquen el gap. No paren el VSA por un sistema.'
+  },
+  {
+    face: '⚁',
+    color: '#F59E0B',
+    borderColor: '#F59E0B',
+    title: '⚡ NPI BOMBSHELL',
+    scenario: 'El equipo descubre que hay 3 lanzamientos de NPI no documentados en el sistema que llegan en Q3. Ninguno estaba en el scope del VSA.',
+    action: 'ACCIÓN → Fátima y JC: 15 min de triage. ¿Cuánto impacto en capacidad? Documentar y decidir si afecta el future state. No espiralar — flag para el jueves.'
+  },
+  {
+    face: '⚂',
+    color: '#FB923C',
+    borderColor: '#FB923C',
+    title: '🟠 SCOPE CREEP',
+    scenario: 'El WS2 abrió una discusión sobre el proceso de S&OP global que no tiene dueño. La conversación lleva 30 minutos sin conclusión.',
+    action: 'ACCIÓN → Fery interviene. Parking lot para S&OP global. Regresen al demand map. Tienen 45 min para terminar el current state — foco ahora.'
+  },
+  {
+    face: '⚃',
+    color: '#34D399',
+    borderColor: '#34D399',
+    title: '🟢 MOMENTUM PLAY',
+    scenario: '¡El WS3 encontró que el 60% del espacio de racks está liberado si mueven el inventario obsoleto! Más de lo esperado.',
+    action: 'ACCIÓN → Documenten TODO ahora. Fotos, datos, nombres. Este es un hallazgo de alto impacto. Fery: coordinen un mini-presentación al grupo en el sync de las 15:00.'
+  },
+  {
+    face: '⚄',
+    color: '#60A5FA',
+    borderColor: '#60A5FA',
+    title: '🔵 CROSS-TEAM PLAY',
+    scenario: 'WS1 y WS4 descubren que el phantom BOM está causando tanto el bloqueo de producción COMO la subestimación del forecast en WS2. Es una causa raíz compartida.',
+    action: 'ACCIÓN → Cross-team sync no programado: JC + Neri + EN juntos 20 min. Mapear la conexión. Esto podría ser el hallazgo central del VSA — documenten bien.'
+  },
+  {
+    face: '⚅',
+    color: '#E2E8F0',
+    borderColor: '#94A3B8',
+    title: '⚪ WILDCARD — NITHIA ENTRA',
+    scenario: 'Nithia (Kaizen Institute) se conecta de forma inesperada. Tiene 30 minutos y quiere un update del VSA. ¿Están listos para resumir en 5 diapositivas?',
+    action: 'ACCIÓN → Fery da el brief. JC prepara el one-pager rápido: scope, hallazgos top 3, riesgos. Nithia es stakeholder clave — hagan que cuente.'
+  }
+];
+
+function openCard(id) {
+  const p = PLAYERS[id];
+  if (!p) return;
+
+  document.getElementById('card-badge').textContent = p.badge;
+  document.getElementById('card-badge').style.background = p.color + '22';
+  document.getElementById('card-badge').style.color = p.color;
+  document.getElementById('card-name').textContent = p.name;
+  document.getElementById('card-role').textContent = p.role;
+  document.getElementById('card-time').textContent = '⏱ ' + p.time;
+  document.getElementById('card-play').textContent = p.play;
+  document.getElementById('play-box').style.borderLeftColor = p.color;
+  document.getElementById('card-header').style.borderBottom = '1px solid ' + p.color + '33';
+
+  const ins = document.getElementById('card-ins');
+  ins.innerHTML = p.ins.map(i => `<div class="io-item">${i}</div>`).join('');
+
+  const outs = document.getElementById('card-outs');
+  outs.innerHTML = p.outs.map(o => `<div class="io-item">${o}</div>`).join('');
+
+  document.getElementById('modal').classList.add('show');
 }
+
+function closeCard() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal')) closeCard();
+}
+
+const FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+
+function rollDice() {
+  const btn = document.getElementById('dice-face');
+  btn.classList.add('spinning');
+
+  let count = 0;
+  const interval = setInterval(() => {
+    btn.textContent = FACES[Math.floor(Math.random() * 6)];
+    count++;
+    if (count >= 10) {
+      clearInterval(interval);
+      const result = Math.floor(Math.random() * 6);
+      const face = FACES[result];
+      btn.textContent = face;
+      btn.classList.remove('spinning');
+      showChallenge(result);
+    }
+  }, 60);
+}
+
+function showChallenge(idx) {
+  const ch = CHALLENGES[idx];
+  const card = document.getElementById('challenge-card');
+  card.style.borderColor = ch.borderColor;
+  document.getElementById('ch-header').style.background = ch.color + '18';
+  document.getElementById('ch-title').textContent = ch.face + ' ' + ch.title;
+  document.getElementById('ch-title').style.color = ch.color;
+  document.getElementById('ch-scenario').textContent = ch.scenario;
+  document.getElementById('ch-action').textContent = ch.action;
+  document.getElementById('ch-action').style.color = ch.color;
+  card.classList.add('show');
+}
+
+function closeChallenge() {
+  document.getElementById('challenge-card').classList.remove('show');
+}
+
+// Keyboard close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeCard(); closeChallenge(); }
+});
 </script>
 </body>
 </html>
